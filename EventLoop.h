@@ -23,7 +23,7 @@ public:
 
     EventLoop &init();
 
-    EventLoop &pollEvents();
+    EventLoop &pollEvents(const std::shared_ptr<Entity> &p_entity);
 
     EventLoop &update(const Entities &entities);
 

@@ -21,6 +21,8 @@ private:
 
     void checkCollision() override;
 
+    void setVerticalPosition(float nextX, float deltaTime);
+
 public:
     Doodler();
 

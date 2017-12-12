@@ -4,11 +4,13 @@ project(doodle_jump)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif ()
 
-if (WIN32)
+if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
     add_executable(doodle_jump WIN32 main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h Entity.cpp Entity.h)
 else ()
     add_executable(doodle_jump main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h Entity.cpp Entity.h)
@@ -31,8 +33,6 @@ find_package(JPEG REQUIRED)
 find_package(SFML 2 COMPONENTS window graphics system REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(BZip2 REQUIRED)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")

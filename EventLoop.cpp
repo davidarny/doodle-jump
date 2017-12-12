@@ -10,7 +10,7 @@ void EventLoop::createWindow()
     m_window.setFramerateLimit(MAX_FPS);
 }
 
-EventLoop &EventLoop::pollEvents()
+EventLoop &EventLoop::pollEvents(const std::shared_ptr<Entity> &p_entity)
 {
     m_deltaTime = m_clock.restart().asSeconds();
     sf::Event event{};
@@ -26,8 +26,10 @@ EventLoop &EventLoop::pollEvents()
                 switch (event.key.code)
                 {
                     case sf::Keyboard::Left:
+                        p_entity->m_keysMap[sf::Keyboard::Left] = true;
                         break;
                     case sf::Keyboard::Right:
+                        p_entity->m_keysMap[sf::Keyboard::Right] = true;
                         break;
                     default:
                         break;
@@ -38,7 +40,10 @@ EventLoop &EventLoop::pollEvents()
                 switch (event.key.code)
                 {
                     case sf::Keyboard::Left:
+                        p_entity->m_keysMap[sf::Keyboard::Left] = false;
+                        break;
                     case sf::Keyboard::Right:
+                        p_entity->m_keysMap[sf::Keyboard::Right] = false;
                         break;
                     default:
                         break;

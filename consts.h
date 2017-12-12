@@ -13,5 +13,6 @@ static const unsigned MAX_FPS = 60;
 /// Game params
 static const float G = 9.8f;
 static const float TIME_ACCELERATOR = 10.f;
+static const float MOVE_SPEED = 500.f;
 
 #endif //DOODLE_JUMP_CONSTS_H

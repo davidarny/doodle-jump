@@ -20,7 +20,7 @@ int main()
     while (window.isOpen())
     {
         eventLoop
-            .pollEvents()
+            .pollEvents(p_doodler)
             .update(entities)
             .redrawFrame(entities);
     }
