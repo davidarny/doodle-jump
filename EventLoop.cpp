@@ -2,7 +2,7 @@
 
 EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock) : m_window(window), m_clock(clock) {}
 
-void EventLoop::createWindow()
+void EventLoop::createWindow() const
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = ANTIALIASING_LEVEL;

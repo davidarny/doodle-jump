@@ -14,7 +14,7 @@ private:
 
     float m_deltaTime = 0.f;
 
-    void createWindow();
+    void createWindow() const;
 
 public:
     EventLoop(sf::RenderWindow &window, sf::Clock &clock);
