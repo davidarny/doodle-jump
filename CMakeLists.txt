@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(doodle_jump)
 
@@ -9,9 +9,9 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 if (WIN32)
-    add_executable(doodle_jump WIN32 main.cpp resources consts.h EventLoop.cpp EventLoop.h)
+    add_executable(doodle_jump WIN32 main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h Entity.cpp Entity.h)
 else ()
-    add_executable(doodle_jump main.cpp resources consts.h EventLoop.cpp EventLoop.h)
+    add_executable(doodle_jump main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h Entity.cpp Entity.h)
 endif ()
 
 target_compile_features(doodle_jump PUBLIC cxx_std_17)

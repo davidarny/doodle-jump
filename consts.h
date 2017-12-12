@@ -10,4 +10,8 @@ static const std::string WINDOW_TITLE = "Doodle Jump";
 static const unsigned ANTIALIASING_LEVEL = 8;
 static const unsigned MAX_FPS = 60;
 
+/// Game params
+static const float G = 9.8f;
+static const float TIME_ACCELERATOR = 10.f;
+
 #endif //DOODLE_JUMP_CONSTS_H

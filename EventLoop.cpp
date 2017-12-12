@@ -1,6 +1,6 @@
 #include "EventLoop.h"
 
-EventLoop::EventLoop(sf::RenderWindow &window, const sf::Clock &clock) : m_window(window), m_clock(clock) {}
+EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock) : m_window(window), m_clock(clock) {}
 
 void EventLoop::createWindow()
 {
@@ -12,6 +12,7 @@ void EventLoop::createWindow()
 
 EventLoop &EventLoop::pollEvents()
 {
+    m_deltaTime = m_clock.restart().asSeconds();
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
@@ -20,8 +21,28 @@ EventLoop &EventLoop::pollEvents()
             case sf::Event::Closed:
                 m_window.close();
                 break;
-            case sf::Event::MouseMoved:
+            case sf::Event::KeyPressed:
+            {
+                switch (event.key.code)
+                {
+                    case sf::Keyboard::Left:
+                        break;
+                    case sf::Keyboard::Right:
+                        break;
+                    default:
+                        break;
+                }
                 break;
+            }
+            case sf::Event::KeyReleased:
+                switch (event.key.code)
+                {
+                    case sf::Keyboard::Left:
+                    case sf::Keyboard::Right:
+                        break;
+                    default:
+                        break;
+                }
             default:
                 break;
         }
@@ -29,11 +50,11 @@ EventLoop &EventLoop::pollEvents()
     return *this;
 }
 
-EventLoop &EventLoop::redrawFrame(const std::vector<sf::Drawable> &drawable)
+EventLoop &EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
-    std::for_each(drawable.begin(), drawable.end(), [&](const sf::Drawable &item) -> void {
-        m_window.draw(item);
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<Entity> p_item) -> void {
+        m_window.draw(*p_item);
     });
     m_window.display();
     return *this;
@@ -45,7 +66,10 @@ EventLoop &EventLoop::init()
     return *this;
 }
 
-EventLoop &EventLoop::update()
+EventLoop &EventLoop::update(const Entities &entities)
 {
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<Entity> p_item) -> void {
+        p_item->updatePosition(m_deltaTime);
+    });
     return *this;
 }
