@@ -29,6 +29,8 @@ public:
     ~Doodler() override = default;
 
     void updatePosition(float deltaTime) override;
+
+    TYPES getType() const override;
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

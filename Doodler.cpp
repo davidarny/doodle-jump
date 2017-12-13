@@ -49,3 +49,8 @@ void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
         m_position.x -= nextX * deltaTime;
     }
 }
+
+TYPES Doodler::getType() const
+{
+    return TYPES::DOODLER;
+}

@@ -74,7 +74,13 @@ EventLoop &EventLoop::init()
 EventLoop &EventLoop::update(const Entities &entities)
 {
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<Entity> p_item) -> void {
-        p_item->updatePosition(m_deltaTime);
+        if (p_item->getType() == TYPES::PLATFORM)
+        {
+            p_item->updatePosition();
+        } else if (p_item->getType() == TYPES::DOODLER)
+        {
+            p_item->updatePosition(m_deltaTime);
+        }
     });
     return *this;
 }
