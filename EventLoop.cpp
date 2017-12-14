@@ -1,5 +1,4 @@
 #include "Doodler.h"
-#include "Platform.h"
 #include "EventLoop.h"
 
 EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock) : m_window(window), m_clock(clock) {}
@@ -60,7 +59,7 @@ EventLoop &EventLoop::pollEvents(const std::shared_ptr<IEntity> &p_entity)
 EventLoop &EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> p_item) -> void {
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         m_window.draw(*p_item);
     });
     m_window.display();
@@ -75,7 +74,7 @@ EventLoop &EventLoop::init()
 
 EventLoop &EventLoop::update(const Entities &entities)
 {
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> p_item) -> void {
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         p_item->updatePosition(m_deltaTime);
     });
     return *this;

@@ -3,11 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "IPhysicsObject.h"
 #include "consts.h"
 
 using KeysMap = std::map<sf::Keyboard::Key, bool>;
 
-class IEntity : public sf::Drawable, public sf::Transformable
+class IEntity : public IPhysicsObject, public sf::Drawable, public sf::Transformable
 {
 public:
     KeysMap m_keysMap;

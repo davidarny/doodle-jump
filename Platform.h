@@ -1,11 +1,13 @@
 #ifndef DOODLE_JUMP_PLATFORM_H
 #define DOODLE_JUMP_PLATFORM_H
 
+#include <SFML/Graphics.hpp>
+#include <memory>
 #include "IPhysicsObject.h"
 #include "IEntity.h"
 #include "consts.h"
 
-class Platform : public IEntity, public IPhysicsObject
+class Platform : public IEntity
 {
 public:
     Platform();

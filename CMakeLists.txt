@@ -11,9 +11,9 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
-    add_executable(doodle_jump WIN32 main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h IEntity.h Platform.cpp Platform.h IPhysicsObject.h)
+    add_executable(doodle_jump WIN32 main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h IEntity.h Platform.cpp Platform.h IPhysicsObject.h Engine.cpp Engine.h)
 else ()
-    add_executable(doodle_jump main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h IEntity.h Platform.cpp Platform.h IPhysicsObject.h)
+    add_executable(doodle_jump main.cpp resources consts.h EventLoop.cpp EventLoop.h Doodler.cpp Doodler.h IEntity.h Platform.cpp Platform.h IPhysicsObject.h Engine.cpp Engine.h)
 endif ()
 
 target_compile_features(doodle_jump PUBLIC cxx_std_17)

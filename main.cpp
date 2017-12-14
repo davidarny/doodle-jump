@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "Engine.h"
 #include "EventLoop.h"
-#include "Doodler.h"
 #include "Platform.h"
 
 int main()
@@ -16,6 +16,8 @@ int main()
     EventLoop eventLoop(window, clock);
     eventLoop.init();
 
+    Engine engine;
+
     for (size_t i = 0; i < PLATFORM_COUNT; ++i)
     {
         std::shared_ptr<Platform> p_platform = std::make_shared<Platform>(Platform());
@@ -28,9 +30,9 @@ int main()
 
     while (window.isOpen())
     {
-        eventLoop
-            .pollEvents(p_doodler)
-            .update(entities)
-            .redrawFrame(entities);
+        eventLoop.pollEvents(p_doodler);
+        eventLoop.update(entities);
+        engine.checkCollision(entities);
+        eventLoop.redrawFrame(entities);
     }
 }

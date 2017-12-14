@@ -7,7 +7,7 @@
 #include "IEntity.h"
 #include "consts.h"
 
-class Doodler : public IEntity, public IPhysicsObject
+class Doodler : public IEntity
 {
 public:
     Doodler();
@@ -21,7 +21,7 @@ public:
     sf::Vector2f getBounds() const override;
 
 private:
-    const sf::Vector2f m_size = sf::Vector2f(50.f, 50.f);
+    const sf::Vector2f m_size = sf::Vector2f(35.f, 50.f);
     const float m_outlineThickness = 2;
     const float m_initialSpeed = 75.f;
     float m_timeAccumulator = 0.f;
