@@ -22,12 +22,13 @@ Platform::Platform()
     }
 
     m_shape.setSize(m_size);
+    m_shape.setOrigin(m_size.x / 2, m_size.y / 2);
     m_shape.setFillColor(sf::Color::Green);
     m_shape.setOutlineColor(sf::Color::Black);
     m_shape.setOutlineThickness(m_outlineThickness);
 }
 
-void Platform::updatePosition()
+void Platform::updatePosition(float)
 {
     m_shape.setPosition(m_position);
 }
@@ -35,4 +36,9 @@ void Platform::updatePosition()
 TYPES Platform::getType() const
 {
     return TYPES::PLATFORM;
+}
+
+sf::Vector2f Platform::getBounds() const
+{
+    return m_size;
 }

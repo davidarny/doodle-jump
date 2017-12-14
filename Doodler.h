@@ -3,26 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "Entity.h"
+#include "IPhysicsObject.h"
+#include "IEntity.h"
 #include "consts.h"
 
-class Doodler : public Entity
+class Doodler : public IEntity, public IPhysicsObject
 {
-private:
-    const unsigned m_radius = 25;
-    const unsigned m_outlineThickness = 2;
-    const float m_initialSpeed = 75.f;
-    float m_timeAccumulator = 0.f;
-
-    sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT - m_radius - m_outlineThickness);
-    sf::CircleShape m_circle;
-
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-
-    void checkCollision() override;
-
-    void setVerticalPosition(float nextX, float deltaTime);
-
 public:
     Doodler();
 
@@ -31,6 +17,23 @@ public:
     void updatePosition(float deltaTime) override;
 
     TYPES getType() const override;
+
+    sf::Vector2f getBounds() const override;
+
+private:
+    const sf::Vector2f m_size = sf::Vector2f(50.f, 50.f);
+    const float m_outlineThickness = 2;
+    const float m_initialSpeed = 75.f;
+    float m_timeAccumulator = 0.f;
+
+    sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT - m_size.x / 2 - m_outlineThickness);
+    sf::RectangleShape m_shape;
+
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    void checkCollision() override;
+
+    void setVerticalPosition(float nextX, float deltaTime);
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

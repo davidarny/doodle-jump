@@ -1,3 +1,5 @@
+#include "Doodler.h"
+#include "Platform.h"
 #include "EventLoop.h"
 
 EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock) : m_window(window), m_clock(clock) {}
@@ -10,7 +12,7 @@ void EventLoop::createWindow() const
     m_window.setFramerateLimit(MAX_FPS);
 }
 
-EventLoop &EventLoop::pollEvents(const std::shared_ptr<Entity> &p_entity)
+EventLoop &EventLoop::pollEvents(const std::shared_ptr<IEntity> &p_entity)
 {
     m_deltaTime = m_clock.restart().asSeconds();
     sf::Event event{};
@@ -58,7 +60,7 @@ EventLoop &EventLoop::pollEvents(const std::shared_ptr<Entity> &p_entity)
 EventLoop &EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<Entity> p_item) -> void {
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> p_item) -> void {
         m_window.draw(*p_item);
     });
     m_window.display();
@@ -73,14 +75,8 @@ EventLoop &EventLoop::init()
 
 EventLoop &EventLoop::update(const Entities &entities)
 {
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<Entity> p_item) -> void {
-        if (p_item->getType() == TYPES::PLATFORM)
-        {
-            p_item->updatePosition();
-        } else if (p_item->getType() == TYPES::DOODLER)
-        {
-            p_item->updatePosition(m_deltaTime);
-        }
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> p_item) -> void {
+        p_item->updatePosition(m_deltaTime);
     });
     return *this;
 }
