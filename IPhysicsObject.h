@@ -11,7 +11,7 @@ public:
 
     virtual sf::Vector2f getBounds() const = 0;
 
-    virtual TYPES getType() const = 0;
+    virtual Types getType() const = 0;
 };
 
 #endif //DOODLE_JUMP_IPHYSICSOBJECT_H

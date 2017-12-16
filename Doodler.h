@@ -16,7 +16,7 @@ public:
 
     void updatePosition(float deltaTime) override;
 
-    TYPES getType() const override;
+    Types getType() const override;
 
     sf::Vector2f getBounds() const override;
 

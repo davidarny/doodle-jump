@@ -12,14 +12,14 @@ static const unsigned MAX_FPS = 60;
 
 /// Game params
 static const float G = 9.8f;
-static const float TIME_ACCELERATOR = 10.f;
+static const float TIME_ACCELERATOR = 15.f;
 static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 20;
 
-enum TYPES : size_t
+enum class Types : size_t
 {
-    PLATFORM = 0,
-    DOODLER
+    Platform = 0,
+    Doodler
 };
 
 #endif //DOODLE_JUMP_CONSTS_H

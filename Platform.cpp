@@ -33,9 +33,9 @@ void Platform::updatePosition(float)
     m_shape.setPosition(m_position);
 }
 
-TYPES Platform::getType() const
+Types Platform::getType() const
 {
-    return TYPES::PLATFORM;
+    return Types::Platform;
 }
 
 sf::Vector2f Platform::getBounds() const

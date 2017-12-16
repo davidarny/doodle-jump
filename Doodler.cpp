@@ -50,9 +50,9 @@ void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
     }
 }
 
-TYPES Doodler::getType() const
+Types Doodler::getType() const
 {
-    return TYPES::DOODLER;
+    return Types::Doodler;
 }
 
 sf::Vector2f Doodler::getBounds() const
