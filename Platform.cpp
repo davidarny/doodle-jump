@@ -31,6 +31,7 @@ Platform::Platform()
 void Platform::updatePosition(float)
 {
     m_shape.setPosition(m_position);
+    setPosition(m_position);
 }
 
 Types Platform::getType() const

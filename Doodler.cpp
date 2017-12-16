@@ -21,18 +21,20 @@ Doodler::Doodler()
 void Doodler::updatePosition(const float deltaTime)
 {
     checkCollision();
+    setVerticalPosition(MOVE_SPEED, deltaTime);
     m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
     double nextY = m_position.y - m_initialSpeed * m_timeAccumulator + 0.5 * G * std::pow(m_timeAccumulator, 2);
     const sf::Vector2f nextPosition = {m_position.x, static_cast<float>(nextY)};
     m_shape.setPosition(nextPosition);
-    setVerticalPosition(MOVE_SPEED, deltaTime);
+    setFalling(static_cast<float>(nextY));
+    setPosition(nextPosition);
 }
 
 void Doodler::checkCollision()
 {
     const float currentBottomPosition = m_shape.getPosition().y + m_size.x / 2 + m_outlineThickness;
-    const bool isAtZeroLevel = currentBottomPosition > WINDOW_HEIGHT;
-    if (isAtZeroLevel)
+    const bool isAtZeroLevel = currentBottomPosition >= m_floor;
+    if (isAtZeroLevel && m_isFalling)
     {
         m_timeAccumulator = 0;
     }
@@ -58,4 +60,19 @@ Types Doodler::getType() const
 sf::Vector2f Doodler::getBounds() const
 {
     return m_size;
+}
+
+void Doodler::setFloor(const float nextFloor)
+{
+    if (!m_isFalling)
+    {
+        return;
+    }
+    m_floor = nextFloor;
+    m_position.y = m_floor - m_size.x / 2 - m_outlineThickness;
+}
+
+void Doodler::setFalling(const float nextY)
+{
+    m_isFalling = getPosition().y - nextY <= 0;
 }

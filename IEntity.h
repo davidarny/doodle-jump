@@ -15,6 +15,8 @@ public:
 
     virtual void updatePosition(float deltaTime) { (void) &deltaTime; };
 
+    virtual void setFloor(float nextFloor) { (void) &nextFloor; };
+
 private:
     virtual void checkCollision() {};
 };
