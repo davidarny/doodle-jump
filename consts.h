@@ -9,6 +9,8 @@ static const unsigned WINDOW_HEIGHT = 600;
 static const std::string WINDOW_TITLE = "Doodle Jump";
 static const unsigned ANTIALIASING_LEVEL = 8;
 static const unsigned MAX_FPS = 60;
+static const std::string ICON_PATH = "./resources/icon.png";
+static const sf::Vector2u ICON_SIZE = {32, 32};
 
 /// Game params
 static const float G = 9.8f;

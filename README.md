@@ -1,6 +1,8 @@
 # Doodle Jump
 C++ clone of Doodle Jump
 
+![Doodle Jump](resources/doodle-jump.png)
+
 ## Requirements
 
 Library `SFML`  must be located in `lib/sfml`. If folder not found default settings of `CMake` will be accepted

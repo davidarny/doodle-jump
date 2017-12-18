@@ -10,6 +10,11 @@ void EventLoop::createWindow() const
     settings.antialiasingLevel = ANTIALIASING_LEVEL;
     m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Close, settings);
     m_window.setFramerateLimit(MAX_FPS);
+
+    sf::Image icon;
+    if (icon.loadFromFile(ICON_PATH)) {
+        m_window.setIcon(ICON_SIZE.x, ICON_SIZE.y, icon.getPixelsPtr());
+    }
 }
 
 EventLoop &EventLoop::pollEvents()
