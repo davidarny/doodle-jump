@@ -1,7 +1,8 @@
 #include "Doodler.h"
 #include "EventLoop.h"
 
-EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock) : m_window(window), m_clock(clock) {}
+EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock, KeyboardState &keyboardState)
+    : m_window(window), m_clock(clock), m_keyboardState(keyboardState) {}
 
 void EventLoop::createWindow() const
 {
@@ -11,47 +12,14 @@ void EventLoop::createWindow() const
     m_window.setFramerateLimit(MAX_FPS);
 }
 
-EventLoop &EventLoop::pollEvents(const std::shared_ptr<IEntity> &p_entity)
+EventLoop &EventLoop::pollEvents()
 {
     m_deltaTime = m_clock.restart().asSeconds();
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
-        switch (event.type)
-        {
-            case sf::Event::Closed:
-                m_window.close();
-                break;
-            case sf::Event::KeyPressed:
-            {
-                switch (event.key.code)
-                {
-                    case sf::Keyboard::Left:
-                        p_entity->m_keysMap[sf::Keyboard::Left] = true;
-                        break;
-                    case sf::Keyboard::Right:
-                        p_entity->m_keysMap[sf::Keyboard::Right] = true;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            }
-            case sf::Event::KeyReleased:
-                switch (event.key.code)
-                {
-                    case sf::Keyboard::Left:
-                        p_entity->m_keysMap[sf::Keyboard::Left] = false;
-                        break;
-                    case sf::Keyboard::Right:
-                        p_entity->m_keysMap[sf::Keyboard::Right] = false;
-                        break;
-                    default:
-                        break;
-                }
-            default:
-                break;
-        }
+        m_keyboardState.onKeyEventHandler(event);
+        onWindowEventHandler(event);
     }
     return *this;
 }
@@ -78,4 +46,14 @@ EventLoop &EventLoop::update(const Entities &entities)
         p_item->updatePosition(m_deltaTime);
     });
     return *this;
+}
+
+// TODO: create GameState class and dispatch this stuff there
+void EventLoop::onWindowEventHandler(const sf::Event &event)
+{
+    if (event.type != sf::Event::Closed)
+    {
+        return;
+    }
+    m_window.close();
 }

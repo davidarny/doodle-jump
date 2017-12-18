@@ -39,7 +39,7 @@ Types Platform::getType() const
     return Types::Platform;
 }
 
-sf::Vector2f Platform::getBounds() const
+const sf::Vector2f &Platform::getBounds() const
 {
     return m_size;
 }

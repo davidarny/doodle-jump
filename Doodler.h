@@ -6,11 +6,12 @@
 #include "IPhysicsObject.h"
 #include "IEntity.h"
 #include "consts.h"
+#include "KeyboardState.h"
 
 class Doodler : public IEntity
 {
 public:
-    Doodler();
+    explicit Doodler(KeyboardState &m_keyboardState);
 
     ~Doodler() override = default;
 
@@ -18,9 +19,11 @@ public:
 
     Types getType() const override;
 
-    sf::Vector2f getBounds() const override;
+    const sf::Vector2f &getBounds() const override;
 
 private:
+    KeyboardState &m_keyboardState;
+
     const sf::Vector2f m_size = sf::Vector2f(35.f, 50.f);
     const float m_outlineThickness = 2;
     const float m_initialSpeed = 75.f;

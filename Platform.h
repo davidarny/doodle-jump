@@ -18,7 +18,7 @@ public:
 
     Types getType() const override;
 
-    sf::Vector2f getBounds() const override;
+    const sf::Vector2f &getBounds() const override;
 
 private:
     sf::RectangleShape m_shape;

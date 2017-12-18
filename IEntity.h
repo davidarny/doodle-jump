@@ -6,13 +6,9 @@
 #include "IPhysicsObject.h"
 #include "consts.h"
 
-using KeysMap = std::map<sf::Keyboard::Key, bool>;
-
 class IEntity : public IPhysicsObject, public sf::Drawable, public sf::Transformable
 {
 public:
-    KeysMap m_keysMap;
-
     virtual void updatePosition(float deltaTime) { (void) &deltaTime; };
 
     virtual void setFloor(float nextFloor) { (void) &nextFloor; };

@@ -13,7 +13,9 @@ int main()
 
     Entities entities;
 
-    EventLoop eventLoop(window, clock);
+    KeyboardState keyboardState;
+
+    EventLoop eventLoop(window, clock, keyboardState);
     eventLoop.init();
 
     Engine engine;
@@ -24,13 +26,13 @@ int main()
         entities.push_back(p_platform);
     }
 
-    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler());
+    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler(keyboardState));
 
     entities.push_back(p_doodler);
 
     while (window.isOpen())
     {
-        eventLoop.pollEvents(p_doodler);
+        eventLoop.pollEvents();
         eventLoop.update(entities);
         engine.checkCollision(entities);
         eventLoop.redrawFrame(entities);

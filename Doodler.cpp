@@ -5,11 +5,8 @@ void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_shape, states);
 }
 
-Doodler::Doodler()
+Doodler::Doodler(KeyboardState &m_keyboardState) : m_keyboardState(m_keyboardState)
 {
-    m_keysMap[sf::Keyboard::Left] = false;
-    m_keysMap[sf::Keyboard::Right] = false;
-
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
     m_shape.setPosition(m_position);
@@ -43,10 +40,11 @@ void Doodler::checkCollision()
 // TODO: fix side collision check
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
-    if (m_keysMap[sf::Keyboard::Right] && m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH)
+    const KeysMap &keysMap = m_keyboardState.getKeysMap();
+    if (keysMap.at(sf::Keyboard::Right) && m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH)
     {
         m_position.x += nextX * deltaTime;
-    } else if (m_keysMap[sf::Keyboard::Left] && m_position.x - m_size.x / 2 - m_outlineThickness > 0)
+    } else if (keysMap.at(sf::Keyboard::Left) && m_position.x - m_size.x / 2 - m_outlineThickness > 0)
     {
         m_position.x -= nextX * deltaTime;
     }
@@ -57,7 +55,7 @@ Types Doodler::getType() const
     return Types::Doodler;
 }
 
-sf::Vector2f Doodler::getBounds() const
+const sf::Vector2f &Doodler::getBounds() const
 {
     return m_size;
 }
