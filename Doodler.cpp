@@ -31,7 +31,8 @@ void Doodler::checkCollision()
 {
     const float currentBottomPosition = m_shape.getPosition().y + m_size.x / 2 + m_outlineThickness;
     const bool isAtZeroLevel = currentBottomPosition >= m_floor;
-    if (isAtZeroLevel && m_isFalling)
+    const bool isGameOverLevel = m_floor == WINDOW_HEIGHT;
+    if (isAtZeroLevel && m_isFalling && !isGameOverLevel)
     {
         m_timeAccumulator = 0;
     }
