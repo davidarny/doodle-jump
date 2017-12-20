@@ -6,30 +6,37 @@
 #include "consts.h"
 #include "IEntity.h"
 #include "KeyboardState.h"
+#include "View.h"
 
 class EventLoop
 {
 public:
-    EventLoop(sf::RenderWindow &window, sf::Clock &clock, KeyboardState &keyboardState);
-
     ~EventLoop() = default;
 
-    EventLoop &init();
+    void init();
 
-    EventLoop &pollEvents();
+    void pollEvents();
 
-    EventLoop &update(const Entities &entities);
+    void update(const Entities &entities);
 
-    EventLoop &redrawFrame(const Entities &entities);
+    void redrawFrame(const Entities &entities);
+
+    void addKeyboardState(std::shared_ptr<KeyboardState> p_keyboardState);
+
+    void addView(std::shared_ptr<View> p_view);
+
+    const sf::RenderWindow &getWindow() const;
 
 private:
-    sf::RenderWindow &m_window;
-    sf::Clock &m_clock;
-    KeyboardState &m_keyboardState;
+    sf::RenderWindow m_window;
+    sf::Clock m_clock;
+
+    std::shared_ptr<KeyboardState> p_m_keyboardState;
+    std::shared_ptr<View> p_m_view;
 
     float m_deltaTime = 0.f;
 
-    void createWindow() const;
+    void createWindow();
 
     void onWindowEventHandler(const sf::Event &event);
 

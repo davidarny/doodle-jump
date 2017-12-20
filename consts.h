@@ -16,7 +16,7 @@ static const sf::Vector2u ICON_SIZE = {32, 32};
 static const float G = 9.8f;
 static const float TIME_ACCELERATOR = 15.f;
 static const float MOVE_SPEED = 500.f;
-static const size_t PLATFORM_COUNT = 10;
+static const size_t PLATFORM_COUNT = 30;
 
 enum class Types : size_t
 {

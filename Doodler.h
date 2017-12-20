@@ -11,7 +11,7 @@
 class Doodler : public IEntity
 {
 public:
-    explicit Doodler(KeyboardState &m_keyboardState);
+    Doodler();
 
     ~Doodler() override = default;
 
@@ -21,8 +21,10 @@ public:
 
     const sf::Vector2f &getBounds() const override;
 
+    void addKeyboardState(std::shared_ptr<KeyboardState> p_keyboardState);
+
 private:
-    KeyboardState &m_keyboardState;
+    std::shared_ptr<KeyboardState> p_m_keyboardState;
 
     sf::Vector2f m_size = sf::Vector2f(35.f, 50.f);
     const float m_outlineThickness = 2;

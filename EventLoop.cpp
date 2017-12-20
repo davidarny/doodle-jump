@@ -1,10 +1,7 @@
 #include "Doodler.h"
 #include "EventLoop.h"
 
-EventLoop::EventLoop(sf::RenderWindow &window, sf::Clock &clock, KeyboardState &keyboardState)
-    : m_window(window), m_clock(clock), m_keyboardState(keyboardState) {}
-
-void EventLoop::createWindow() const
+void EventLoop::createWindow()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = ANTIALIASING_LEVEL;
@@ -12,45 +9,43 @@ void EventLoop::createWindow() const
     m_window.setFramerateLimit(MAX_FPS);
 
     sf::Image icon;
-    if (icon.loadFromFile(ICON_PATH)) {
+    if (icon.loadFromFile(ICON_PATH))
+    {
         m_window.setIcon(ICON_SIZE.x, ICON_SIZE.y, icon.getPixelsPtr());
     }
 }
 
-EventLoop &EventLoop::pollEvents()
+void EventLoop::pollEvents()
 {
     m_deltaTime = m_clock.restart().asSeconds();
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
-        m_keyboardState.onKeyEventHandler(event);
+        p_m_keyboardState->onKeyEventHandler(event);
         onWindowEventHandler(event);
     }
-    return *this;
 }
 
-EventLoop &EventLoop::redrawFrame(const Entities &entities)
+void EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
+    m_window.setView(p_m_view->getView());
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         m_window.draw(*p_item);
     });
     m_window.display();
-    return *this;
 }
 
-EventLoop &EventLoop::init()
+void EventLoop::init()
 {
     createWindow();
-    return *this;
 }
 
-EventLoop &EventLoop::update(const Entities &entities)
+void EventLoop::update(const Entities &entities)
 {
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         p_item->updatePosition(m_deltaTime);
     });
-    return *this;
 }
 
 // TODO: create GameState class and dispatch this stuff there
@@ -62,3 +57,19 @@ void EventLoop::onWindowEventHandler(const sf::Event &event)
     }
     m_window.close();
 }
+
+const sf::RenderWindow &EventLoop::getWindow() const
+{
+    return m_window;
+}
+
+void EventLoop::addKeyboardState(const std::shared_ptr<KeyboardState> p_keyboardState)
+{
+    p_m_keyboardState = p_keyboardState;
+}
+
+void EventLoop::addView(const std::shared_ptr<View> p_view)
+{
+    p_m_view = p_view;
+}
+

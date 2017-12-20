@@ -5,7 +5,7 @@ void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_shape, states);
 }
 
-Doodler::Doodler(KeyboardState &m_keyboardState) : m_keyboardState(m_keyboardState)
+Doodler::Doodler()
 {
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
@@ -44,7 +44,7 @@ void Doodler::checkCollision()
 // TODO: fix side collision check
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
-    const KeysMap &keysMap = m_keyboardState.getKeysMap();
+    const KeysMap &keysMap = p_m_keyboardState->getKeysMap();
     const bool isMaxRightPosition = m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH;
     const bool isMaxLeftPosition = m_position.x - m_size.x / 2 - m_outlineThickness > 0;
     if (keysMap.at(sf::Keyboard::Right) && isMaxRightPosition)
@@ -79,4 +79,9 @@ void Doodler::setFloor(const float nextFloor)
 void Doodler::setFalling(const float nextY)
 {
     m_isFalling = getPosition().y - nextY <= 0;
+}
+
+void Doodler::addKeyboardState(const std::shared_ptr<KeyboardState> p_keyboardState)
+{
+    p_m_keyboardState = p_keyboardState;
 }
