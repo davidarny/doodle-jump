@@ -11,12 +11,14 @@ Platform::Platform()
     m_position.x = rand() % WINDOW_WIDTH;
     m_position.y = rand() % WINDOW_HEIGHT;
 
-    if (m_position.x + m_size.x > WINDOW_WIDTH)
+    const bool isOverRightSide = m_position.x + m_size.x > WINDOW_WIDTH;
+    const bool isOverLeftSide = m_position.x - m_size.x < 0;
+    if (isOverRightSide)
     {
         m_position.x -= m_size.x;
     }
 
-    if (m_position.x - m_size.x < 0)
+    if (isOverLeftSide)
     {
         m_position.x += m_size.x;
     }
@@ -26,6 +28,9 @@ Platform::Platform()
     m_shape.setFillColor(sf::Color::Green);
     m_shape.setOutlineColor(sf::Color::Black);
     m_shape.setOutlineThickness(m_outlineThickness);
+
+    m_size.x += m_outlineThickness;
+    m_size.y += m_outlineThickness;
 }
 
 void Platform::updatePosition(float)

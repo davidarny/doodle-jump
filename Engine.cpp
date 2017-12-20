@@ -21,7 +21,7 @@ void Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
     if (doesIntersect(p_entity) && !m_shouldSetFloor)
     {
         m_shouldSetFloor = true;
-        m_floor = p_entity->getPosition().y - p_entity->getBounds().y * 4;
+        m_floor = p_entity->getPosition().y - p_entity->getBounds().y;
     }
 }
 

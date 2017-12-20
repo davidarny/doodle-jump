@@ -13,6 +13,9 @@ Doodler::Doodler(KeyboardState &m_keyboardState) : m_keyboardState(m_keyboardSta
     m_shape.setFillColor(sf::Color::Red);
     m_shape.setOutlineColor(sf::Color::Black);
     m_shape.setOutlineThickness(m_outlineThickness);
+
+    m_size.x += m_outlineThickness;
+    m_size.y += m_outlineThickness;
 }
 
 void Doodler::updatePosition(const float deltaTime)
@@ -42,10 +45,12 @@ void Doodler::checkCollision()
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
     const KeysMap &keysMap = m_keyboardState.getKeysMap();
-    if (keysMap.at(sf::Keyboard::Right) && m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH)
+    const bool isMaxRightPosition = m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH;
+    const bool isMaxLeftPosition = m_position.x - m_size.x / 2 - m_outlineThickness > 0;
+    if (keysMap.at(sf::Keyboard::Right) && isMaxRightPosition)
     {
         m_position.x += nextX * deltaTime;
-    } else if (keysMap.at(sf::Keyboard::Left) && m_position.x - m_size.x / 2 - m_outlineThickness > 0)
+    } else if (keysMap.at(sf::Keyboard::Left) && isMaxLeftPosition)
     {
         m_position.x -= nextX * deltaTime;
     }
