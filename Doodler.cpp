@@ -26,17 +26,18 @@ void Doodler::updatePosition(const float deltaTime)
     double nextY = m_position.y - m_initialSpeed * m_timeAccumulator + 0.5 * G * std::pow(m_timeAccumulator, 2);
     const sf::Vector2f nextPosition = {m_position.x, static_cast<float>(nextY)};
     m_shape.setPosition(nextPosition);
-    setFalling(static_cast<float>(nextY));
+    setFallingState(static_cast<float>(nextY));
     setPosition(nextPosition);
 }
 
 void Doodler::checkCollision()
 {
     const float currentBottomPosition = m_shape.getPosition().y + m_size.x / 2 + m_outlineThickness;
-    const bool isAtZeroLevel = currentBottomPosition >= m_floor;
+    const bool isAtZeroLevel = m_areFuzzyEqual(currentBottomPosition, m_floor);
     const bool isGameOverLevel = m_floor == WINDOW_HEIGHT;
     if (isAtZeroLevel && m_isFalling && !isGameOverLevel)
     {
+        printf("%f\n", m_floor);
         m_timeAccumulator = 0;
     }
 }
@@ -44,7 +45,7 @@ void Doodler::checkCollision()
 // TODO: fix side collision check
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
-    const KeysMap &keysMap = p_m_keyboardState->getKeysMap();
+    const KeysMap &keysMap = m_p_keyboardState->getKeysMap();
     const bool isMaxRightPosition = m_position.x + m_size.x / 2 + m_outlineThickness < WINDOW_WIDTH;
     const bool isMaxLeftPosition = m_position.x - m_size.x / 2 - m_outlineThickness > 0;
     if (keysMap.at(sf::Keyboard::Right) && isMaxRightPosition)
@@ -76,12 +77,17 @@ void Doodler::setFloor(const float nextFloor)
     m_position.y = m_floor - m_size.x / 2 - m_outlineThickness;
 }
 
-void Doodler::setFalling(const float nextY)
+void Doodler::setFallingState(float nextY)
 {
     m_isFalling = getPosition().y - nextY <= 0;
 }
 
 void Doodler::addKeyboardState(const std::shared_ptr<KeyboardState> p_keyboardState)
 {
-    p_m_keyboardState = p_keyboardState;
+    m_p_keyboardState = p_keyboardState;
+}
+
+bool Doodler::getFallingState() const
+{
+    return m_isFalling;
 }

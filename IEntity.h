@@ -13,6 +13,8 @@ public:
 
     virtual void setFloor(float nextFloor) { (void) &nextFloor; };
 
+    virtual bool getFallingState() const { return false; };
+
 private:
     virtual void checkCollision() {};
 };

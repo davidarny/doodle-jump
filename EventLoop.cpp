@@ -21,7 +21,7 @@ void EventLoop::pollEvents()
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
-        p_m_keyboardState->onKeyEventHandler(event);
+        m_p_keyboardState->onKeyEventHandler(event);
         onWindowEventHandler(event);
     }
 }
@@ -29,7 +29,7 @@ void EventLoop::pollEvents()
 void EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
-    m_window.setView(p_m_view->getView());
+    m_window.setView(m_p_view->getView());
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         m_window.draw(*p_item);
     });
@@ -65,11 +65,11 @@ const sf::RenderWindow &EventLoop::getWindow() const
 
 void EventLoop::addKeyboardState(const std::shared_ptr<KeyboardState> p_keyboardState)
 {
-    p_m_keyboardState = p_keyboardState;
+    m_p_keyboardState = p_keyboardState;
 }
 
 void EventLoop::addView(const std::shared_ptr<View> p_view)
 {
-    p_m_view = p_view;
+    m_p_view = p_view;
 }
 

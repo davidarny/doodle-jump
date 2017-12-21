@@ -23,8 +23,14 @@ public:
 
     void addKeyboardState(std::shared_ptr<KeyboardState> p_keyboardState);
 
+    bool getFallingState() const override;
+
+    void setFallingState(float nextY);
+
+    void setFloor(float nextFloor) override;
+
 private:
-    std::shared_ptr<KeyboardState> p_m_keyboardState;
+    std::shared_ptr<KeyboardState> m_p_keyboardState;
 
     sf::Vector2f m_size = sf::Vector2f(35.f, 50.f);
     const float m_outlineThickness = 2;
@@ -36,15 +42,29 @@ private:
     sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2 - m_outlineThickness);
     sf::RectangleShape m_shape;
 
+    const Lambda<bool(float, float)> m_areCloseAbsolute = [&](float lhs, float rhs) -> bool {
+        constexpr float tolerance = 0.001f;
+        return std::abs(lhs - rhs) < tolerance;
+    };
+
+    const Lambda<bool(float, float)> m_areCloseRelative = [&](float lhs, float rhs) -> bool {
+        constexpr float tolerance = 0.001f;
+        return std::abs((lhs - rhs) / rhs) < tolerance;
+    };
+
+    const Lambda<bool(float, float)> m_areFuzzyEqual = [&](float lhs, float rhs) -> bool {
+        if (std::abs(rhs) > 1.f)
+        {
+            return m_areCloseRelative(lhs, rhs);
+        }
+        return m_areCloseAbsolute(lhs, rhs);
+    };
+
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
     void checkCollision() override;
 
     void setVerticalPosition(float nextX, float deltaTime);
-
-    void setFloor(float nextFloor) override;
-
-    void setFalling(float nextY);
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

@@ -7,8 +7,6 @@
 class IPhysicsObject
 {
 public:
-    virtual void onContact(IPhysicsObject &object) { (void) &object; };
-
     virtual const sf::Vector2f &getBounds() const = 0;
 
     virtual Types getType() const = 0;

@@ -18,7 +18,7 @@ void Engine::checkCollision(Entities &entities)
 
 void Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
 {
-    if (doesIntersect(p_entity) && !m_shouldSetFloor)
+    if (doesIntersect(p_entity) && m_p_doodler->getFallingState() && !m_shouldSetFloor)
     {
         m_shouldSetFloor = true;
         m_floor = p_entity->getPosition().y - p_entity->getBounds().y;
@@ -28,8 +28,7 @@ void Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
 // TODO: adjust intersection check
 bool Engine::doesIntersect(const std::shared_ptr<IEntity> &p_entity) const
 {
-    return !(m_p_doodler->getPosition().x + m_p_doodler->getBounds().x < p_entity->getPosition().x ||
-             p_entity->getPosition().x + p_entity->getBounds().x < m_p_doodler->getPosition().x ||
-             m_p_doodler->getPosition().y + m_p_doodler->getBounds().y < p_entity->getBounds().y ||
-             p_entity->getPosition().y + p_entity->getBounds().y < m_p_doodler->getPosition().y);
+    sf::Rect<float> rhs(p_entity->getPosition(), p_entity->getBounds());
+    sf::Rect<float> lhs(m_p_doodler->getPosition(), m_p_doodler->getBounds());
+    return lhs.intersects(rhs);
 }

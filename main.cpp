@@ -30,10 +30,9 @@ int main()
     p_doodler->addKeyboardState(p_keyboardState);
     entities.push_back(p_doodler);
 
-    p_view->followTo(p_doodler);
-
     while (eventLoop.getWindow().isOpen())
     {
+        p_view->followTo(p_doodler);
         eventLoop.pollEvents();
         eventLoop.update(entities);
         engine.checkCollision(entities);

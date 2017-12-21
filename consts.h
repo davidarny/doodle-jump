@@ -1,7 +1,10 @@
 #ifndef DOODLE_JUMP_CONSTS_H
 #define DOODLE_JUMP_CONSTS_H
 
+#include <SFML/Graphics.hpp>
 #include <string>
+#include <functional>
+#include <memory>
 
 /// Window params
 static const unsigned WINDOW_WIDTH = 400;
@@ -17,6 +20,9 @@ static const float G = 9.8f;
 static const float TIME_ACCELERATOR = 15.f;
 static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
+
+template<typename Signature>
+using Lambda = std::function<Signature>;
 
 enum class Types : size_t
 {

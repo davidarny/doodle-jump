@@ -31,8 +31,8 @@ private:
     sf::RenderWindow m_window;
     sf::Clock m_clock;
 
-    std::shared_ptr<KeyboardState> p_m_keyboardState;
-    std::shared_ptr<View> p_m_view;
+    std::shared_ptr<KeyboardState> m_p_keyboardState;
+    std::shared_ptr<View> m_p_view;
 
     float m_deltaTime = 0.f;
 
