@@ -11,8 +11,10 @@ Platform::Platform()
     m_position.x = rand() % WINDOW_WIDTH;
     m_position.y = rand() % WINDOW_HEIGHT;
 
-    const bool isOverRightSide = m_position.x + m_size.x > WINDOW_WIDTH;
-    const bool isOverLeftSide = m_position.x - m_size.x < 0;
+    const sf::FloatRect bounds = getBounds();
+    const bool isOverRightSide = bounds.width > WINDOW_WIDTH;
+    const bool isOverLeftSide = bounds.left < 0;
+
     if (isOverRightSide)
     {
         m_position.x -= m_size.x;
@@ -44,7 +46,17 @@ Types Platform::getType() const
     return Types::Platform;
 }
 
-const sf::Vector2f &Platform::getBounds() const
+const sf::Vector2f &Platform::getSize() const
 {
     return m_size;
+}
+
+sf::FloatRect Platform::getBounds() const
+{
+    const sf::Vector2f position = m_shape.getPosition();
+    const float left = position.x - m_size.x / 2 - m_outlineThickness;
+    const float right = position.x + m_size.x / 2 + m_outlineThickness;
+    const float top = position.y - m_size.y / 2 - m_outlineThickness;
+    const float bottom = position.y + m_size.y / 2 + m_outlineThickness;
+    return sf::FloatRect(left, top, right, bottom);
 }

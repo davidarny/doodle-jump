@@ -17,9 +17,10 @@ static const sf::Vector2u ICON_SIZE = {32, 32};
 
 /// Game params
 static const float G = 9.8f;
-static const float TIME_ACCELERATOR = 15.f;
+static const float TIME_ACCELERATOR = 7.5f;
 static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
+static const unsigned MAX_PRECISION_COUNT = 128;
 
 template<typename Signature>
 using Lambda = std::function<Signature>;

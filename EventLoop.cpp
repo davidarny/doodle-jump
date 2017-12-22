@@ -63,12 +63,12 @@ const sf::RenderWindow &EventLoop::getWindow() const
     return m_window;
 }
 
-void EventLoop::addKeyboardState(const std::shared_ptr<KeyboardState> p_keyboardState)
+void EventLoop::addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState)
 {
     m_p_keyboardState = p_keyboardState;
 }
 
-void EventLoop::addView(const std::shared_ptr<View> p_view)
+void EventLoop::addView(const std::shared_ptr<View> &p_view)
 {
     m_p_view = p_view;
 }

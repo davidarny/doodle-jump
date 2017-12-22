@@ -18,7 +18,7 @@ public:
 
     Types getType() const override;
 
-    const sf::Vector2f &getBounds() const override;
+    const sf::Vector2f &getSize() const override;
 
 private:
     sf::RectangleShape m_shape;
@@ -28,6 +28,8 @@ private:
     const unsigned m_outlineThickness = 2;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    sf::FloatRect getBounds() const;
 };
 
 #endif //DOODLE_JUMP_PLATFORM_H

@@ -19,9 +19,9 @@ public:
 
     Types getType() const override;
 
-    const sf::Vector2f &getBounds() const override;
+    const sf::Vector2f &getSize() const override;
 
-    void addKeyboardState(std::shared_ptr<KeyboardState> p_keyboardState);
+    void addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState);
 
     bool getFallingState() const override;
 
@@ -65,6 +65,12 @@ private:
     void checkCollision() override;
 
     void setVerticalPosition(float nextX, float deltaTime);
+
+    void setNextY();
+
+    sf::FloatRect getBounds() const;
+
+    float getNextY() const;
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

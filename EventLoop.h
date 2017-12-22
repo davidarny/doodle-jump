@@ -21,9 +21,9 @@ public:
 
     void redrawFrame(const Entities &entities);
 
-    void addKeyboardState(std::shared_ptr<KeyboardState> p_keyboardState);
+    void addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState);
 
-    void addView(std::shared_ptr<View> p_view);
+    void addView(const std::shared_ptr<View> &p_view);
 
     const sf::RenderWindow &getWindow() const;
 

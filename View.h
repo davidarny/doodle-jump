@@ -11,7 +11,7 @@ public:
 
     const sf::View &getView() const;
 
-    void followTo(std::shared_ptr<Doodler> p_doodler);
+    void followTo(const std::shared_ptr<Doodler> &p_doodler);
 
 private:
     sf::View m_view;
