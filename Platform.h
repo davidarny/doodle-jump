@@ -29,7 +29,7 @@ private:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    sf::FloatRect getBounds() const;
+    sf::FloatRect getBounds() const override;
 };
 
 #endif //DOODLE_JUMP_PLATFORM_H

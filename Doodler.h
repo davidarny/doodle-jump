@@ -42,17 +42,17 @@ private:
     sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2 - m_outlineThickness);
     sf::RectangleShape m_shape;
 
-    const Lambda<bool(float, float)> m_areCloseAbsolute = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areCloseAbsolute = [&](float lhs, float rhs) -> bool {
         constexpr float tolerance = 0.001f;
         return std::abs(lhs - rhs) < tolerance;
     };
 
-    const Lambda<bool(float, float)> m_areCloseRelative = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areCloseRelative = [&](float lhs, float rhs) -> bool {
         constexpr float tolerance = 0.001f;
         return std::abs((lhs - rhs) / rhs) < tolerance;
     };
 
-    const Lambda<bool(float, float)> m_areFuzzyEqual = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areFuzzyEqual = [&](float lhs, float rhs) -> bool {
         if (std::abs(rhs) > 1.f)
         {
             return m_areCloseRelative(lhs, rhs);
@@ -68,7 +68,7 @@ private:
 
     void setNextY();
 
-    sf::FloatRect getBounds() const;
+    sf::FloatRect getBounds() const override;
 
     float getNextY() const;
 };

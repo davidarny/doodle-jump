@@ -15,12 +15,12 @@ private:
     bool m_shouldSetFloor = false;
     float m_floor = WINDOW_HEIGHT;
 
-    const Lambda<bool(const std::shared_ptr<IEntity> &)> m_isDoodler = [&](
+    const std::function<bool(const std::shared_ptr<IEntity> &)> m_isDoodler = [&](
         const std::shared_ptr<IEntity> &p_entity) -> bool {
         return p_entity->getType() == Types::Doodler;
     };
 
-    const Lambda<void(const std::shared_ptr<IEntity> &)> m_applyForEach = [&](
+    const std::function<void(const std::shared_ptr<IEntity> &)> m_applyForEach = [&](
         const std::shared_ptr<IEntity> &p_entity) -> void {
         if (m_p_doodler == nullptr || m_isDoodler(p_entity))
         {

@@ -22,9 +22,6 @@ static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
 static const unsigned MAX_PRECISION_COUNT = 128;
 
-template<typename Signature>
-using Lambda = std::function<Signature>;
-
 enum class Types : size_t
 {
     Platform = 0,
