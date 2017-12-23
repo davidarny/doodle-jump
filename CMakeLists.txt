@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(doodle_jump)
+project(doodle-jump)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -11,7 +11,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
-    add_executable(doodle_jump WIN32
+    add_executable(doodle-jump WIN32
         resources
         src/main.cpp
         src/consts.h
@@ -31,7 +31,7 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/View.h
         src/icon.h)
 else ()
-    add_executable(doodle_jump
+    add_executable(doodle-jump
         resources
         src/main.cpp
         src/consts.h
@@ -52,7 +52,7 @@ else ()
         src/icon.h)
 endif ()
 
-target_compile_features(doodle_jump PUBLIC cxx_std_17)
+target_compile_features(doodle-jump PUBLIC cxx_std_17)
 
 if (EXISTS ${CMAKE_SOURCE_DIR}/cmake_modules)
     set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -76,19 +76,19 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 if (${SFML_FOUND})
     include_directories(${SFML_INCLUDE_DIR})
-    target_include_directories(doodle_jump PRIVATE ${SFML_INCLUDE_DIR})
-    target_link_libraries(doodle_jump ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-    target_compile_definitions(doodle_jump PRIVATE SFML_STATIC)
+    target_include_directories(doodle-jump PRIVATE ${SFML_INCLUDE_DIR})
+    target_link_libraries(doodle-jump ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    target_compile_definitions(doodle-jump PRIVATE SFML_STATIC)
 endif ()
 
 if (${ZLIB_FOUND})
-    target_include_directories(doodle_jump PRIVATE ${ZLIB_INCLUDE_DIRS})
-    target_link_libraries(doodle_jump ${ZLIB_LIBRARIES})
+    target_include_directories(doodle-jump PRIVATE ${ZLIB_INCLUDE_DIRS})
+    target_link_libraries(doodle-jump ${ZLIB_LIBRARIES})
 endif ()
 
 if (${BZIP2_FOUND})
-    target_include_directories(doodle_jump PRIVATE ${BZIP2_INCLUDE_DIR})
-    target_link_libraries(doodle_jump ${BZIP2_LIBRARIES})
+    target_include_directories(doodle-jump PRIVATE ${BZIP2_INCLUDE_DIR})
+    target_link_libraries(doodle-jump ${BZIP2_LIBRARIES})
 endif ()
 
 file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
