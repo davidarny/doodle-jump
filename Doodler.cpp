@@ -5,7 +5,7 @@ void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_shape, states);
 }
 
-Doodler::Doodler()
+Doodler::Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState) : m_p_keyboardState(p_keyboardState)
 {
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
@@ -85,11 +85,6 @@ void Doodler::setFallingState(float nextY)
     m_isFalling = getPosition().y - nextY <= 0;
 }
 
-void Doodler::addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState)
-{
-    m_p_keyboardState = p_keyboardState;
-}
-
 bool Doodler::getFallingState() const
 {
     return m_isFalling;
@@ -109,10 +104,10 @@ float Doodler::getNextY() const
 
 sf::FloatRect Doodler::getBounds() const
 {
-    const sf::Vector2f position = m_shape.getPosition();
-    const float left = position.x - m_size.x / 2 - m_outlineThickness;
-    const float right = position.x + m_size.x / 2 + m_outlineThickness;
-    const float top = position.y - m_size.y / 2 - m_outlineThickness;
-    const float bottom = position.y + m_size.y / 2 + m_outlineThickness;
+    const sf::Vector2f &position = m_shape.getPosition();
+    const float left = position.x - m_size.x / 2;
+    const float right = position.x + m_size.x / 2;
+    const float top = position.y - m_size.y / 2;
+    const float bottom = position.y + m_size.y / 2;
     return sf::FloatRect(left, top, right, bottom);
 }

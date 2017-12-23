@@ -11,7 +11,7 @@
 class Doodler : public IEntity
 {
 public:
-    Doodler();
+    explicit Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState);
 
     ~Doodler() override = default;
 
@@ -21,8 +21,6 @@ public:
 
     const sf::Vector2f &getSize() const override;
 
-    void addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState);
-
     bool getFallingState() const override;
 
     void setFallingState(float nextY);
@@ -30,35 +28,35 @@ public:
     void setFloor(float nextFloor) override;
 
 private:
-    std::shared_ptr<KeyboardState> m_p_keyboardState;
+    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
 
-    sf::Vector2f m_size = sf::Vector2f(35.f, 50.f);
-    const float m_outlineThickness = 2;
+    const float m_outlineThickness = 2.f;
     const float m_initialSpeed = 75.f;
-    float m_timeAccumulator = 0.f;
-    float m_floor = static_cast<float>(WINDOW_HEIGHT);
-    bool m_isFalling = false;
 
-    sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2 - m_outlineThickness);
-    sf::RectangleShape m_shape;
+    float m_timeAccumulator{0.f};
+    float m_floor{static_cast<float>(WINDOW_HEIGHT)};
+    bool m_isFalling{false};
+    sf::Vector2f m_size{sf::Vector2f(35.f, 50.f)};
+    sf::Vector2f m_position{sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2 - m_outlineThickness)};
+    sf::RectangleShape m_shape{sf::RectangleShape()};
 
-    const std::function<bool(float, float)> m_areCloseAbsolute = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areCloseAbsolute{[&](float lhs, float rhs) -> bool {
         constexpr float tolerance = 0.001f;
         return std::abs(lhs - rhs) < tolerance;
-    };
+    }};
 
-    const std::function<bool(float, float)> m_areCloseRelative = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areCloseRelative{[&](float lhs, float rhs) -> bool {
         constexpr float tolerance = 0.001f;
         return std::abs((lhs - rhs) / rhs) < tolerance;
-    };
+    }};
 
-    const std::function<bool(float, float)> m_areFuzzyEqual = [&](float lhs, float rhs) -> bool {
+    const std::function<bool(float, float)> m_areFuzzyEqual{[&](float lhs, float rhs) -> bool {
         if (std::abs(rhs) > 1.f)
         {
             return m_areCloseRelative(lhs, rhs);
         }
         return m_areCloseAbsolute(lhs, rhs);
-    };
+    }};
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

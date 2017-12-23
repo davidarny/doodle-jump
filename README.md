@@ -1,7 +1,7 @@
 # Doodle Jump
 C++ clone of Doodle Jump
 
-![Doodle Jump](resources/doodle-jump.png)
+![Doodle Jump](resources/img/doodle-jump.png)
 
 ## Up and coming features
 

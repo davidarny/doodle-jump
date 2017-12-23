@@ -11,6 +11,8 @@
 class EventLoop
 {
 public:
+    EventLoop(const std::shared_ptr<KeyboardState> &p_keyboardState, const std::shared_ptr<View> &p_view);
+
     ~EventLoop() = default;
 
     void init();
@@ -21,18 +23,14 @@ public:
 
     void redrawFrame(const Entities &entities);
 
-    void addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState);
-
-    void addView(const std::shared_ptr<View> &p_view);
-
     const sf::RenderWindow &getWindow() const;
 
 private:
     sf::RenderWindow m_window;
     sf::Clock m_clock;
 
-    std::shared_ptr<KeyboardState> m_p_keyboardState;
-    std::shared_ptr<View> m_p_view;
+    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
+    const std::shared_ptr<View> &m_p_view;
 
     float m_deltaTime = 0.f;
 

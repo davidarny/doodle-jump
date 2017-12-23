@@ -1,5 +1,6 @@
 #include "Doodler.h"
 #include "EventLoop.h"
+#include "resources/icon.h"
 
 void EventLoop::createWindow()
 {
@@ -9,9 +10,9 @@ void EventLoop::createWindow()
     m_window.setFramerateLimit(MAX_FPS);
 
     sf::Image icon;
-    if (icon.loadFromFile(ICON_PATH))
+    if (icon.loadFromMemory(ICON_IMAGE.data, std::size(ICON_IMAGE.data)))
     {
-        m_window.setIcon(ICON_SIZE.x, ICON_SIZE.y, icon.getPixelsPtr());
+        m_window.setIcon(ICON_IMAGE.width, ICON_IMAGE.height, icon.getPixelsPtr());
     }
 }
 
@@ -63,13 +64,6 @@ const sf::RenderWindow &EventLoop::getWindow() const
     return m_window;
 }
 
-void EventLoop::addKeyboardState(const std::shared_ptr<KeyboardState> &p_keyboardState)
-{
-    m_p_keyboardState = p_keyboardState;
-}
-
-void EventLoop::addView(const std::shared_ptr<View> &p_view)
-{
-    m_p_view = p_view;
-}
+EventLoop::EventLoop(const std::shared_ptr<KeyboardState> &p_keyboardState, const std::shared_ptr<View> &p_view)
+    : m_p_keyboardState(p_keyboardState), m_p_view(p_view) {}
 

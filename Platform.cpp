@@ -53,9 +53,9 @@ const sf::Vector2f &Platform::getSize() const
 
 sf::FloatRect Platform::getBounds() const
 {
-    const float left = m_position.x - m_size.x / 2 - m_outlineThickness;
-    const float right = m_position.x + m_size.x / 2 + m_outlineThickness;
-    const float top = m_position.y - m_size.y / 2 - m_outlineThickness;
-    const float bottom = m_position.y + m_size.y / 2 + m_outlineThickness;
+    const float left = m_position.x - m_size.x / 2;
+    const float right = m_position.x + m_size.x / 2;
+    const float top = m_position.y - m_size.y / 2;
+    const float bottom = m_position.y + m_size.y / 2;
     return sf::FloatRect(left, top, right, bottom);
 }

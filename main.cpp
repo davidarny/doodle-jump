@@ -9,16 +9,14 @@ int main()
 {
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Entities entities;
-    Engine engine;
-    EventLoop eventLoop;
-
     std::shared_ptr<KeyboardState> p_keyboardState = std::make_shared<KeyboardState>(KeyboardState());
     std::shared_ptr<View> p_view = std::make_shared<View>(View());
 
+    Entities entities;
+    Engine engine;
+    EventLoop eventLoop(p_keyboardState, p_view);
+
     eventLoop.init();
-    eventLoop.addView(p_view);
-    eventLoop.addKeyboardState(p_keyboardState);
 
     for (size_t i = 0; i < PLATFORM_COUNT; ++i)
     {
@@ -26,8 +24,7 @@ int main()
         entities.push_back(p_platform);
     }
 
-    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler());
-    p_doodler->addKeyboardState(p_keyboardState);
+    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler(p_keyboardState));
     entities.push_back(p_doodler);
 
     while (eventLoop.getWindow().isOpen())

@@ -23,8 +23,8 @@ public:
 private:
     sf::RectangleShape m_shape;
     sf::Vector2f m_position;
+    sf::Vector2f m_size{sf::Vector2f(30.f, 5.f)};
 
-    sf::Vector2f m_size = sf::Vector2f(30.f, 5.f);
     const unsigned m_outlineThickness = 2;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
