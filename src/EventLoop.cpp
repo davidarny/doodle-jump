@@ -1,6 +1,6 @@
 #include "Doodler.h"
 #include "EventLoop.h"
-#include "resources/icon.h"
+#include "icon.h"
 
 void EventLoop::createWindow()
 {
