@@ -12,11 +12,9 @@ class Platform : public IEntity
 public:
     Platform();
 
-    ~Platform() override = default;
-
     void updatePosition(float) override;
 
-    Types getType() const override;
+    EntityType getType() const override;
 
     const sf::Vector2f &getSize() const override;
 

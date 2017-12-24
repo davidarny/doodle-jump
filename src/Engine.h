@@ -17,7 +17,7 @@ private:
 
     const std::function<bool(const std::shared_ptr<IEntity> &)> m_isDoodler{[&](
         const std::shared_ptr<IEntity> &p_entity) -> bool {
-        return p_entity->getType() == Types::Doodler;
+        return p_entity->getType() == EntityType::Doodler;
     }};
 
     const std::function<void(const std::shared_ptr<IEntity> &)> m_applyForEach{[&](

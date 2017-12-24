@@ -22,15 +22,15 @@ void EventLoop::pollEvents()
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
-        m_p_keyboardState->onKeyEventHandler(event);
-        onWindowEventHandler(event);
+        m_states.at(StateType::Keyboard)->eventHandler(event);
+        m_states.at(StateType::Game)->eventHandler(event);
     }
 }
 
 void EventLoop::redrawFrame(const Entities &entities)
 {
     m_window.clear(sf::Color::White);
-    m_window.setView(m_p_view->getView());
+    m_window.setView(m_view.getView());
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         m_window.draw(*p_item);
     });
@@ -49,21 +49,11 @@ void EventLoop::update(const Entities &entities)
     });
 }
 
-// TODO: create GameState class and dispatch this stuff there
-void EventLoop::onWindowEventHandler(const sf::Event &event)
-{
-    if (event.type != sf::Event::Closed)
-    {
-        return;
-    }
-    m_window.close();
-}
-
 const sf::RenderWindow &EventLoop::getWindow() const
 {
     return m_window;
 }
 
-EventLoop::EventLoop(const std::shared_ptr<KeyboardState> &p_keyboardState, const std::shared_ptr<View> &p_view)
-    : m_p_keyboardState(p_keyboardState), m_p_view(p_view) {}
+EventLoop::EventLoop(const View &view, sf::RenderWindow &window, const States &states)
+    : m_view(view), m_window(window), m_states(states) {}
 

@@ -5,7 +5,7 @@ void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_shape, states);
 }
 
-Doodler::Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState) : m_p_keyboardState(p_keyboardState)
+Doodler::Doodler(const std::shared_ptr<IState> &p_keyboardState) : m_p_keyboardState(p_keyboardState)
 {
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
@@ -48,6 +48,7 @@ void Doodler::checkCollision()
 
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
+    // TODO: fix error
     const KeysMap &keysMap = m_p_keyboardState->getKeysMap();
     const sf::FloatRect bounds = getBounds();
     const bool isMaxRightPosition = bounds.width < WINDOW_WIDTH;
@@ -61,9 +62,9 @@ void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
     }
 }
 
-Types Doodler::getType() const
+EntityType Doodler::getType() const
 {
-    return Types::Doodler;
+    return EntityType::Doodler;
 }
 
 const sf::Vector2f &Doodler::getSize() const

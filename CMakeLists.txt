@@ -29,7 +29,11 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/KeyboardState.h
         src/View.cpp
         src/View.h
-        src/icon.h)
+        src/icon.h
+        src/GameState.cpp
+        src/GameState.h
+        src/IState.h
+        src/enums.h)
 else ()
     add_executable(doodle-jump
         resources
@@ -49,7 +53,11 @@ else ()
         src/KeyboardState.h
         src/View.cpp
         src/View.h
-        src/icon.h)
+        src/icon.h
+        src/GameState.cpp
+        src/GameState.h
+        src/IState.h
+        src/enums.h)
 endif ()
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)

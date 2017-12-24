@@ -6,14 +6,13 @@
 #include "consts.h"
 #include "IEntity.h"
 #include "KeyboardState.h"
+#include "GameState.h"
 #include "View.h"
 
 class EventLoop
 {
 public:
-    EventLoop(const std::shared_ptr<KeyboardState> &p_keyboardState, const std::shared_ptr<View> &p_view);
-
-    ~EventLoop() = default;
+    EventLoop(const View &view, sf::RenderWindow &window, const States &states);
 
     void init();
 
@@ -26,17 +25,15 @@ public:
     const sf::RenderWindow &getWindow() const;
 
 private:
-    sf::RenderWindow m_window;
+    const View &m_view;
+    sf::RenderWindow &m_window;
     sf::Clock m_clock;
 
-    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
-    const std::shared_ptr<View> &m_p_view;
+    const States &m_states;
 
     float m_deltaTime = 0.f;
 
     void createWindow();
-
-    void onWindowEventHandler(const sf::Event &event);
 
 };
 

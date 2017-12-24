@@ -2,17 +2,16 @@
 #define DOODLE_JUMP_KEYBOARDSTATE_H
 
 #include <SFML/Graphics.hpp>
+#include "IState.h"
 
 using KeysMap = std::map<sf::Keyboard::Key, bool>;
 
-class KeyboardState
+class KeyboardState : public IState
 {
 public:
     KeyboardState();
 
-    ~KeyboardState() = default;
-
-    void onKeyEventHandler(const sf::Event &event);
+    void eventHandler(const sf::Event &event) override;
 
     const KeysMap &getKeysMap() const;
 

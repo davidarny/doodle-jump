@@ -6,7 +6,7 @@ KeyboardState::KeyboardState()
     m_keysMap[sf::Keyboard::Right] = false;
 }
 
-void KeyboardState::onKeyEventHandler(const sf::Event &event)
+void KeyboardState::eventHandler(const sf::Event &event)
 {
     switch (event.type)
     {

@@ -41,9 +41,9 @@ void Platform::updatePosition(float)
     setPosition(m_position);
 }
 
-Types Platform::getType() const
+EntityType Platform::getType() const
 {
-    return Types::Platform;
+    return EntityType::Platform;
 }
 
 const sf::Vector2f &Platform::getSize() const

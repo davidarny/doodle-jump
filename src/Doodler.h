@@ -11,13 +11,11 @@
 class Doodler : public IEntity
 {
 public:
-    explicit Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState);
-
-    ~Doodler() override = default;
+    explicit Doodler(const std::shared_ptr<IState> &p_keyboardState);
 
     void updatePosition(float deltaTime) override;
 
-    Types getType() const override;
+    EntityType getType() const override;
 
     const sf::Vector2f &getSize() const override;
 
@@ -28,7 +26,7 @@ public:
     void setFloor(float nextFloor) override;
 
 private:
-    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
+    const std::shared_ptr<IState> &m_p_keyboardState;
 
     const float m_outlineThickness = 2.f;
     const float m_initialSpeed = 75.f;

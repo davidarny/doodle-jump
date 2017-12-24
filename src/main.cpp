@@ -9,12 +9,19 @@ int main()
 {
     srand(static_cast<unsigned>(time(nullptr)));
 
+    sf::RenderWindow window;
+
     std::shared_ptr<KeyboardState> p_keyboardState = std::make_shared<KeyboardState>(KeyboardState());
-    std::shared_ptr<View> p_view = std::make_shared<View>(View());
+    std::shared_ptr<GameState> p_gameState = std::make_shared<GameState>(GameState(window));
+
+    States states;
+    states.at(StateType::Game) = p_gameState;
+    states.at(StateType::Keyboard) = p_keyboardState;
 
     Entities entities;
     Engine engine;
-    EventLoop eventLoop(p_keyboardState, p_view);
+    View view;
+    EventLoop eventLoop(view, window, states);
 
     eventLoop.init();
 
@@ -29,7 +36,7 @@ int main()
 
     while (eventLoop.getWindow().isOpen())
     {
-        p_view->followTo(p_doodler);
+        view.followTo(p_doodler);
         eventLoop.pollEvents();
         eventLoop.update(entities);
         engine.checkCollision(entities);
