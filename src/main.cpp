@@ -15,8 +15,8 @@ int main()
     std::shared_ptr<GameState> p_gameState = std::make_shared<GameState>(GameState(window));
 
     States states;
-    states.at(StateType::Game) = p_gameState;
-    states.at(StateType::Keyboard) = p_keyboardState;
+    states[StateType::Game] = p_gameState;
+    states[StateType::Keyboard] = p_keyboardState;
 
     Entities entities;
     Engine engine;

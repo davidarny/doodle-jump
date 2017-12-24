@@ -11,6 +11,6 @@ public:
     virtual void eventHandler(const sf::Event &event) = 0;
 };
 
-using States = std::map<StateType, std::shared_ptr<IState> &>;
+using States = std::map<StateType, std::shared_ptr<IState>>;
 
 #endif //DOODLE_JUMP_ISTATE_H

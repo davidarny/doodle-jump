@@ -49,7 +49,7 @@ void Doodler::checkCollision()
 void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
 {
     // TODO: fix error
-    const KeysMap &keysMap = m_p_keyboardState->getKeysMap();
+/*    const KeysMap &keysMap = m_p_keyboardState->getKeysMap();
     const sf::FloatRect bounds = getBounds();
     const bool isMaxRightPosition = bounds.width < WINDOW_WIDTH;
     const bool isMaxLeftPosition = bounds.left > 0;
@@ -59,7 +59,7 @@ void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
     } else if (keysMap.at(sf::Keyboard::Left) && isMaxLeftPosition)
     {
         m_position.x -= nextX * deltaTime;
-    }
+    }*/
 }
 
 EntityType Doodler::getType() const
