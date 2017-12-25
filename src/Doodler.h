@@ -11,7 +11,7 @@
 class Doodler : public IEntity
 {
 public:
-    explicit Doodler(const std::shared_ptr<IState> &p_keyboardState);
+    explicit Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState);
 
     void updatePosition(float deltaTime) override;
 
@@ -26,7 +26,7 @@ public:
     void setFloor(float nextFloor) override;
 
 private:
-    const std::shared_ptr<IState> &m_p_keyboardState;
+    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
 
     const float m_outlineThickness = 2.f;
     const float m_initialSpeed = 75.f;
