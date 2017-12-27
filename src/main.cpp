@@ -7,21 +7,16 @@
 
 int main()
 {
-    srand(static_cast<unsigned>(time(nullptr)));
+    srand(time(nullptr));
 
     sf::RenderWindow window;
+    StateMediator stateMediator(window);
 
-    std::shared_ptr<KeyboardState> p_keyboardState = std::make_shared<KeyboardState>(KeyboardState());
-    std::shared_ptr<GameState> p_gameState = std::make_shared<GameState>(GameState(window));
-
-    States states;
-    states[StateType::Game] = p_gameState;
-    states[StateType::Keyboard] = p_keyboardState;
-
-    Entities entities;
+    Menu menu(stateMediator);
     Engine engine;
     View view;
-    EventLoop eventLoop(view, window, states);
+    Entities entities;
+    EventLoop eventLoop(view, window, stateMediator);
 
     eventLoop.init();
 
@@ -31,7 +26,7 @@ int main()
         entities.push_back(p_platform);
     }
 
-    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler(p_keyboardState));
+    std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler(stateMediator));
     entities.push_back(p_doodler);
 
     while (eventLoop.getWindow().isOpen())
@@ -40,6 +35,6 @@ int main()
         eventLoop.pollEvents();
         eventLoop.update(entities);
         engine.checkCollision(entities);
-        eventLoop.redrawFrame(entities);
+        eventLoop.redrawFrame(entities, menu);
     }
 }

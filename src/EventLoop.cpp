@@ -22,19 +22,25 @@ void EventLoop::pollEvents()
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
-        m_states.at(StateType::Keyboard)->eventHandler(event);
-        m_states.at(StateType::Game)->eventHandler(event);
+        m_stateMediator.triggerEventHandler(event);
     }
 }
 
-void EventLoop::redrawFrame(const Entities &entities)
+void EventLoop::redrawFrame(const Entities &entities, const Menu &menu)
 {
-    m_window.clear(sf::Color::White);
-    m_window.setView(m_view.getView());
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
-        m_window.draw(*p_item);
-    });
-    m_window.display();
+    const State &state = m_stateMediator.getGameState();
+    switch (state)
+    {
+        case State::Game:
+            drawGameScreen(entities);
+            break;
+        case State::MainMenu:
+            drawMenuScreen(menu);
+            break;
+        default:
+            break;
+    }
+
 }
 
 void EventLoop::init()
@@ -54,6 +60,23 @@ const sf::RenderWindow &EventLoop::getWindow() const
     return m_window;
 }
 
-EventLoop::EventLoop(const View &view, sf::RenderWindow &window, const States &states)
-    : m_view(view), m_window(window), m_states(states) {}
+EventLoop::EventLoop(const View &view, sf::RenderWindow &window, StateMediator &stateMediator)
+    : m_view(view), m_window(window), m_stateMediator(stateMediator) {}
+
+void EventLoop::drawGameScreen(const Entities &entities)
+{
+    m_window.clear(sf::Color::White);
+    m_window.setView(m_view.getView());
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
+        m_window.draw(*p_item);
+    });
+    m_window.display();
+}
+
+void EventLoop::drawMenuScreen(const Menu &menu)
+{
+    m_window.clear(sf::Color::White);
+    m_window.draw(menu);
+    m_window.display();
+}
 

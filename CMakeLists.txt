@@ -33,7 +33,12 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/GameState.cpp
         src/GameState.h
         src/IState.h
-        src/enums.h)
+        src/enums.h
+        src/StateMediator.cpp
+        src/StateMediator.h
+        src/Menu.cpp
+        src/Menu.h
+        src/opensans.h)
 else ()
     add_executable(doodle-jump
         resources
@@ -57,7 +62,12 @@ else ()
         src/GameState.cpp
         src/GameState.h
         src/IState.h
-        src/enums.h)
+        src/enums.h
+        src/StateMediator.cpp
+        src/StateMediator.h
+        src/Menu.cpp
+        src/Menu.h
+        src/opensans.h)
 endif ()
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)

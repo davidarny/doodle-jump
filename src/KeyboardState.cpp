@@ -63,3 +63,4 @@ void KeyboardState::onRightKeyReleased(const sf::Keyboard::Key &key)
     }
     m_keysMap[sf::Keyboard::Right] = false;
 }
+

@@ -7,11 +7,12 @@
 #include "IEntity.h"
 #include "consts.h"
 #include "KeyboardState.h"
+#include "StateMediator.h"
 
 class Doodler : public IEntity
 {
 public:
-    explicit Doodler(const std::shared_ptr<KeyboardState> &p_keyboardState);
+    explicit Doodler(const StateMediator &stateMediator);
 
     void updatePosition(float deltaTime) override;
 
@@ -26,7 +27,7 @@ public:
     void setFloor(float nextFloor) override;
 
 private:
-    const std::shared_ptr<KeyboardState> &m_p_keyboardState;
+    const StateMediator &m_stateMediator;
 
     const float m_outlineThickness = 2.f;
     const float m_initialSpeed = 75.f;

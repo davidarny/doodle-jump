@@ -20,4 +20,9 @@ static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
 static const unsigned MAX_PRECISION_COUNT = 128;
 
+/// Menu params
+static const unsigned BASE_MARGIN = 20;
+static const unsigned BUTTON_TEXT_SIZE = 30;
+static const unsigned LOGO_TEXT_SIZE = 50;
+
 #endif //DOODLE_JUMP_CONSTS_H

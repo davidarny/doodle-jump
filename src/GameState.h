@@ -10,8 +10,12 @@ public:
 
     void eventHandler(const sf::Event &event) override;
 
+    const State &getState() const;
+
 private:
     sf::RenderWindow &m_window;
+
+    State m_state{State::MainMenu};
 };
 
 #endif //DOODLE_JUMP_GAMESTATE_H

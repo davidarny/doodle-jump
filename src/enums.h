@@ -3,6 +3,13 @@
 
 #include <cstdlib>
 
+enum class State : size_t
+{
+    MainMenu = 0,
+    PauseMenu,
+    Game
+};
+
 enum class StateType : size_t
 {
     Game = 0,
