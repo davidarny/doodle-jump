@@ -10,12 +10,6 @@ enum class State : size_t
     Game
 };
 
-enum class StateType : size_t
-{
-    Game = 0,
-    Keyboard
-};
-
 enum class EntityType : size_t
 {
     Platform = 0,

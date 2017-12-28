@@ -16,9 +16,6 @@ int main()
     Engine engine;
     View view;
     Entities entities;
-    EventLoop eventLoop(view, window, stateMediator);
-
-    eventLoop.init();
 
     for (size_t i = 0; i < PLATFORM_COUNT; ++i)
     {
@@ -29,12 +26,16 @@ int main()
     std::shared_ptr<Doodler> p_doodler = std::make_shared<Doodler>(Doodler(stateMediator));
     entities.push_back(p_doodler);
 
+    EventLoop eventLoop(view, window, stateMediator, menu, entities);
+
+    eventLoop.init();
+
     while (eventLoop.getWindow().isOpen())
     {
         view.followTo(p_doodler);
         eventLoop.pollEvents();
-        eventLoop.update(entities);
+        eventLoop.update();
         engine.checkCollision(entities);
-        eventLoop.redrawFrame(entities, menu);
+        eventLoop.redrawFrame();
     }
 }

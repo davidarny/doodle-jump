@@ -10,7 +10,9 @@ public:
 
     void eventHandler(const sf::Event &event) override;
 
-    const State &getState() const;
+    State getState() const;
+
+    void setState(State state);
 
 private:
     sf::RenderWindow &m_window;

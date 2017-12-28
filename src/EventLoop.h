@@ -14,32 +14,40 @@
 class EventLoop
 {
 public:
-    EventLoop(const View &view, sf::RenderWindow &window, StateMediator &stateMediator);
+    EventLoop(const View &view,
+              sf::RenderWindow &window,
+              StateMediator &stateMediator,
+              Menu &menu,
+              Entities &entities);
 
     void init();
 
     void pollEvents();
 
-    void update(const Entities &entities);
+    void update();
 
-    void redrawFrame(const Entities &entities, const Menu &menu);
+    void redrawFrame();
 
     const sf::RenderWindow &getWindow() const;
 
 private:
     const View &m_view;
     sf::RenderWindow &m_window;
+
     sf::Clock m_clock;
 
     StateMediator &m_stateMediator;
+    Menu &m_menu;
+
+    Entities &m_entities;
 
     float m_deltaTime = 0.f;
 
     void createWindow();
 
-    void drawGameScreen(const Entities &entities);
+    void drawGameScreen();
 
-    void drawMenuScreen(const Menu &menu);
+    void drawMenuScreen();
 
 };
 

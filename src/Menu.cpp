@@ -38,7 +38,6 @@ void Menu::initStartButton()
     text.setPosition(shape.getPosition());
 }
 
-// TODO: add on click handler
 void Menu::initExitButton()
 {
     sf::RectangleShape &exitButtonShape = m_exitButton.m_shape;
@@ -66,7 +65,7 @@ void Menu::initExitButton()
 void Menu::initLogo()
 {
     m_logo.setFont(m_font);
-    m_logo.setString("Doodle Jump");
+    m_logo.setString(WINDOW_TITLE);
     m_logo.setCharacterSize(LOGO_TEXT_SIZE);
     m_logo.setFillColor(sf::Color::Black);
     const sf::FloatRect &bounds = m_logo.getLocalBounds();
@@ -82,4 +81,21 @@ void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_exitButton.m_shape, states);
     target.draw(m_exitButton.m_text, states);
     target.draw(m_logo, states);
+}
+
+void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition)
+{
+    if (event.type != sf::Event::MouseButtonPressed)
+    {
+        return;
+    }
+    const sf::FloatRect &startButtonBounds = m_startButton.m_shape.getGlobalBounds();
+    const sf::FloatRect &exitButtonBounds = m_exitButton.m_shape.getGlobalBounds();
+    if (startButtonBounds.contains(mousePosition))
+    {
+        m_stateMediator.setState(State::Game);
+    } else if (exitButtonBounds.contains(mousePosition))
+    {
+        std::exit(0);
+    }
 }

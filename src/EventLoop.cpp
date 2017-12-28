@@ -22,20 +22,22 @@ void EventLoop::pollEvents()
     sf::Event event{};
     while (m_window.pollEvent(event))
     {
+        const sf::Vector2i &mousePosition = sf::Mouse::getPosition(m_window);
         m_stateMediator.triggerEventHandler(event);
+        m_menu.eventHandler(event, {static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)});
     }
 }
 
-void EventLoop::redrawFrame(const Entities &entities, const Menu &menu)
+void EventLoop::redrawFrame()
 {
-    const State &state = m_stateMediator.getGameState();
+    const State state = m_stateMediator.getGameState();
     switch (state)
     {
         case State::Game:
-            drawGameScreen(entities);
+            drawGameScreen();
             break;
         case State::MainMenu:
-            drawMenuScreen(menu);
+            drawMenuScreen();
             break;
         default:
             break;
@@ -48,11 +50,19 @@ void EventLoop::init()
     createWindow();
 }
 
-void EventLoop::update(const Entities &entities)
+void EventLoop::update()
 {
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
-        p_item->updatePosition(m_deltaTime);
-    });
+    const State state = m_stateMediator.getGameState();
+    switch (state)
+    {
+        case State::Game:
+            std::for_each(m_entities.begin(), m_entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
+                p_item->updatePosition(m_deltaTime);
+            });
+            break;
+        default:
+            break;
+    }
 }
 
 const sf::RenderWindow &EventLoop::getWindow() const
@@ -60,23 +70,31 @@ const sf::RenderWindow &EventLoop::getWindow() const
     return m_window;
 }
 
-EventLoop::EventLoop(const View &view, sf::RenderWindow &window, StateMediator &stateMediator)
-    : m_view(view), m_window(window), m_stateMediator(stateMediator) {}
+EventLoop::EventLoop(const View &view,
+                     sf::RenderWindow &window,
+                     StateMediator &stateMediator,
+                     Menu &menu,
+                     Entities &entities)
+    : m_view(view),
+      m_window(window),
+      m_stateMediator(stateMediator),
+      m_menu(menu),
+      m_entities(entities) {}
 
-void EventLoop::drawGameScreen(const Entities &entities)
+void EventLoop::drawGameScreen()
 {
     m_window.clear(sf::Color::White);
     m_window.setView(m_view.getView());
-    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
+    std::for_each(m_entities.begin(), m_entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
         m_window.draw(*p_item);
     });
     m_window.display();
 }
 
-void EventLoop::drawMenuScreen(const Menu &menu)
+void EventLoop::drawMenuScreen()
 {
     m_window.clear(sf::Color::White);
-    m_window.draw(menu);
+    m_window.draw(m_menu);
     m_window.display();
 }
 

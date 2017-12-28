@@ -20,6 +20,8 @@ class Menu : public sf::Drawable
 public:
     explicit Menu(StateMediator &stateMediator);
 
+    void eventHandler(sf::Event &event, const sf::Vector2f &mousePosition);
+
 private:
     StateMediator &m_stateMediator;
 

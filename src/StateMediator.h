@@ -14,9 +14,11 @@ public:
 
     const KeysMap &getKeysMap() const;
 
-    const State &getGameState() const;
+    State getGameState() const;
 
     void triggerEventHandler(const sf::Event &event);
+
+    void setState(const State state);
 
 private:
     sf::RenderWindow &m_window;

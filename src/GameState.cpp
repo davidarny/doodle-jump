@@ -11,8 +11,14 @@ void GameState::eventHandler(const sf::Event &event)
 
 GameState::GameState(sf::RenderWindow &window) : m_window(window) {}
 
-const State &GameState::getState() const
+State GameState::getState() const
 {
     return m_state;
 }
+
+void GameState::setState(const State state)
+{
+    m_state = state;
+}
+
 
