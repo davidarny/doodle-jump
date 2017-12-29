@@ -20,8 +20,6 @@ public:
               Menu &menu,
               Entities &entities);
 
-    void init();
-
     void pollEvents();
 
     void update();
