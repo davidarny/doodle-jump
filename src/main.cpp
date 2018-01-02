@@ -9,12 +9,11 @@ int main()
 {
     srand(time(nullptr));
 
-    sf::RenderWindow window;
-    StateMediator stateMediator(window);
-
-    Menu menu(stateMediator);
     Engine engine;
     View view;
+    sf::RenderWindow window;
+    StateMediator stateMediator(window);
+    Menu menu(stateMediator);
     Entities entities;
 
     for (size_t i = 0; i < PLATFORM_COUNT; ++i)
@@ -27,8 +26,6 @@ int main()
     entities.push_back(p_doodler);
 
     EventLoop eventLoop(view, window, stateMediator, menu, entities);
-
-    eventLoop.init();
 
     while (eventLoop.getWindow().isOpen())
     {

@@ -45,11 +45,6 @@ void EventLoop::redrawFrame()
 
 }
 
-void EventLoop::init()
-{
-    createWindow();
-}
-
 void EventLoop::update()
 {
     const State state = m_stateMediator.getGameState();
@@ -76,11 +71,14 @@ EventLoop::EventLoop(const View &view,
                      StateMediator &stateMediator,
                      Menu &menu,
                      Entities &entities)
-    : m_view(view),
-      m_window(window),
-      m_stateMediator(stateMediator),
-      m_menu(menu),
-      m_entities(entities) {}
+        : m_view(view),
+          m_window(window),
+          m_stateMediator(stateMediator),
+          m_menu(menu),
+          m_entities(entities)
+{
+    createWindow();
+}
 
 void EventLoop::drawGameScreen()
 {
