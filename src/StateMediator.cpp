@@ -22,4 +22,3 @@ void StateMediator::setState(const State state)
 {
     m_gameState.setState(state);
 }
-

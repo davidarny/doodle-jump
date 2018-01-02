@@ -56,9 +56,10 @@ void EventLoop::update()
     switch (state)
     {
         case State::Game:
-            std::for_each(m_entities.begin(), m_entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
-                p_item->updatePosition(m_deltaTime);
-            });
+            for (auto &&m_entity : m_entities)
+            {
+                m_entity->updatePosition(m_deltaTime);
+            }
             break;
         default:
             break;
@@ -85,9 +86,10 @@ void EventLoop::drawGameScreen()
 {
     m_window.clear(sf::Color::White);
     m_window.setView(m_view.getView());
-    std::for_each(m_entities.begin(), m_entities.end(), [&](const std::shared_ptr<IEntity> &p_item) -> void {
-        m_window.draw(*p_item);
-    });
+    for (auto &&m_entity : m_entities)
+    {
+        m_window.draw(*m_entity);
+    }
     m_window.display();
 }
 
@@ -97,4 +99,3 @@ void EventLoop::drawMenuScreen()
     m_window.draw(m_menu);
     m_window.display();
 }
-

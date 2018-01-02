@@ -36,6 +36,8 @@ int main()
         eventLoop.pollEvents();
         eventLoop.update();
         engine.checkCollision(entities);
+        engine.addPlatforms(entities);
+        engine.removePlatforms(entities);
         eventLoop.redrawFrame();
     }
 }

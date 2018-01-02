@@ -7,7 +7,7 @@ C++ clone of Doodle Jump
 
 - [x] collision adjustment
 - [x] first playable version
-- [ ] endless map
+- [x] endless map
 - [ ] game over state
 - [ ] bonuses
 - [ ] textures
@@ -16,7 +16,7 @@ C++ clone of Doodle Jump
 
 Library `SFML`  must be located in `lib/sfml`. If folder not found default settings of `CMake` will be accepted
 
-All necessary modules must be placed into `cmake_modules`. If folder not found то default settings of `CMake` will be accepted
+All necessary modules must be placed into `cmake_modules`. If folder not found default settings of `CMake` will be accepted
 
 [CMake](https://cmake.org/) - compilation processor
 

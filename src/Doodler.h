@@ -39,23 +39,11 @@ private:
     sf::Vector2f m_position{sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2 - m_outlineThickness)};
     sf::RectangleShape m_shape{sf::RectangleShape()};
 
-    const std::function<bool(float, float)> m_areCloseAbsolute{[&](float lhs, float rhs) -> bool {
-        constexpr float tolerance = 0.001f;
-        return std::abs(lhs - rhs) < tolerance;
-    }};
+    const std::function<bool(float, float)> areCloseAbsolute();
 
-    const std::function<bool(float, float)> m_areCloseRelative{[&](float lhs, float rhs) -> bool {
-        constexpr float tolerance = 0.001f;
-        return std::abs((lhs - rhs) / rhs) < tolerance;
-    }};
+    const std::function<bool(float, float)> areFuzzyEqual();
 
-    const std::function<bool(float, float)> m_areFuzzyEqual{[&](float lhs, float rhs) -> bool {
-        if (std::abs(rhs) > 1.f)
-        {
-            return m_areCloseRelative(lhs, rhs);
-        }
-        return m_areCloseAbsolute(lhs, rhs);
-    }};
+    const std::function<bool(float, float)> areCloseRelative();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

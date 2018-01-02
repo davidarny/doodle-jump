@@ -1,5 +1,7 @@
 #include "Platform.h"
 
+long long Platform::multiplier = 1;
+
 void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_shape, states);
@@ -9,7 +11,9 @@ void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
 Platform::Platform()
 {
     m_position.x = rand() % WINDOW_WIDTH;
-    m_position.y = rand() % WINDOW_HEIGHT;
+    long long min = WINDOW_HEIGHT - multiplier * WINDOW_HEIGHT;
+    long long max = -multiplier * WINDOW_HEIGHT;
+    m_position.y = min + (rand() % static_cast<int>(max - min + 1));
 
     const sf::FloatRect bounds = getBounds();
     const bool isOverRightSide = bounds.width > WINDOW_WIDTH;
@@ -26,6 +30,7 @@ Platform::Platform()
     }
 
     m_shape.setSize(m_size);
+    m_shape.setPosition(m_position);
     m_shape.setOrigin(m_size.x / 2, m_size.y / 2);
     m_shape.setFillColor(sf::Color::Green);
     m_shape.setOutlineColor(sf::Color::Black);
@@ -33,6 +38,8 @@ Platform::Platform()
 
     m_size.x += m_outlineThickness;
     m_size.y += m_outlineThickness;
+
+    setPosition(m_position);
 }
 
 void Platform::updatePosition(float)
@@ -58,4 +65,9 @@ sf::FloatRect Platform::getBounds() const
     const float top = m_position.y - m_size.y / 2;
     const float bottom = m_position.y + m_size.y / 2;
     return sf::FloatRect(left, top, right, bottom);
+}
+
+void Platform::increment()
+{
+    ++multiplier;
 }

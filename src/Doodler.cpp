@@ -16,6 +16,8 @@ Doodler::Doodler(const StateMediator &stateMediator) : m_stateMediator(stateMedi
 
     m_size.x += m_outlineThickness;
     m_size.y += m_outlineThickness;
+
+    setPosition(m_position);
 }
 
 void Doodler::updatePosition(const float deltaTime)
@@ -37,8 +39,8 @@ void Doodler::updatePosition(const float deltaTime)
 void Doodler::checkCollision()
 {
     const float currentBottomPosition = getBounds().height;
-    const bool isAtZeroLevel = m_areFuzzyEqual(currentBottomPosition, m_floor);
-    const bool isGameOverLevel = m_areFuzzyEqual(m_floor, WINDOW_HEIGHT);
+    const bool isAtZeroLevel = areFuzzyEqual()(currentBottomPosition, m_floor);
+    const bool isGameOverLevel = areFuzzyEqual()(m_floor, WINDOW_HEIGHT);
     if (isAtZeroLevel && m_isFalling && !isGameOverLevel)
     {
         setNextY();
@@ -98,7 +100,7 @@ void Doodler::setNextY()
 float Doodler::getNextY() const
 {
     const float lhs = m_initialSpeed * m_timeAccumulator;
-    const auto rhs = static_cast<const float>(0.5 * G * std::pow(m_timeAccumulator, 2));
+    const auto rhs = static_cast<float>(0.5 * G * std::pow(m_timeAccumulator, 2));
     return m_position.y - lhs + rhs;
 }
 
@@ -110,4 +112,31 @@ sf::FloatRect Doodler::getBounds() const
     const float top = position.y - m_size.y / 2;
     const float bottom = position.y + m_size.y / 2;
     return sf::FloatRect(left, top, right, bottom);
+}
+
+const std::function<bool(float, float)> Doodler::areCloseAbsolute()
+{
+    return [](float lhs, float rhs) -> bool {
+        constexpr float tolerance = 0.001f;
+        return std::abs(lhs - rhs) < tolerance;
+    };
+}
+
+const std::function<bool(float, float)> Doodler::areFuzzyEqual()
+{
+    return [&](float lhs, float rhs) -> bool {
+        if (std::abs(rhs) > 1.f)
+        {
+            return areCloseRelative()(lhs, rhs);
+        }
+        return areCloseAbsolute()(lhs, rhs);
+    };
+}
+
+const std::function<bool(float, float)> Doodler::areCloseRelative()
+{
+    return [](float lhs, float rhs) -> bool {
+        constexpr float tolerance = 0.001f;
+        return std::abs((lhs - rhs) / rhs) < tolerance;
+    };
 }

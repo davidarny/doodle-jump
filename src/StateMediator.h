@@ -18,14 +18,13 @@ public:
 
     void triggerEventHandler(const sf::Event &event);
 
-    void setState(const State state);
+    void setState(State state);
 
 private:
     sf::RenderWindow &m_window;
 
     KeyboardState m_keyboardState{KeyboardState()};
     GameState m_gameState = GameState(m_window);
-
 };
 
 #endif //DOODLE_JUMP_STATEMEDIATOR_H

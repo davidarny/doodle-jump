@@ -18,12 +18,16 @@ public:
 
     const sf::Vector2f &getSize() const override;
 
+    static void increment();
+
 private:
     sf::RectangleShape m_shape;
     sf::Vector2f m_position;
     sf::Vector2f m_size{sf::Vector2f(30.f, 5.f)};
 
     const unsigned m_outlineThickness = 2;
+
+    static long long multiplier;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
