@@ -1,11 +1,6 @@
 #include "Doodler.h"
 
-void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    target.draw(m_shape, states);
-}
-
-Doodler::Doodler(const StateMediator &stateMediator) : m_stateMediator(stateMediator)
+Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
@@ -33,6 +28,11 @@ void Doodler::updatePosition(const float deltaTime)
         setFallingState(nextY);
         setPosition(nextPosition);
         checkCollision();
+    }
+    if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
+    {
+        m_stateMediator.setState(State::GameOver);
+        m_timeAccumulator = 0.f;
     }
 }
 
@@ -139,4 +139,9 @@ const std::function<bool(float, float)> Doodler::areCloseRelative()
         constexpr float tolerance = 0.001f;
         return std::abs((lhs - rhs) / rhs) < tolerance;
     };
+}
+
+void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_shape, states);
 }

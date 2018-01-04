@@ -7,6 +7,7 @@ enum class State : size_t
 {
     MainMenu = 0,
     PauseMenu,
+    GameOver,
     Game
 };
 

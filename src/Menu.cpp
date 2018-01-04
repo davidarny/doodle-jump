@@ -5,97 +5,129 @@ Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
     if (m_font.loadFromMemory(OpenSans, std::size(OpenSans)))
     {
-        initStartButton();
-        initExitButton();
-        initLogo();
+        createLogo();
+        createScore();
+        createStartButton();
+        createRestartButton();
+        createExitButton();
     } else
     {
         // TODO: handle error
-        std::exit(0);
+        std::exit(EXIT_FAILURE);
     }
 }
 
-// TODO: add on click handler
-void Menu::initStartButton()
+void Menu::createStartButton()
 {
-    const sf::Vector2f size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
-    sf::RectangleShape &shape = m_startButton.m_shape;
-    shape.setSize(size);
-    shape.setFillColor(sf::Color::Red);
-    shape.setOutlineColor(sf::Color::Black);
-    shape.setOutlineThickness(2);
-    shape.setOrigin(size.x / 2, size.y / 2);
-    shape.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f);
+    ButtonOptions buttonOptions;
+    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
+    buttonOptions.fillColor = sf::Color::Red;
+    buttonOptions.outlineColor = sf::Color::Black;
+    buttonOptions.outlineThickness = 2;
+    buttonOptions.position = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f};
+    buttonOptions.font = sf::Font(m_font);
+    buttonOptions.text = "Start game";
+    buttonOptions.textSize = BUTTON_TEXT_SIZE;
+    buttonOptions.textColor = sf::Color::White;
 
-    sf::Text &text = m_startButton.m_text;
-    text.setFont(m_font);
-    text.setString("Start game");
-    text.setCharacterSize(m_startButton.m_textSize);
-    text.setFillColor(sf::Color::White);
-    const sf::FloatRect &bounds = text.getLocalBounds();
-    const sf::Vector2f origin = {bounds.left + bounds.width / 2, bounds.top + bounds.height / 2};
-    text.setOrigin(origin);
-    text.setPosition(shape.getPosition());
+    m_startButton = Button(buttonOptions);
 }
 
-void Menu::initExitButton()
+void Menu::createExitButton()
 {
-    sf::RectangleShape &exitButtonShape = m_exitButton.m_shape;
-    const sf::RectangleShape &startButtonShape = m_startButton.m_shape;
+    const sf::RectangleShape &startButtonShape = m_startButton.getShape();
     const float topOffset = startButtonShape.getPosition().y + startButtonShape.getSize().y + BASE_MARGIN * 2;
-    const sf::Vector2f size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
-    exitButtonShape.setSize(size);
-    exitButtonShape.setFillColor(sf::Color::Black);
-    exitButtonShape.setOutlineColor(sf::Color::Red);
-    exitButtonShape.setOutlineThickness(2);
-    exitButtonShape.setOrigin(size.x / 2, size.y / 2);
-    exitButtonShape.setPosition(WINDOW_WIDTH / 2, topOffset);
+    ButtonOptions buttonOptions;
+    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
+    buttonOptions.fillColor = sf::Color::Black;
+    buttonOptions.outlineColor = sf::Color::Red;
+    buttonOptions.outlineThickness = 2;
+    buttonOptions.position = {WINDOW_WIDTH / 2, topOffset};
+    buttonOptions.font = sf::Font(m_font);
+    buttonOptions.text = "Exit game";
+    buttonOptions.textSize = BUTTON_TEXT_SIZE;
+    buttonOptions.textColor = sf::Color::White;
 
-    sf::Text &text = m_exitButton.m_text;
-    text.setFont(m_font);
-    text.setString("Exit game");
-    text.setCharacterSize(m_exitButton.m_textSize);
-    text.setFillColor(sf::Color::White);
-    const sf::FloatRect &bounds = text.getLocalBounds();
-    const sf::Vector2f origin = {bounds.left + bounds.width / 2, bounds.top + bounds.height / 2};
-    text.setOrigin(origin);
-    text.setPosition(exitButtonShape.getPosition());
+    m_exitButton = Button(buttonOptions);
 }
 
-void Menu::initLogo()
+void Menu::createRestartButton()
+{
+    ButtonOptions buttonOptions;
+    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
+    buttonOptions.fillColor = sf::Color::Red;
+    buttonOptions.outlineColor = sf::Color::Black;
+    buttonOptions.outlineThickness = 2;
+    buttonOptions.position = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f};
+    buttonOptions.font = sf::Font(m_font);
+    buttonOptions.text = "Restart game";
+    buttonOptions.textSize = BUTTON_TEXT_SIZE;
+    buttonOptions.textColor = sf::Color::White;
+
+    m_restartButton = Button(buttonOptions);
+}
+
+void Menu::createLogo()
 {
     m_logo.setFont(m_font);
     m_logo.setString(WINDOW_TITLE);
     m_logo.setCharacterSize(LOGO_TEXT_SIZE);
     m_logo.setFillColor(sf::Color::Black);
     const sf::FloatRect &bounds = m_logo.getLocalBounds();
-    const sf::Vector2f origin = {bounds.left + bounds.width / 2, bounds.top + bounds.height / 2};
-    m_logo.setOrigin(origin);
+    m_logo.setOrigin({bounds.left + bounds.width / 2, bounds.top + bounds.height / 2});
     m_logo.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 8);
 }
 
+void Menu::createScore()
+{
+    m_score.setFont(m_font);
+    m_score.setString("Your score: 0");
+    m_score.setCharacterSize(SCORE_TEXT_SIZE);
+    m_score.setFillColor(sf::Color::Black);
+    const sf::FloatRect &bounds = m_score.getLocalBounds();
+    m_score.setOrigin({bounds.left + bounds.width / 2, bounds.top + bounds.height / 2});
+    m_score.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3);
+}
+
+
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_startButton.m_shape, states);
-    target.draw(m_startButton.m_text, states);
-    target.draw(m_exitButton.m_shape, states);
-    target.draw(m_exitButton.m_text, states);
+    const State state = m_stateMediator.getGameState();
+    switch (state)
+    {
+        case State::MainMenu:
+            target.draw(m_startButton, states);
+            break;
+        case State::GameOver:
+            target.draw(m_score, states);
+            target.draw(m_restartButton, states);
+            break;
+        default:
+            break;
+    }
+    target.draw(m_exitButton, states);
     target.draw(m_logo, states);
 }
 
-void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition)
+void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback)
 {
     if (event.type != sf::Event::MouseButtonPressed)
     {
         return;
     }
-    const sf::FloatRect &startButtonBounds = m_startButton.m_shape.getGlobalBounds();
-    const sf::FloatRect &exitButtonBounds = m_exitButton.m_shape.getGlobalBounds();
-    if (startButtonBounds.contains(mousePosition))
+    const sf::FloatRect &startButtonBounds = m_startButton.getShape().getGlobalBounds();
+    const sf::FloatRect &exitButtonBounds = m_exitButton.getShape().getGlobalBounds();
+    const sf::FloatRect &restartButtonBounds = m_restartButton.getShape().getGlobalBounds();
+    const State state = m_stateMediator.getGameState();
+    if (startButtonBounds.contains(mousePosition) && state == State::MainMenu)
     {
         m_stateMediator.setState(State::Game);
+    } else if (restartButtonBounds.contains(mousePosition) && state == State::GameOver)
+    {
+        m_stateMediator.setState(State::Game);
+        callback();
     } else if (exitButtonBounds.contains(mousePosition))
     {
-        std::exit(0);
+        std::exit(EXIT_SUCCESS);
     }
 }

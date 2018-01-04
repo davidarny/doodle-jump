@@ -9,9 +9,9 @@ class View
 public:
     View();
 
-    const sf::View &getView() const;
+    sf::View &getView();
 
-    void followTo(const std::shared_ptr<Doodler> &p_doodler);
+    void followTo(const std::shared_ptr<IEntity> &p_doodler);
 
 private:
     sf::View m_view;

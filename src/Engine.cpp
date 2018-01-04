@@ -84,6 +84,12 @@ void Engine::removePlatforms(Entities &entities)
 const std::function<bool(const std::shared_ptr<IEntity> &)> Engine::isDoodler()
 {
     return [](const std::shared_ptr<IEntity> &p_entity) -> bool {
-        return p_entity->getType() == EntityType::Doodler;
+        return p_entity != nullptr && p_entity->getType() == EntityType::Doodler;
     };
+}
+
+void Engine::reset()
+{
+    m_shouldSetFloor = false;
+    m_floor = static_cast<float>(WINDOW_HEIGHT);
 }

@@ -7,7 +7,7 @@ void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_shape, states);
 }
 
-// TODO: use C++11 random library
+// TODO: switch to C++11 random library
 Platform::Platform()
 {
     m_position.x = rand() % WINDOW_WIDTH;
@@ -70,4 +70,9 @@ sf::FloatRect Platform::getBounds() const
 void Platform::increment()
 {
     ++multiplier;
+}
+
+void Platform::reset()
+{
+    multiplier = 1;
 }

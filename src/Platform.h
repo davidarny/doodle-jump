@@ -20,6 +20,8 @@ public:
 
     static void increment();
 
+    static void reset();
+
 private:
     sf::RectangleShape m_shape;
     sf::Vector2f m_position;

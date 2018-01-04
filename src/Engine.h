@@ -14,12 +14,15 @@ public:
 
     void removePlatforms(Entities &entities);
 
+    const std::function<bool(const std::shared_ptr<IEntity> &)> isDoodler();
+
+    void reset();
+
 private:
     std::shared_ptr<IEntity> m_p_doodler;
     bool m_shouldSetFloor{false};
-    float m_floor{static_cast<float>(WINDOW_HEIGHT)};
 
-    const std::function<bool(const std::shared_ptr<IEntity> &)> isDoodler();
+    float m_floor{static_cast<float>(WINDOW_HEIGHT)};
 
     void processCollision(const std::shared_ptr<IEntity> &p_entity);
 

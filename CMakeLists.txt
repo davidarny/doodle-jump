@@ -38,7 +38,9 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/StateMediator.h
         src/Menu.cpp
         src/Menu.h
-        src/opensans.h)
+        src/opensans.h
+        src/Button.cpp
+        src/Button.h)
 else ()
     add_executable(doodle-jump
         resources
@@ -67,7 +69,9 @@ else ()
         src/StateMediator.h
         src/Menu.cpp
         src/Menu.h
-        src/opensans.h)
+        src/opensans.h
+        src/Button.cpp
+        src/Button.h)
 endif ()
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)
