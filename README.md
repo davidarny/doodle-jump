@@ -9,7 +9,7 @@ C++ clone of Doodle Jump
 - [x] first playable version
 - [x] endless map
 - [x] game over state
-- [ ] score
+- [x] score
 - [ ] bonuses
 - [ ] textures
 

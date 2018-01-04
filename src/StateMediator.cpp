@@ -7,7 +7,7 @@ const KeysMap &StateMediator::getKeysMap() const
     return m_keyboardState.getKeysMap();
 }
 
-State StateMediator::getGameState() const
+State StateMediator::getState() const
 {
     return m_gameState.getState();
 }
@@ -21,4 +21,14 @@ void StateMediator::triggerEventHandler(const sf::Event &event)
 void StateMediator::setState(const State state)
 {
     m_gameState.setState(state);
+}
+
+void StateMediator::setScore(const float nextScore)
+{
+    m_gameState.setScore(nextScore);
+}
+
+float StateMediator::getScore() const
+{
+    return m_gameState.getScore();
 }

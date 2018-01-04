@@ -11,6 +11,7 @@
 #include "View.h"
 #include "Menu.h"
 #include "Engine.h"
+#include "Overlay.h"
 
 class EventLoop
 {
@@ -32,6 +33,7 @@ private:
     View m_view;
     StateMediator m_stateMediator{StateMediator(m_window)};
     Menu m_menu{Menu(m_stateMediator)};
+    Overlay m_overlay{Overlay(m_stateMediator)};
     Entities m_entities;
 
     std::shared_ptr<IEntity> m_p_doodler;

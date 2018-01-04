@@ -13,6 +13,8 @@ public:
 
     void eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback);
 
+    void updateScoreString();
+
 private:
     StateMediator &m_stateMediator;
 
@@ -33,6 +35,8 @@ private:
     void createLogo();
 
     void createScore();
+
+    void updateScoreOrigin();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };

@@ -14,11 +14,15 @@ public:
 
     const KeysMap &getKeysMap() const;
 
-    State getGameState() const;
+    State getState() const;
+
+    float getScore() const;
 
     void triggerEventHandler(const sf::Event &event);
 
     void setState(State state);
+
+    void setScore(float nextScore);
 
 private:
     sf::RenderWindow &m_window;

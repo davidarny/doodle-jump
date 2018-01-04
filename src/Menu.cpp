@@ -3,7 +3,7 @@
 
 Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    if (m_font.loadFromMemory(OpenSans, std::size(OpenSans)))
+    if (m_font.loadFromMemory(OPEN_SANS.data, std::size(OPEN_SANS.data)))
     {
         createLogo();
         createScore();
@@ -81,18 +81,16 @@ void Menu::createLogo()
 void Menu::createScore()
 {
     m_score.setFont(m_font);
-    m_score.setString("Your score: 0");
     m_score.setCharacterSize(SCORE_TEXT_SIZE);
     m_score.setFillColor(sf::Color::Black);
-    const sf::FloatRect &bounds = m_score.getLocalBounds();
-    m_score.setOrigin({bounds.left + bounds.width / 2, bounds.top + bounds.height / 2});
+    updateScoreString();
     m_score.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3);
 }
 
 
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    const State state = m_stateMediator.getGameState();
+    const State state = m_stateMediator.getState();
     switch (state)
     {
         case State::MainMenu:
@@ -105,8 +103,8 @@ void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
         default:
             break;
     }
-    target.draw(m_exitButton, states);
     target.draw(m_logo, states);
+    target.draw(m_exitButton, states);
 }
 
 void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback)
@@ -118,7 +116,7 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
     const sf::FloatRect &startButtonBounds = m_startButton.getShape().getGlobalBounds();
     const sf::FloatRect &exitButtonBounds = m_exitButton.getShape().getGlobalBounds();
     const sf::FloatRect &restartButtonBounds = m_restartButton.getShape().getGlobalBounds();
-    const State state = m_stateMediator.getGameState();
+    const State state = m_stateMediator.getState();
     if (startButtonBounds.contains(mousePosition) && state == State::MainMenu)
     {
         m_stateMediator.setState(State::Game);
@@ -130,4 +128,18 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
     {
         std::exit(EXIT_SUCCESS);
     }
+}
+
+void Menu::updateScoreString()
+{
+    const auto score = static_cast<int>(m_stateMediator.getScore() * SCORE_MULTIPLIER);
+    m_score.setString("Your score: " + std::to_string(score));
+    updateScoreOrigin();
+}
+
+
+void Menu::updateScoreOrigin()
+{
+    const sf::FloatRect &bounds = m_score.getLocalBounds();
+    m_score.setOrigin({bounds.left + bounds.width / 2, bounds.top + bounds.height / 2});
 }

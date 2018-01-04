@@ -1,11 +1,11 @@
 #include "Doodler.h"
 #include "EventLoop.h"
-#include "icon.h"
 #include "Platform.h"
+#include "icon.h"
 
 void EventLoop::update()
 {
-    const State state = m_stateMediator.getGameState();
+    const State state = m_stateMediator.getState();
     switch (state)
     {
         case State::Game:
@@ -15,6 +15,10 @@ void EventLoop::update()
             {
                 m_entity->updatePosition(m_deltaTime);
             }
+            m_stateMediator.setScore(m_p_doodler->getPosition().y);
+            m_overlay.updateScoreString();
+            m_overlay.updateScorePosition(m_view.getView().getCenter().y);
+            m_menu.updateScoreString();
             m_engine.checkCollision(m_entities);
             m_engine.addPlatforms(m_entities);
             m_engine.removePlatforms(m_entities);
@@ -39,7 +43,7 @@ void EventLoop::pollEvents()
 
 void EventLoop::redrawFrame()
 {
-    const State state = m_stateMediator.getGameState();
+    const State state = m_stateMediator.getState();
     switch (state)
     {
         case State::Game:
@@ -58,6 +62,7 @@ void EventLoop::drawGameScreen()
 {
     m_window.clear(sf::Color::White);
     m_window.setView(m_view.getView());
+    m_window.draw(m_overlay);
     for (auto &&m_entity : m_entities)
     {
         m_window.draw(*m_entity);

@@ -14,10 +14,18 @@ public:
 
     void setState(State state);
 
+    float getScore() const;
+
+    void setScore(float nextScore);
+
 private:
     sf::RenderWindow &m_window;
 
+    float m_score{0.f};
+
     State m_state{State::MainMenu};
+
+    float positionToScore(float position);
 };
 
 #endif //DOODLE_JUMP_GAMESTATE_H

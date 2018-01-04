@@ -20,11 +20,13 @@ static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
 static const unsigned MAX_PRECISION_COUNT = 128;
 static const short DEAD_TIME = 3;
+static const float SCORE_MULTIPLIER = 0.1f;
 
 /// Menu params
 static const unsigned BASE_MARGIN = 20;
 static const unsigned BUTTON_TEXT_SIZE = 30;
 static const unsigned LOGO_TEXT_SIZE = 50;
 static const unsigned SCORE_TEXT_SIZE = 30;
+static const unsigned GAME_SCORE_TEXT_SIZE = 20;
 
 #endif //DOODLE_JUMP_CONSTS_H

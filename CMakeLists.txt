@@ -40,7 +40,9 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/Menu.h
         src/opensans.h
         src/Button.cpp
-        src/Button.h)
+        src/Button.h
+        src/Overlay.cpp
+        src/Overlay.h)
 else ()
     add_executable(doodle-jump
         resources
@@ -71,7 +73,9 @@ else ()
         src/Menu.h
         src/opensans.h
         src/Button.cpp
-        src/Button.h)
+        src/Button.h
+        src/Overlay.cpp
+        src/Overlay.h)
 endif ()
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)
