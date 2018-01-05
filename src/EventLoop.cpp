@@ -1,7 +1,7 @@
 #include "Doodler.h"
 #include "EventLoop.h"
 #include "Platform.h"
-#include "icon.h"
+#include "resources/icon.h"
 
 void EventLoop::update()
 {

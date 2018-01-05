@@ -18,7 +18,7 @@ static const float G = 9.8f;
 static const float TIME_ACCELERATOR = 7.5f;
 static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 30;
-static const unsigned MAX_PRECISION_COUNT = 128;
+static const unsigned MAX_PRECISION_COUNT = 64;
 static const short DEAD_TIME = 3;
 static const float SCORE_MULTIPLIER = 0.1f;
 

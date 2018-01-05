@@ -12,7 +12,6 @@ endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
     add_executable(doodle-jump WIN32
-        resources
         src/main.cpp
         src/consts.h
         src/EventLoop.cpp
@@ -29,7 +28,7 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/KeyboardState.h
         src/View.cpp
         src/View.h
-        src/icon.h
+        src/resources/icon.h
         src/GameState.cpp
         src/GameState.h
         src/IState.h
@@ -38,14 +37,13 @@ if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
         src/StateMediator.h
         src/Menu.cpp
         src/Menu.h
-        src/opensans.h
+        src/resources/opensans.h
         src/Button.cpp
         src/Button.h
         src/Overlay.cpp
         src/Overlay.h)
 else ()
     add_executable(doodle-jump
-        resources
         src/main.cpp
         src/consts.h
         src/EventLoop.cpp
@@ -62,7 +60,7 @@ else ()
         src/KeyboardState.h
         src/View.cpp
         src/View.h
-        src/icon.h
+        src/resources/icon.h
         src/GameState.cpp
         src/GameState.h
         src/IState.h
@@ -71,7 +69,7 @@ else ()
         src/StateMediator.h
         src/Menu.cpp
         src/Menu.h
-        src/opensans.h
+        src/resources/opensans.h
         src/Button.cpp
         src/Button.h
         src/Overlay.cpp
@@ -116,5 +114,3 @@ if (${BZIP2_FOUND})
     target_include_directories(doodle-jump PRIVATE ${BZIP2_INCLUDE_DIR})
     target_link_libraries(doodle-jump ${BZIP2_LIBRARIES})
 endif ()
-
-file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

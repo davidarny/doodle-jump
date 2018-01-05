@@ -1,6 +1,6 @@
 #include "Overlay.h"
 #include "consts.h"
-#include "opensans.h"
+#include "resources/opensans.h"
 
 Overlay::Overlay(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {

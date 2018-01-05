@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include "opensans.h"
+#include "resources/opensans.h"
 
 Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
