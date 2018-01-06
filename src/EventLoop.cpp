@@ -1,7 +1,7 @@
 #include "Doodler.h"
 #include "EventLoop.h"
 #include "Platform.h"
-#include "resources/icon.h"
+#include "Assets.h"
 
 void EventLoop::update()
 {
@@ -89,9 +89,9 @@ void EventLoop::createWindow()
     m_window.requestFocus();
 
     sf::Image icon;
-    if (icon.loadFromMemory(ICON_IMAGE.data, std::size(ICON_IMAGE.data)))
+    if (icon.loadFromMemory(Assets::ICON.data, Assets::ICON.size))
     {
-        m_window.setIcon(ICON_IMAGE.width, ICON_IMAGE.height, icon.getPixelsPtr());
+        m_window.setIcon(ICON_SIZE, ICON_SIZE, icon.getPixelsPtr());
     }
 }
 

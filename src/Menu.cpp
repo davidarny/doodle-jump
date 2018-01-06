@@ -1,9 +1,10 @@
 #include "Menu.h"
-#include "resources/opensans.h"
+#include "Assets.h"
 
 Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    if (m_font.loadFromMemory(OPEN_SANS.data, std::size(OPEN_SANS.data)))
+    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.size
+    ))
     {
         createLogo();
         createScore();

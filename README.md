@@ -15,10 +15,13 @@ C++ clone of Doodle Jump
 
 ## Requirements
 
-Library `SFML`  must be located in `lib/sfml`. If folder not found default settings of `CMake` will be accepted
-
-All necessary modules must be placed into `cmake_modules`. If folder not found default settings of `CMake` will be accepted
 
 [CMake](https://cmake.org/) - compilation processor
 
 [MinGW](https://nuwen.net/) - compiler
+
+## Dependencies
+
+[SFML](https://www.sfml-dev.org/) - multimedia library
+
+[incbin](https://github.com/graphitemaster/incbin) - Include binary files in C/C++
