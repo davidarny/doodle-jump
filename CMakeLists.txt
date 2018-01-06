@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+endif ()
+
 project(doodle-jump)
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
     add_executable(doodle-jump WIN32
@@ -82,8 +82,8 @@ if (EXISTS ${CMAKE_SOURCE_DIR}/cmake_modules)
     set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 endif ()
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/lib/sfml/)
-    set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/sfml/")
+if (EXISTS ${CMAKE_SOURCE_DIR}/lib/SFML/)
+    set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/SFML/")
 endif ()
 
 set(SFML_STATIC_LIBRARIES TRUE)
