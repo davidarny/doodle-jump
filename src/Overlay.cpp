@@ -1,10 +1,10 @@
 #include "Overlay.h"
 #include "consts.h"
-#include "resources/opensans.h"
+#include "Assets.h"
 
 Overlay::Overlay(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    if (m_font.loadFromMemory(OPEN_SANS.data, std::size(OPEN_SANS.data)))
+    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.size))
     {
         createScore();
     } else

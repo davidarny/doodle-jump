@@ -1,80 +1,54 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+endif ()
+
 project(doodle-jump)
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif ()
+set(NO_CONSOLE "")
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
-    add_executable(doodle-jump WIN32
-        src/main.cpp
-        src/consts.h
-        src/EventLoop.cpp
-        src/EventLoop.h
-        src/Doodler.cpp
-        src/Doodler.h
-        src/IEntity.h
-        src/Platform.cpp
-        src/Platform.h
-        src/IPhysicsObject.h
-        src/Engine.cpp
-        src/Engine.h
-        src/KeyboardState.cpp
-        src/KeyboardState.h
-        src/View.cpp
-        src/View.h
-        src/resources/icon.h
-        src/GameState.cpp
-        src/GameState.h
-        src/IState.h
-        src/enums.h
-        src/StateMediator.cpp
-        src/StateMediator.h
-        src/Menu.cpp
-        src/Menu.h
-        src/resources/opensans.h
-        src/Button.cpp
-        src/Button.h
-        src/Overlay.cpp
-        src/Overlay.h)
-else ()
-    add_executable(doodle-jump
-        src/main.cpp
-        src/consts.h
-        src/EventLoop.cpp
-        src/EventLoop.h
-        src/Doodler.cpp
-        src/Doodler.h
-        src/IEntity.h
-        src/Platform.cpp
-        src/Platform.h
-        src/IPhysicsObject.h
-        src/Engine.cpp
-        src/Engine.h
-        src/KeyboardState.cpp
-        src/KeyboardState.h
-        src/View.cpp
-        src/View.h
-        src/resources/icon.h
-        src/GameState.cpp
-        src/GameState.h
-        src/IState.h
-        src/enums.h
-        src/StateMediator.cpp
-        src/StateMediator.h
-        src/Menu.cpp
-        src/Menu.h
-        src/resources/opensans.h
-        src/Button.cpp
-        src/Button.h
-        src/Overlay.cpp
-        src/Overlay.h)
+    set(NO_CONSOLE WIN32)
 endif ()
+
+add_executable(doodle-jump ${NO_CONSOLE}
+    resources
+    lib/incbin/incbin.h
+    src/main.cpp
+    src/consts.h
+    src/EventLoop.cpp
+    src/EventLoop.h
+    src/Doodler.cpp
+    src/Doodler.h
+    src/IEntity.h
+    src/Platform.cpp
+    src/Platform.h
+    src/IPhysicsObject.h
+    src/Engine.cpp
+    src/Engine.h
+    src/KeyboardState.cpp
+    src/KeyboardState.h
+    src/View.cpp
+    src/View.h
+    src/GameState.cpp
+    src/GameState.h
+    src/IState.h
+    src/enums.h
+    src/StateMediator.cpp
+    src/StateMediator.h
+    src/Menu.cpp
+    src/Menu.h
+    src/Button.cpp
+    src/Button.h
+    src/Overlay.cpp
+    src/Overlay.h
+    src/Assets.cpp
+    src/Assets.h)
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)
 
@@ -82,8 +56,8 @@ if (EXISTS ${CMAKE_SOURCE_DIR}/cmake_modules)
     set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 endif ()
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/lib/sfml/)
-    set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/sfml/")
+if (EXISTS ${CMAKE_SOURCE_DIR}/lib/SFML/)
+    set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/SFML/")
 endif ()
 
 set(SFML_STATIC_LIBRARIES TRUE)
