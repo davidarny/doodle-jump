@@ -15,6 +15,7 @@ C++ clone of Doodle Jump
 
 ## Requirements
 
+Only x64 support guaranteed!
 
 [CMake](https://cmake.org/) - compilation processor
 
