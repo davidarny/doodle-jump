@@ -4,7 +4,7 @@
 
 Overlay::Overlay(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.size))
+    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.length))
     {
         createScore();
     } else

@@ -43,12 +43,12 @@ add_executable(doodle-jump ${NO_CONSOLE}
     src/StateMediator.h
     src/Menu.cpp
     src/Menu.h
-    src/Button.cpp
-    src/Button.h
     src/Overlay.cpp
     src/Overlay.h
     src/Assets.cpp
-    src/Assets.h)
+    src/Assets.h
+    src/Sprite.cpp
+    src/Sprite.h)
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)
 

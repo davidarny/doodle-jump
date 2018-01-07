@@ -3,16 +3,11 @@
 Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
     m_shape.setSize(m_size);
-    m_shape.setOrigin(m_size.x / 2, m_size.x / 2);
+    m_shape.setOrigin(m_size / 2.f);
     m_shape.setPosition(m_position);
-    m_shape.setFillColor(sf::Color::Red);
-    m_shape.setOutlineColor(sf::Color::Black);
-    m_shape.setOutlineThickness(m_outlineThickness);
-
-    m_size.x += m_outlineThickness;
-    m_size.y += m_outlineThickness;
 
     setPosition(m_position);
+    setOrigin(m_size / 2.f);
 }
 
 void Doodler::updatePosition(const float deltaTime)
@@ -20,13 +15,14 @@ void Doodler::updatePosition(const float deltaTime)
     const float dtPhysics = deltaTime / MAX_PRECISION_COUNT;
     for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
     {
-        setVerticalPosition(MOVE_SPEED, dtPhysics);
+        setHorizontalPosition(MOVE_SPEED, dtPhysics);
         m_timeAccumulator += dtPhysics * TIME_ACCELERATOR;
         const float nextY = getNextY();
         const sf::Vector2f nextPosition = {m_position.x, nextY};
         m_shape.setPosition(nextPosition);
         setFallingState(nextY);
         setPosition(nextPosition);
+        m_doodlerSprite.setPosition(nextPosition);
         checkCollision();
     }
     if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
@@ -48,7 +44,7 @@ void Doodler::checkCollision()
     }
 }
 
-void Doodler::setVerticalPosition(const float nextX, const float deltaTime)
+void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
 {
     const KeysMap &keysMap = m_stateMediator.getKeysMap();
     const sf::FloatRect bounds = getBounds();
@@ -94,7 +90,7 @@ bool Doodler::getFallingState() const
 
 void Doodler::setNextY()
 {
-    m_position.y = m_floor - m_size.y / 2 - m_outlineThickness;
+    m_position.y = m_floor - m_size.y / 2;
 }
 
 float Doodler::getNextY() const
@@ -143,5 +139,20 @@ const std::function<bool(float, float)> Doodler::areCloseRelative()
 
 void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_shape, states);
+    target.draw(m_doodlerSprite, states);
+}
+
+void Doodler::eventHandler(const sf::Event &event)
+{
+    if (event.type != sf::Event::KeyPressed)
+    {
+        return;
+    }
+    if (event.key.code == sf::Keyboard::Left)
+    {
+        m_doodlerSprite.setScale({-DOODLER_SCALE.x, DOODLER_SCALE.y});
+    } else if (event.key.code == sf::Keyboard::Right)
+    {
+        m_doodlerSprite.setScale(DOODLER_SCALE);
+    }
 }

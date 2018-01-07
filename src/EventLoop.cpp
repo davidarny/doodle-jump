@@ -1,11 +1,14 @@
 #include "Doodler.h"
 #include "EventLoop.h"
 #include "Platform.h"
-#include "Assets.h"
 
 void EventLoop::update()
 {
     const State state = m_stateMediator.getState();
+    const sf::Vector2f &viewCenter = m_view.getView().getCenter();
+
+    m_backgroundSprite.setPosition({0.f, viewCenter.y});
+
     switch (state)
     {
         case State::Game:
@@ -17,7 +20,7 @@ void EventLoop::update()
             }
             m_stateMediator.setScore(m_p_doodler->getPosition().y);
             m_overlay.updateScoreString();
-            m_overlay.updateScorePosition(m_view.getView().getCenter().y);
+            m_overlay.updateScorePosition(viewCenter.y);
             m_menu.updateScoreString();
             m_engine.checkCollision(m_entities);
             m_engine.addPlatforms(m_entities);
@@ -36,6 +39,7 @@ void EventLoop::pollEvents()
     while (m_window.pollEvent(event))
     {
         const sf::Vector2f &mousePosition = sf::Vector2f(sf::Mouse::getPosition(m_window));
+        m_p_doodler->eventHandler(event);
         m_stateMediator.triggerEventHandler(event);
         m_menu.eventHandler(event, mousePosition, std::bind(&EventLoop::restart, this));
     }
@@ -62,6 +66,7 @@ void EventLoop::drawGameScreen()
 {
     m_window.clear(sf::Color::White);
     m_window.setView(m_view.getView());
+    m_window.draw(m_backgroundSprite);
     m_window.draw(m_overlay);
     for (auto &&m_entity : m_entities)
     {
@@ -74,8 +79,9 @@ void EventLoop::drawMenuScreen()
 {
     sf::View &view = m_view.getView();
     view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-    m_window.setView(view);
     m_window.clear(sf::Color::White);
+    m_window.setView(view);
+    m_window.draw(m_backgroundSprite);
     m_window.draw(m_menu);
     m_window.display();
 }
@@ -89,7 +95,7 @@ void EventLoop::createWindow()
     m_window.requestFocus();
 
     sf::Image icon;
-    if (icon.loadFromMemory(Assets::ICON.data, Assets::ICON.size))
+    if (icon.loadFromMemory(Assets::ICON.data, Assets::ICON.length))
     {
         m_window.setIcon(ICON_SIZE, ICON_SIZE, icon.getPixelsPtr());
     }

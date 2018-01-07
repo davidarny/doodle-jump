@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "StateMediator.h"
-#include "Button.h"
+#include "Sprite.h"
 #include "consts.h"
 
 class Menu : public sf::Drawable
@@ -22,9 +22,9 @@ private:
     sf::Text m_logo;
     sf::Text m_score;
 
-    Button m_startButton;
-    Button m_exitButton;
-    Button m_restartButton;
+    std::unique_ptr<Sprite> m_p_startButton;
+    std::unique_ptr<Sprite> m_p_exitButton;
+    std::unique_ptr<Sprite> m_p_restartButton;
 
     void createStartButton();
 

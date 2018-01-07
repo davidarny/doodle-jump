@@ -26,6 +26,8 @@ private:
 
     void processCollision(const std::shared_ptr<IEntity> &p_entity);
 
+    bool shouldProcess(const std::shared_ptr<IEntity> &p_entity);
+
     bool doesIntersect(const std::shared_ptr<IEntity> &p_entity) const;
 };
 

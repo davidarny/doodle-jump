@@ -12,10 +12,14 @@
 #include "Menu.h"
 #include "Engine.h"
 #include "Overlay.h"
+#include "Sprite.h"
+#include "Assets.h"
 
 class EventLoop
 {
 public:
+    EventLoop() = default;
+
     void pollEvents();
 
     void update();
@@ -27,6 +31,12 @@ public:
     const sf::RenderWindow &getWindow() const;
 
 private:
+    Sprite m_backgroundSprite = Sprite(SpriteOptions{Assets::BACKGROUND.length,
+                                                     Assets::BACKGROUND.data,
+                                                     {0.f, BACKGROUND_SIZE.y},
+                                                     BACKGROUND_SCALE,
+                                                     false,
+                                                     true});
     sf::RenderWindow m_window;
     sf::Clock m_clock;
     Engine m_engine;

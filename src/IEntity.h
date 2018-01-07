@@ -15,6 +15,8 @@ public:
 
     virtual bool getFallingState() const { return false; };
 
+    virtual void eventHandler(const sf::Event &event) { (void) &event; };
+
 private:
     virtual void checkCollision() {};
 };

@@ -3,8 +3,7 @@
 
 Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.size
-    ))
+    if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.length))
     {
         createLogo();
         createScore();
@@ -20,52 +19,36 @@ Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 
 void Menu::createStartButton()
 {
-    ButtonOptions buttonOptions;
-    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
-    buttonOptions.fillColor = sf::Color::Red;
-    buttonOptions.outlineColor = sf::Color::Black;
-    buttonOptions.outlineThickness = 2;
-    buttonOptions.position = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f};
-    buttonOptions.font = sf::Font(m_font);
-    buttonOptions.text = "Start game";
-    buttonOptions.textSize = BUTTON_TEXT_SIZE;
-    buttonOptions.textColor = sf::Color::White;
-
-    m_startButton = Button(buttonOptions);
+    m_p_startButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::PLAY_BUTTON.length,
+                                                                    Assets::PLAY_BUTTON.data,
+                                                                    PLAY_BUTTON_SIZE,
+                                                                    {1.f, 1.f},
+                                                                    false,
+                                                                    true}));
+    m_p_startButton->setPosition({WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f});
 }
 
 void Menu::createExitButton()
 {
-    const sf::RectangleShape &startButtonShape = m_startButton.getShape();
-    const float topOffset = startButtonShape.getPosition().y + startButtonShape.getSize().y + BASE_MARGIN * 2;
-    ButtonOptions buttonOptions;
-    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
-    buttonOptions.fillColor = sf::Color::Black;
-    buttonOptions.outlineColor = sf::Color::Red;
-    buttonOptions.outlineThickness = 2;
-    buttonOptions.position = {WINDOW_WIDTH / 2, topOffset};
-    buttonOptions.font = sf::Font(m_font);
-    buttonOptions.text = "Exit game";
-    buttonOptions.textSize = BUTTON_TEXT_SIZE;
-    buttonOptions.textColor = sf::Color::White;
-
-    m_exitButton = Button(buttonOptions);
+    const float topOffset = m_p_startButton->getPosition().y + m_p_startButton->getSize().y + BASE_MARGIN * 2;
+    m_p_exitButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::CANCEL_BUTTON.length,
+                                                                   Assets::CANCEL_BUTTON.data,
+                                                                   CANCEL_BUTTON_SIZE,
+                                                                   {1.f, 1.f},
+                                                                   false,
+                                                                   true}));
+    m_p_exitButton->setPosition({WINDOW_WIDTH / 2, topOffset});
 }
 
 void Menu::createRestartButton()
 {
-    ButtonOptions buttonOptions;
-    buttonOptions.size = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10};
-    buttonOptions.fillColor = sf::Color::Red;
-    buttonOptions.outlineColor = sf::Color::Black;
-    buttonOptions.outlineThickness = 2;
-    buttonOptions.position = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f};
-    buttonOptions.font = sf::Font(m_font);
-    buttonOptions.text = "Restart game";
-    buttonOptions.textSize = BUTTON_TEXT_SIZE;
-    buttonOptions.textColor = sf::Color::White;
-
-    m_restartButton = Button(buttonOptions);
+    m_p_restartButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::RESTART_BUTTON.length,
+                                                                      Assets::RESTART_BUTTON.data,
+                                                                      RESTART_BUTTON_SIZE,
+                                                                      {1.f, 1.f},
+                                                                      false,
+                                                                      true}));
+    m_p_restartButton->setPosition({WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f});
 }
 
 void Menu::createLogo()
@@ -95,17 +78,17 @@ void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
     switch (state)
     {
         case State::MainMenu:
-            target.draw(m_startButton, states);
+            target.draw(*m_p_startButton, states);
             break;
         case State::GameOver:
             target.draw(m_score, states);
-            target.draw(m_restartButton, states);
+            target.draw(*m_p_restartButton, states);
             break;
         default:
             break;
     }
     target.draw(m_logo, states);
-    target.draw(m_exitButton, states);
+    target.draw(*m_p_exitButton, states);
 }
 
 void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback)
@@ -114,9 +97,9 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
     {
         return;
     }
-    const sf::FloatRect &startButtonBounds = m_startButton.getShape().getGlobalBounds();
-    const sf::FloatRect &exitButtonBounds = m_exitButton.getShape().getGlobalBounds();
-    const sf::FloatRect &restartButtonBounds = m_restartButton.getShape().getGlobalBounds();
+    const sf::FloatRect &startButtonBounds = m_p_startButton->getGlobalBounds();
+    const sf::FloatRect &exitButtonBounds = m_p_exitButton->getGlobalBounds();
+    const sf::FloatRect &restartButtonBounds = m_p_restartButton->getGlobalBounds();
     const State state = m_stateMediator.getState();
     if (startButtonBounds.contains(mousePosition) && state == State::MainMenu)
     {

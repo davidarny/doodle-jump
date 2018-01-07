@@ -4,7 +4,7 @@ long long Platform::multiplier = 1;
 
 void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_shape, states);
+    target.draw(m_platformSprite, states);
 }
 
 // TODO: switch to C++11 random library
@@ -29,22 +29,14 @@ Platform::Platform()
         m_position.x += m_size.x;
     }
 
-    m_shape.setSize(m_size);
-    m_shape.setPosition(m_position);
-    m_shape.setOrigin(m_size.x / 2, m_size.y / 2);
-    m_shape.setFillColor(sf::Color::Green);
-    m_shape.setOutlineColor(sf::Color::Black);
-    m_shape.setOutlineThickness(m_outlineThickness);
-
-    m_size.x += m_outlineThickness;
-    m_size.y += m_outlineThickness;
-
     setPosition(m_position);
+    setOrigin(m_size / 2.f);
 }
 
 void Platform::updatePosition(float)
 {
     m_shape.setPosition(m_position);
+    m_platformSprite.setPosition(m_position);
     setPosition(m_position);
 }
 

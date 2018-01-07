@@ -12,16 +12,16 @@ static const unsigned WINDOW_HEIGHT = 600;
 static const std::string WINDOW_TITLE = "Doodle Jump";
 static const unsigned ANTIALIASING_LEVEL = 8;
 static const unsigned MAX_FPS = 60;
-static const unsigned ICON_SIZE = 32;
 
 /// Game params
 static const float G = 9.8f;
 static const float TIME_ACCELERATOR = 7.5f;
 static const float MOVE_SPEED = 500.f;
-static const size_t PLATFORM_COUNT = 30;
-static const unsigned MAX_PRECISION_COUNT = 64;
+static const size_t PLATFORM_COUNT = 15;
+static const unsigned MAX_PRECISION_COUNT = 256;
 static const short DEAD_TIME = 3;
 static const float SCORE_MULTIPLIER = 0.1f;
+static const float MAX_PROCESS_DISTANCE = 256.f;
 
 /// Menu params
 static const unsigned BASE_MARGIN = 20;
