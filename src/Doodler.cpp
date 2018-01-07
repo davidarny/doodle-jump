@@ -150,9 +150,9 @@ void Doodler::eventHandler(const sf::Event &event)
     }
     if (event.key.code == sf::Keyboard::Left)
     {
-        m_doodlerSprite.setScale({-DOODLER_SCALE.x, DOODLER_SCALE.y});
+        m_doodlerSprite.setScale({-1, 1});
     } else if (event.key.code == sf::Keyboard::Right)
     {
-        m_doodlerSprite.setScale(DOODLER_SCALE);
+        m_doodlerSprite.setScale({1.f, 1.f});
     }
 }

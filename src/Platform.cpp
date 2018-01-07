@@ -2,18 +2,17 @@
 
 long long Platform::multiplier = 1;
 
-void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    target.draw(m_platformSprite, states);
-}
-
 // TODO: switch to C++11 random library
 Platform::Platform()
 {
+    m_shape.setSize(m_size);
+
     m_position.x = rand() % WINDOW_WIDTH;
     long long min = WINDOW_HEIGHT - multiplier * WINDOW_HEIGHT;
     long long max = -multiplier * WINDOW_HEIGHT;
     m_position.y = min + (rand() % static_cast<int>(max - min + 1));
+
+    updatePosition();
 
     const sf::FloatRect bounds = getBounds();
     const bool isOverRightSide = bounds.width > WINDOW_WIDTH;
@@ -29,11 +28,11 @@ Platform::Platform()
         m_position.x += m_size.x;
     }
 
-    setPosition(m_position);
+    updatePosition();
     setOrigin(m_size / 2.f);
 }
 
-void Platform::updatePosition(float)
+void Platform::updatePosition()
 {
     m_shape.setPosition(m_position);
     m_platformSprite.setPosition(m_position);
@@ -52,10 +51,11 @@ const sf::Vector2f &Platform::getSize() const
 
 sf::FloatRect Platform::getBounds() const
 {
-    const float left = m_position.x - m_size.x / 2;
-    const float right = m_position.x + m_size.x / 2;
-    const float top = m_position.y - m_size.y / 2;
-    const float bottom = m_position.y + m_size.y / 2;
+    const sf::Vector2f &position = m_shape.getPosition();
+    const float left = position.x - m_size.x / 2;
+    const float right = position.x + m_size.x / 2;
+    const float top = position.y - m_size.y / 2;
+    const float bottom = position.y + m_size.y / 2;
     return sf::FloatRect(left, top, right, bottom);
 }
 
@@ -67,4 +67,9 @@ void Platform::increment()
 void Platform::reset()
 {
     multiplier = 1;
+}
+
+void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_platformSprite, states);
 }

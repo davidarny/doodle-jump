@@ -15,17 +15,16 @@ static const unsigned MAX_FPS = 60;
 
 /// Game params
 static const float G = 9.8f;
-static const float TIME_ACCELERATOR = 7.5f;
+static const float TIME_ACCELERATOR = 5.f;
 static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 15;
-static const unsigned MAX_PRECISION_COUNT = 256;
-static const short DEAD_TIME = 3;
+static const unsigned MAX_PRECISION_COUNT = 64;
+static const short DEAD_TIME = 5;
 static const float SCORE_MULTIPLIER = 0.1f;
 static const float MAX_PROCESS_DISTANCE = 256.f;
 
 /// Menu params
 static const unsigned BASE_MARGIN = 20;
-static const unsigned BUTTON_TEXT_SIZE = 30;
 static const unsigned LOGO_TEXT_SIZE = 50;
 static const unsigned SCORE_TEXT_SIZE = 30;
 static const unsigned GAME_SCORE_TEXT_SIZE = 20;

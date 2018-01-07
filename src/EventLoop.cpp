@@ -67,11 +67,11 @@ void EventLoop::drawGameScreen()
     m_window.clear(sf::Color::White);
     m_window.setView(m_view.getView());
     m_window.draw(m_backgroundSprite);
-    m_window.draw(m_overlay);
     for (auto &&m_entity : m_entities)
     {
         m_window.draw(*m_entity);
     }
+    m_window.draw(m_overlay);
     m_window.display();
 }
 
@@ -97,7 +97,7 @@ void EventLoop::createWindow()
     sf::Image icon;
     if (icon.loadFromMemory(Assets::ICON.data, Assets::ICON.length))
     {
-        m_window.setIcon(ICON_SIZE, ICON_SIZE, icon.getPixelsPtr());
+        m_window.setIcon(ICON_IMAGE_SIZE.x, ICON_IMAGE_SIZE.y, icon.getPixelsPtr());
     }
 }
 
@@ -128,5 +128,6 @@ void EventLoop::restart()
     Platform::reset();
     m_engine.reset();
     m_entities.clear();
+    m_stateMediator.resetScore();
     init();
 }

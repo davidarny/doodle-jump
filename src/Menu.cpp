@@ -21,8 +21,7 @@ void Menu::createStartButton()
 {
     m_p_startButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::PLAY_BUTTON.length,
                                                                     Assets::PLAY_BUTTON.data,
-                                                                    PLAY_BUTTON_SIZE,
-                                                                    {1.f, 1.f},
+                                                                    BUTTON_SPRITE_SIZE,
                                                                     false,
                                                                     true}));
     m_p_startButton->setPosition({WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f});
@@ -33,8 +32,7 @@ void Menu::createExitButton()
     const float topOffset = m_p_startButton->getPosition().y + m_p_startButton->getSize().y + BASE_MARGIN * 2;
     m_p_exitButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::CANCEL_BUTTON.length,
                                                                    Assets::CANCEL_BUTTON.data,
-                                                                   CANCEL_BUTTON_SIZE,
-                                                                   {1.f, 1.f},
+                                                                   BUTTON_SPRITE_SIZE,
                                                                    false,
                                                                    true}));
     m_p_exitButton->setPosition({WINDOW_WIDTH / 2, topOffset});
@@ -44,8 +42,7 @@ void Menu::createRestartButton()
 {
     m_p_restartButton = std::make_unique<Sprite>(Sprite(SpriteOptions{Assets::RESTART_BUTTON.length,
                                                                       Assets::RESTART_BUTTON.data,
-                                                                      RESTART_BUTTON_SIZE,
-                                                                      {1.f, 1.f},
+                                                                      BUTTON_SPRITE_SIZE,
                                                                       false,
                                                                       true}));
     m_p_restartButton->setPosition({WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.5f});

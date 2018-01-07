@@ -47,3 +47,8 @@ float GameState::positionToScore(const float position)
         return static_cast<float>(WINDOW_HEIGHT) + std::abs(position);
     }
 }
+
+void GameState::resetScore()
+{
+    m_score = 0.f;
+}

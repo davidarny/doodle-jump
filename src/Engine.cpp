@@ -29,14 +29,14 @@ void Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
     if (doesIntersect(p_entity) && m_p_doodler->getFallingState() && !m_shouldSetFloor)
     {
         m_shouldSetFloor = true;
-        m_floor = p_entity->getPosition().y - p_entity->getSize().y;
+        m_floor = p_entity->getPosition().y;
     }
 }
 
 bool Engine::doesIntersect(const std::shared_ptr<IEntity> &p_entity) const
 {
-    sf::Rect<float> rhs(p_entity->getPosition(), p_entity->getSize());
-    sf::Rect<float> lhs(m_p_doodler->getPosition(), m_p_doodler->getSize());
+    sf::FloatRect rhs(p_entity->getPosition(), p_entity->getSize());
+    sf::FloatRect lhs(m_p_doodler->getPosition(), m_p_doodler->getSize());
     return lhs.intersects(rhs);
 }
 

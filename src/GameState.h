@@ -18,6 +18,8 @@ public:
 
     void setScore(float nextScore);
 
+    void resetScore();
+
 private:
     sf::RenderWindow &m_window;
 

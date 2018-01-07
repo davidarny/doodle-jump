@@ -14,7 +14,7 @@ class Platform : public IEntity
 public:
     Platform();
 
-    void updatePosition(float) override;
+    void updatePosition() override;
 
     EntityType getType() const override;
 
@@ -27,13 +27,11 @@ public:
 private:
     Sprite m_platformSprite = Sprite(SpriteOptions{Assets::PLATFORM.length,
                                                    Assets::PLATFORM.data,
-                                                   PLATFORM_SIZE,
-                                                   PLATFORM_SCALE,
-                                                   false,
-                                                   true});
+                                                   PLATFORM_SPRITE_SIZE,
+                                                   false, true});
     sf::RectangleShape m_shape;
     sf::Vector2f m_position;
-    sf::Vector2f m_size{sf::Vector2f(30.f, 5.f)};
+    sf::Vector2f m_size{PLATFORM_SPRITE_SIZE};
 
     static long long multiplier;
 

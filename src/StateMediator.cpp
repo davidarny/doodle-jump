@@ -32,3 +32,8 @@ float StateMediator::getScore() const
 {
     return m_gameState.getScore();
 }
+
+void StateMediator::resetScore()
+{
+    m_gameState.resetScore();
+}

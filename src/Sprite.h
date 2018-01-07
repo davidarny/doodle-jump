@@ -8,7 +8,6 @@ struct SpriteOptions
     const unsigned length;
     const unsigned char *data;
     const sf::Vector2f &size;
-    const sf::Vector2f &scale;
     const bool repeat;
     const bool smooth;
 };

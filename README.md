@@ -11,7 +11,7 @@ C++ clone of Doodle Jump
 - [x] game over state
 - [x] score
 - [ ] bonuses
-- [ ] textures
+- [x] textures
 
 ## Requirements
 

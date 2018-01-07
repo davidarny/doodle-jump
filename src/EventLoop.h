@@ -33,10 +33,8 @@ public:
 private:
     Sprite m_backgroundSprite = Sprite(SpriteOptions{Assets::BACKGROUND.length,
                                                      Assets::BACKGROUND.data,
-                                                     {0.f, BACKGROUND_SIZE.y},
-                                                     BACKGROUND_SCALE,
-                                                     false,
-                                                     true});
+                                                     {0.f, BACKGROUND_SPRITE_SIZE.y},
+                                                     false, true});
     sf::RenderWindow m_window;
     sf::Clock m_clock;
     Engine m_engine;

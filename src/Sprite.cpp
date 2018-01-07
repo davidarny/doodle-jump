@@ -18,5 +18,4 @@ Sprite::Sprite(const SpriteOptions &spriteOptions) : m_spriteOptions(spriteOptio
     m_p_sprite->setTexture(*m_p_texture);
     setSize(spriteOptions.size);
     setOrigin(spriteOptions.size / 2.f);
-    setScale(spriteOptions.scale);
 }

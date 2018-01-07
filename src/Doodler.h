@@ -33,10 +33,8 @@ public:
 private:
     Sprite m_doodlerSprite = Sprite(SpriteOptions{Assets::DOODLER.length,
                                                   Assets::DOODLER.data,
-                                                  DOODLER_SIZE,
-                                                  DOODLER_SCALE,
-                                                  false,
-                                                  true});
+                                                  DOODLER_SPRITE_SIZE,
+                                                  false, true});
     StateMediator &m_stateMediator;
 
     const float m_initialSpeed = 75.f;
@@ -44,7 +42,7 @@ private:
     float m_floor{static_cast<float>(WINDOW_HEIGHT)};
     bool m_isFalling{false};
 
-    sf::Vector2f m_size{sf::Vector2f(55.f, 50.f)};
+    sf::Vector2f m_size{DOODLER_SPRITE_SIZE};
     sf::Vector2f m_position{sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2)};
     sf::RectangleShape m_shape{sf::RectangleShape()};
 
