@@ -17,12 +17,11 @@ void Doodler::updatePosition(const float deltaTime)
     {
         setHorizontalPosition(MOVE_SPEED, dtPhysics);
         m_timeAccumulator += dtPhysics * TIME_ACCELERATOR;
-        const float nextY = getNextY();
-        const sf::Vector2f nextPosition = {m_position.x, nextY};
+        const sf::Vector2f nextPosition = {m_position.x, getNextY()};
+        setFallingState(nextPosition.y);
         m_shape.setPosition(nextPosition);
-        setFallingState(nextY);
-        setPosition(nextPosition);
         m_doodlerSprite.setPosition(nextPosition);
+        setPosition(nextPosition);
         checkCollision();
     }
     if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
@@ -78,7 +77,7 @@ void Doodler::setFloor(const float nextFloor)
     m_floor = nextFloor;
 }
 
-void Doodler::setFallingState(float nextY)
+void Doodler::setFallingState(const float nextY)
 {
     m_isFalling = getPosition().y - nextY <= 0;
 }

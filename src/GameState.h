@@ -21,11 +21,9 @@ public:
     void resetScore();
 
 private:
+    float m_score = 0.f;
     sf::RenderWindow &m_window;
-
-    float m_score{0.f};
-
-    State m_state{State::MainMenu};
+    State m_state = State::MainMenu;
 
     float positionToScore(float position);
 };

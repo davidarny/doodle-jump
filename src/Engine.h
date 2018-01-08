@@ -8,6 +8,8 @@
 class Engine
 {
 public:
+    explicit Engine(const std::shared_ptr<IEntity> &p_doodler);
+
     void checkCollision(Entities &entities);
 
     void addPlatforms(Entities &entities);
@@ -19,10 +21,9 @@ public:
     void reset();
 
 private:
-    std::shared_ptr<IEntity> m_p_doodler;
-    bool m_shouldSetFloor{false};
-
-    float m_floor{static_cast<float>(WINDOW_HEIGHT)};
+    bool m_shouldSetFloor = false;
+    float m_floor = static_cast<float>(WINDOW_HEIGHT);
+    const std::shared_ptr<IEntity> &m_p_doodler;
 
     void processCollision(const std::shared_ptr<IEntity> &p_entity);
 

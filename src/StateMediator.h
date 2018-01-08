@@ -28,8 +28,7 @@ public:
 
 private:
     sf::RenderWindow &m_window;
-
-    KeyboardState m_keyboardState{KeyboardState()};
+    KeyboardState m_keyboardState = KeyboardState();
     GameState m_gameState = GameState(m_window);
 };
 

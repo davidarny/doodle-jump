@@ -1,11 +1,11 @@
 #include "Engine.h"
 #include "Platform.h"
 
+Engine::Engine(const std::shared_ptr<IEntity> &p_doodler) : m_p_doodler(p_doodler) {}
+
 void Engine::checkCollision(Entities &entities)
 {
     m_shouldSetFloor = false;
-
-    m_p_doodler = *std::find_if(entities.begin(), entities.end(), isDoodler());
 
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> void {
         if (m_p_doodler == nullptr || isDoodler()(p_entity) || !shouldProcess(p_entity))

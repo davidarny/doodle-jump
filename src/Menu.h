@@ -17,11 +17,9 @@ public:
 
 private:
     StateMediator &m_stateMediator;
-
     sf::Font m_font;
     sf::Text m_logo;
     sf::Text m_score;
-
     std::unique_ptr<Sprite> m_p_startButton;
     std::unique_ptr<Sprite> m_p_exitButton;
     std::unique_ptr<Sprite> m_p_restartButton;

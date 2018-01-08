@@ -14,7 +14,6 @@ public:
 
 private:
     StateMediator &m_stateMediator;
-
     sf::Font m_font;
     sf::Text m_score;
 

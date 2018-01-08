@@ -18,8 +18,6 @@
 class EventLoop
 {
 public:
-    EventLoop() = default;
-
     void pollEvents();
 
     void update();
@@ -31,22 +29,20 @@ public:
     const sf::RenderWindow &getWindow() const;
 
 private:
+    float m_deltaTime = 0.f;
+    sf::Clock m_clock;
+    sf::RenderWindow m_window;
+    View m_view;
+    StateMediator m_stateMediator = StateMediator(m_window);
+    Entities m_entities;
+    std::shared_ptr<IEntity> m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));
+    Engine m_engine = Engine(m_p_doodler);
+    Menu m_menu = Menu(m_stateMediator);
+    Overlay m_overlay = Overlay(m_stateMediator);
     Sprite m_backgroundSprite = Sprite(SpriteOptions{Assets::BACKGROUND.length,
                                                      Assets::BACKGROUND.data,
                                                      {0.f, BACKGROUND_SPRITE_SIZE.y},
                                                      false, true});
-    sf::RenderWindow m_window;
-    sf::Clock m_clock;
-    Engine m_engine;
-    View m_view;
-    StateMediator m_stateMediator{StateMediator(m_window)};
-    Menu m_menu{Menu(m_stateMediator)};
-    Overlay m_overlay{Overlay(m_stateMediator)};
-    Entities m_entities;
-
-    std::shared_ptr<IEntity> m_p_doodler;
-
-    float m_deltaTime = 0.f;
 
     void createWindow();
 
@@ -55,7 +51,6 @@ private:
     void drawMenuScreen();
 
     void restart();
-
 };
 
 #endif //DOODLE_JUMP_EVENTLOOP_H

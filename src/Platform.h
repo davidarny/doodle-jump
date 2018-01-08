@@ -25,13 +25,13 @@ public:
     static void reset();
 
 private:
+    sf::RectangleShape m_shape;
+    sf::Vector2f m_position;
+    sf::Vector2f m_size = PLATFORM_SPRITE_SIZE;
     Sprite m_platformSprite = Sprite(SpriteOptions{Assets::PLATFORM.length,
                                                    Assets::PLATFORM.data,
                                                    PLATFORM_SPRITE_SIZE,
                                                    false, true});
-    sf::RectangleShape m_shape;
-    sf::Vector2f m_position;
-    sf::Vector2f m_size{PLATFORM_SPRITE_SIZE};
 
     static long long multiplier;
 
