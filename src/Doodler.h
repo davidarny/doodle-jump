@@ -29,7 +29,7 @@ public:
     void eventHandler(const sf::Event &event) override;
 
 private:
-    const float m_initialSpeed = 75.f;
+    const float m_initialSpeed = DOODLER_SPEED;
     float m_timeAccumulator = 0.f;
     float m_floor = static_cast<float>(WINDOW_HEIGHT);
     bool m_isFalling = false;
@@ -60,7 +60,7 @@ private:
 
     float getNextY() const;
 
-    void setNextY();
+    void setNextY(float nextY);
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

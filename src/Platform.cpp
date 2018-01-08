@@ -6,6 +6,8 @@ long long Platform::multiplier = 1;
 Platform::Platform()
 {
     m_shape.setSize(m_size);
+    m_shape.setOrigin(m_size / 2.f);
+    m_shape.setFillColor(sf::Color::Red);
 
     m_position.x = rand() % WINDOW_WIDTH;
     long long min = WINDOW_HEIGHT - multiplier * WINDOW_HEIGHT;
@@ -71,5 +73,9 @@ void Platform::reset()
 
 void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    if (IS_DEBUG)
+    {
+        target.draw(m_shape, states);
+    }
     target.draw(m_platformSprite, states);
 }

@@ -4,6 +4,7 @@ Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size / 2.f);
+    m_shape.setFillColor(sf::Color::Red);
     m_shape.setPosition(m_position);
 
     setPosition(m_position);
@@ -12,18 +13,14 @@ Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 
 void Doodler::updatePosition(const float deltaTime)
 {
-    const float dtPhysics = deltaTime / MAX_PRECISION_COUNT;
-    for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
-    {
-        setHorizontalPosition(MOVE_SPEED, dtPhysics);
-        m_timeAccumulator += dtPhysics * TIME_ACCELERATOR;
-        const sf::Vector2f nextPosition = {m_position.x, getNextY()};
-        setFallingState(nextPosition.y);
-        m_shape.setPosition(nextPosition);
-        m_doodlerSprite.setPosition(nextPosition);
-        setPosition(nextPosition);
-        checkCollision();
-    }
+    setHorizontalPosition(MOVE_SPEED, deltaTime);
+    m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
+    const sf::Vector2f nextPosition = {m_position.x, getNextY()};
+    setFallingState(nextPosition.y);
+    m_shape.setPosition(nextPosition);
+    m_doodlerSprite.setPosition(nextPosition);
+    setPosition(nextPosition);
+    checkCollision();
     if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
     {
         m_stateMediator.setState(State::GameOver);
@@ -33,12 +30,15 @@ void Doodler::updatePosition(const float deltaTime)
 
 void Doodler::checkCollision()
 {
-    const float currentBottomPosition = getBounds().height;
-    const bool isAtZeroLevel = areFuzzyEqual()(currentBottomPosition, m_floor);
-    const bool isGameOverLevel = areFuzzyEqual()(m_floor, WINDOW_HEIGHT);
-    if (isAtZeroLevel && m_isFalling && !isGameOverLevel)
+    const bool shouldCheck = m_floor != -1.f;
+    if (!shouldCheck || !m_isFalling)
     {
-        setNextY();
+        return;
+    }
+    const bool isAtFloorLevel = areFuzzyEqual()(getBounds().height, m_floor);
+    if (isAtFloorLevel)
+    {
+        setNextY(m_floor);
         m_timeAccumulator = 0;
     }
 }
@@ -87,9 +87,9 @@ bool Doodler::getFallingState() const
     return m_isFalling;
 }
 
-void Doodler::setNextY()
+void Doodler::setNextY(const float nextY)
 {
-    m_position.y = m_floor - m_size.y / 2;
+    m_position.y = nextY - m_size.y / 2;
 }
 
 float Doodler::getNextY() const
@@ -138,6 +138,10 @@ const std::function<bool(float, float)> Doodler::areCloseRelative()
 
 void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    if (IS_DEBUG)
+    {
+        target.draw(m_shape, states);
+    }
     target.draw(m_doodlerSprite, states);
 }
 

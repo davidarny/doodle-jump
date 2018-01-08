@@ -8,7 +8,7 @@ void Engine::checkCollision(Entities &entities)
     m_shouldSetFloor = false;
 
     std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> void {
-        if (m_p_doodler == nullptr || isDoodler()(p_entity) || !shouldProcess(p_entity))
+        if (m_p_doodler == nullptr || isDoodler()(p_entity))
         {
             return;
         }
@@ -20,7 +20,7 @@ void Engine::checkCollision(Entities &entities)
         m_p_doodler->setFloor(m_floor);
     } else
     {
-        m_p_doodler->setFloor(WINDOW_HEIGHT);
+        m_p_doodler->setFloor(-1.f);
     }
 }
 
@@ -92,12 +92,4 @@ void Engine::reset()
 {
     m_shouldSetFloor = false;
     m_floor = static_cast<float>(WINDOW_HEIGHT);
-}
-
-bool Engine::shouldProcess(const std::shared_ptr<IEntity> &p_entity)
-{
-    const float doodlerY = m_p_doodler->getPosition().y;
-    const float platformY = p_entity->getPosition().y;
-    const float distance = std::abs(doodlerY - platformY);
-    return distance <= MAX_PROCESS_DISTANCE;
 }

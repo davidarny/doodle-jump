@@ -14,7 +14,7 @@ static const sf::Vector2f BUTTON_SPRITE_SIZE = {220.f, 80.f};
 
 struct BinaryData
 {
-    unsigned length;
+    size_t length;
     const unsigned char *data;
 };
 
@@ -31,6 +31,5 @@ struct Assets
     static BinaryData RESTART_BUTTON;
     static BinaryData CANCEL_BUTTON;
 };
-
 
 #endif //DOODLE_JUMP_ASSETS_H

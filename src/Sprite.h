@@ -5,7 +5,7 @@
 
 struct SpriteOptions
 {
-    const unsigned length;
+    const size_t length;
     const unsigned char *data;
     const sf::Vector2f &size;
     const bool repeat;

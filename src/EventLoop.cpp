@@ -5,22 +5,24 @@
 void EventLoop::update()
 {
     const State state = m_stateMediator.getState();
-    const sf::Vector2f &viewCenter = m_view.getView().getCenter();
-
-    m_backgroundSprite.setPosition({0.f, viewCenter.y});
-
     switch (state)
     {
         case State::Game:
         {
-            m_view.followTo(m_p_doodler);
-            for (auto &&m_entity : m_entities)
+            const float dtPhysics = m_deltaTime / MAX_PRECISION_COUNT;
+            for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
             {
-                m_entity->updatePosition(m_deltaTime);
+                const sf::Vector2f &viewCenter = m_view.getView().getCenter();
+                m_backgroundSprite.setPosition({0.f, viewCenter.y});
+                m_overlay.updateScorePosition(viewCenter.y);
+                m_view.followTo(m_p_doodler);
+                for (auto &&m_entity : m_entities)
+                {
+                    m_entity->updatePosition(dtPhysics);
+                }
             }
             m_stateMediator.setScore(m_p_doodler->getPosition().y);
             m_overlay.updateScoreString();
-            m_overlay.updateScorePosition(viewCenter.y);
             m_menu.updateScoreString();
             m_engine.checkCollision(m_entities);
             m_engine.addPlatforms(m_entities);
@@ -79,6 +81,7 @@ void EventLoop::drawMenuScreen()
 {
     sf::View &view = m_view.getView();
     view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    m_backgroundSprite.setPosition({0.f, view.getCenter().y});
     m_window.clear(sf::Color::White);
     m_window.setView(view);
     m_window.draw(m_backgroundSprite);
