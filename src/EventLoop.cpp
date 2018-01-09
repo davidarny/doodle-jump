@@ -73,6 +73,7 @@ void EventLoop::drawGameScreen()
     {
         m_window.draw(*m_entity);
     }
+    m_window.draw(m_engine);
     m_window.draw(m_overlay);
     m_window.display();
 }
@@ -127,7 +128,7 @@ void EventLoop::init()
 
 void EventLoop::restart()
 {
-    Platform::reset();
+    Platform::resetMultiplier();
     m_engine.reset();
     m_entities.clear();
     m_stateMediator.resetScore();

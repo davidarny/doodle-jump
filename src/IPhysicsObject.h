@@ -12,7 +12,7 @@ public:
 
     virtual EntityType getType() const = 0;
 
-    virtual sf::FloatRect getBounds() const = 0;
+    virtual sf::FloatRect getBoundingCoordinates() const = 0;
 };
 
 #endif //DOODLE_JUMP_IPHYSICSOBJECT_H

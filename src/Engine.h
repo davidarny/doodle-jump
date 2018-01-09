@@ -5,7 +5,7 @@
 #include "Doodler.h"
 #include "IEntity.h"
 
-class Engine
+class Engine : public sf::Drawable
 {
 public:
     explicit Engine(const std::shared_ptr<IEntity> &p_doodler);
@@ -21,13 +21,18 @@ public:
     void reset();
 
 private:
-    bool m_shouldSetFloor = false;
+    sf::RectangleShape m_platformHitbox;
+    sf::RectangleShape m_doodlerHitbox;
+
     float m_floor = static_cast<float>(WINDOW_HEIGHT);
     const std::shared_ptr<IEntity> &m_p_doodler;
 
     bool processCollision(const std::shared_ptr<IEntity> &p_entity);
 
-    bool intersect(const std::shared_ptr<IEntity> &p_entity) const;
+    bool intersect(const std::shared_ptr<IEntity> &p_entity);
+
+protected:
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };
 
 #endif //DOODLE_JUMP_ENGINE_H

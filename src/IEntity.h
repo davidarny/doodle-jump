@@ -11,8 +11,6 @@ class IEntity : public IPhysicsObject, public sf::Drawable, public sf::Transform
 public:
     virtual void updatePosition(float deltaTime) { (void) &deltaTime; };
 
-    virtual void updatePosition() {};
-
     virtual void setFloor(float nextFloor) { (void) &nextFloor; };
 
     virtual bool getFallingState() const { return false; };

@@ -14,7 +14,8 @@ enum class State : size_t
 enum class EntityType : size_t
 {
     Platform = 0,
-    Doodler
+    Doodler,
+    Sprite
 };
 
 #endif //DOODLE_JUMP_ENUMS_H

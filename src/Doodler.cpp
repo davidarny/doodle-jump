@@ -2,10 +2,6 @@
 
 Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
 {
-    m_shape.setSize(m_size);
-    m_shape.setOrigin(m_size / 2.f);
-    m_shape.setFillColor(sf::Color::Red);
-
     setPosition(m_position);
 }
 
@@ -26,23 +22,31 @@ void Doodler::updatePosition(const float deltaTime)
 
 void Doodler::checkCollision()
 {
-    const bool shouldCheck = m_floor != -1.f;
+    const bool shouldCheck = m_floor != WINDOW_HEIGHT * 2;
     if (!shouldCheck || !m_isFalling)
     {
         return;
     }
-    const bool isAtFloorLevel = areFuzzyEqual()(getBounds().height, m_floor);
+
+    const float lhs = getPosition().y + getSize().y / 2;
+    const float rhs = std::abs(std::abs(lhs) - std::abs(m_floor));
+
+    const bool isAtFloorLevel = std::ceil(lhs) == std::ceil(m_floor) ||
+                                std::floor(lhs) == std::floor(m_floor) ||
+                                int(lhs) == int(m_floor) ||
+                                (rhs < COLLISION_TOLERANCE && rhs > 0.f);
+
     if (isAtFloorLevel)
     {
         setNextY(m_floor);
-        m_timeAccumulator = 0;
+        m_timeAccumulator = 0.f;
     }
 }
 
 void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
 {
     const KeysMap &keysMap = m_stateMediator.getKeysMap();
-    const sf::FloatRect bounds = getBounds();
+    const sf::FloatRect bounds = getBoundingCoordinates();
     const bool isMaxRightPosition = bounds.width < WINDOW_WIDTH;
     const bool isMaxLeftPosition = bounds.left > 0;
     if (keysMap.at(sf::Keyboard::Right) && isMaxRightPosition)
@@ -95,50 +99,19 @@ float Doodler::getNextY() const
     return m_position.y - lhs + rhs;
 }
 
-sf::FloatRect Doodler::getBounds() const
+sf::FloatRect Doodler::getBoundingCoordinates() const
 {
     const sf::Vector2f &position = getPosition();
     const float left = position.x - m_size.x / 2;
     const float width = position.x + m_size.x / 2;
-    const float top = position.y - m_size.y / 2;
+    const float top = position.y - m_size.x / 2;
     const float height = position.y + m_size.y / 2;
     return sf::FloatRect(left, top, width, height);
-}
-
-const std::function<bool(float, float)> Doodler::areCloseAbsolute()
-{
-    return [](float lhs, float rhs) -> bool {
-        constexpr float tolerance = 0.001f;
-        return std::abs(lhs - rhs) < tolerance;
-    };
-}
-
-const std::function<bool(float, float)> Doodler::areFuzzyEqual()
-{
-    return [&](float lhs, float rhs) -> bool {
-        if (std::abs(rhs) > 1.f)
-        {
-            return areCloseRelative()(lhs, rhs);
-        }
-        return areCloseAbsolute()(lhs, rhs);
-    };
-}
-
-const std::function<bool(float, float)> Doodler::areCloseRelative()
-{
-    return [](float lhs, float rhs) -> bool {
-        constexpr float tolerance = 0.001f;
-        return std::abs((lhs - rhs) / rhs) < tolerance;
-    };
 }
 
 void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    if (IS_DEBUG)
-    {
-        target.draw(m_shape, states);
-    }
     target.draw(m_spite, states);
 }
 
@@ -150,9 +123,9 @@ void Doodler::eventHandler(const sf::Event &event)
     }
     if (event.key.code == sf::Keyboard::Left)
     {
-        m_spite.setScale({-1, 1});
+        setScale({-1.f, 1.f});
     } else if (event.key.code == sf::Keyboard::Right)
     {
-        m_spite.setScale({1.f, 1.f});
+        setScale({1.f, 1.f});
     }
 }

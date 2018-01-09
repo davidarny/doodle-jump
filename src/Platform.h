@@ -14,25 +14,22 @@ class Platform : public IEntity
 public:
     Platform();
 
-    void updatePosition() override;
-
     EntityType getType() const override;
 
     const sf::Vector2f &getSize() const override;
 
-    static void increment();
+    static void incrementMultiplier();
 
-    static void reset();
+    static void resetMultiplier();
 
 private:
-    sf::RectangleShape m_shape;
     sf::Vector2f m_position;
     sf::Vector2f m_size = PLATFORM_SPRITE_SIZE;
     std::unique_ptr<Sprite> m_p_sprite = std::make_unique<Sprite>(Sprite({
-                                                                                 Assets::PLATFORM.length,
-                                                                                 Assets::PLATFORM.data,
-                                                                                 PLATFORM_SPRITE_SIZE,
-                                                                                 false, true
+                                                                             Assets::PLATFORM.length,
+                                                                             Assets::PLATFORM.data,
+                                                                             PLATFORM_SPRITE_SIZE,
+                                                                             false, true
                                                                          }));
 
     static float multiplier;
@@ -41,7 +38,7 @@ private:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    sf::FloatRect getBounds() const override;
+    sf::FloatRect getBoundingCoordinates() const override;
 };
 
 #endif //DOODLE_JUMP_PLATFORM_H
