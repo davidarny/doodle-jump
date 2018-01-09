@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-long long Platform::multiplier = 1;
+float Platform::multiplier = 1.f;
 
 // TODO: switch to C++11 random library
 Platform::Platform()
@@ -10,8 +10,8 @@ Platform::Platform()
     m_shape.setFillColor(sf::Color::Red);
 
     m_position.x = rand() % WINDOW_WIDTH;
-    long long min = WINDOW_HEIGHT - multiplier * WINDOW_HEIGHT;
-    long long max = -multiplier * WINDOW_HEIGHT;
+    const float min = WINDOW_HEIGHT - multiplier * WINDOW_HEIGHT;
+    const float max = -multiplier * WINDOW_HEIGHT;
     m_position.y = min + (rand() % static_cast<int>(max - min + 1));
 
     updatePosition();
@@ -32,13 +32,41 @@ Platform::Platform()
 
     updatePosition();
     setOrigin(m_size / 2.f);
+    setRandomBonusSprites();
 }
 
 void Platform::updatePosition()
 {
     m_shape.setPosition(m_position);
-    m_platformSprite.setPosition(m_position);
+    m_p_sprite->setPosition(m_position);
     setPosition(m_position);
+}
+
+void Platform::setRandomBonusSprites()
+{
+    if (rand() % PLATFORM_COUNT != 0)
+    {
+        return;
+    }
+    if (rand() % 3 > 0)
+    {
+        m_p_sprite = std::make_unique<Sprite>(Sprite({
+                                                             Assets::PLATFORM_SPRING.length,
+                                                             Assets::PLATFORM_SPRING.data,
+                                                             PLATFORM_SPRING_SPRITE_SIZE,
+                                                             false, true
+                                                     }));
+    } else
+    {
+        m_p_sprite = std::make_unique<Sprite>(Sprite({
+                                                             Assets::PLATFORM_TRAMPOLINE.length,
+                                                             Assets::PLATFORM_TRAMPOLINE.data,
+                                                             PLATFORM_TRAMPOLINE_SPRITE_SIZE,
+                                                             false, true
+                                                     }));
+    }
+    m_p_sprite->setOrigin(getOrigin());
+    m_p_sprite->setPosition(getPosition());
 }
 
 EntityType Platform::getType() const
@@ -68,7 +96,7 @@ void Platform::increment()
 
 void Platform::reset()
 {
-    multiplier = 1;
+    multiplier = 1.f;
 }
 
 void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -77,5 +105,5 @@ void Platform::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         target.draw(m_shape, states);
     }
-    target.draw(m_platformSprite, states);
+    target.draw(*m_p_sprite, states);
 }

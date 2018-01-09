@@ -20,11 +20,11 @@ void EventLoop::update()
                 {
                     m_entity->updatePosition(dtPhysics);
                 }
+                m_engine.checkCollision(m_entities);
             }
             m_stateMediator.setScore(m_p_doodler->getPosition().y);
             m_overlay.updateScoreString();
             m_menu.updateScoreString();
-            m_engine.checkCollision(m_entities);
             m_engine.addPlatforms(m_entities);
             m_engine.removePlatforms(m_entities);
             break;
@@ -118,8 +118,7 @@ void EventLoop::init()
 
     for (size_t i = 0; i < PLATFORM_COUNT; ++i)
     {
-        std::shared_ptr<Platform> p_platform = std::make_shared<Platform>(Platform());
-        m_entities.push_back(p_platform);
+        m_entities.push_back(std::make_shared<Platform>(Platform()));
     }
 
     m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));

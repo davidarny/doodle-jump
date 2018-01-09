@@ -28,12 +28,16 @@ private:
     sf::RectangleShape m_shape;
     sf::Vector2f m_position;
     sf::Vector2f m_size = PLATFORM_SPRITE_SIZE;
-    Sprite m_platformSprite = Sprite(SpriteOptions{Assets::PLATFORM.length,
-                                                   Assets::PLATFORM.data,
-                                                   PLATFORM_SPRITE_SIZE,
-                                                   false, true});
+    std::unique_ptr<Sprite> m_p_sprite = std::make_unique<Sprite>(Sprite({
+                                                                                 Assets::PLATFORM.length,
+                                                                                 Assets::PLATFORM.data,
+                                                                                 PLATFORM_SPRITE_SIZE,
+                                                                                 false, true
+                                                                         }));
 
-    static long long multiplier;
+    static float multiplier;
+
+    void setRandomBonusSprites();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

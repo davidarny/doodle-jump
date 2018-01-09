@@ -5,6 +5,8 @@ INCBIN(FONT_BIN, "../resources/opensans.ttf");
 INCBIN(BACKGROUND_BIN, "../resources/background.png");
 INCBIN(DOODLER_BIN, "../resources/doodler.png");
 INCBIN(PLATFORM_BIN, "../resources/platform.png");
+INCBIN(PLATFORM_SPRING_BIN, "../resources/platform-spring.png");
+INCBIN(PLATFORM_TRAMPOLINE_BIN, "../resources/platform-trampoline.png");
 INCBIN(PLAY_BUTTON_BIN, "../resources/play-button.png");
 INCBIN(RESTART_BUTTON_BIN, "../resources/play-again-button.png");
 INCBIN(CANCEL_BUTTON_BIN, "../resources/cancel-button.png");
@@ -19,8 +21,14 @@ BinaryData Assets::DOODLER = BinaryData{static_cast<size_t>(DOODLER_BIN_size), D
 
 BinaryData Assets::PLATFORM = BinaryData{static_cast<size_t>(PLATFORM_BIN_size), PLATFORM_BIN_data};
 
+BinaryData Assets::PLATFORM_SPRING = BinaryData{static_cast<size_t>(PLATFORM_SPRING_BIN_size),
+                                                PLATFORM_SPRING_BIN_data};
+
 BinaryData Assets::PLAY_BUTTON = BinaryData{static_cast<size_t>(PLAY_BUTTON_BIN_size), PLAY_BUTTON_BIN_data};
 
 BinaryData Assets::RESTART_BUTTON = BinaryData{static_cast<size_t>(RESTART_BUTTON_BIN_size), RESTART_BUTTON_BIN_data};
 
 BinaryData Assets::CANCEL_BUTTON = BinaryData{static_cast<size_t>(CANCEL_BUTTON_BIN_size), CANCEL_BUTTON_BIN_data};
+
+BinaryData Assets::PLATFORM_TRAMPOLINE = BinaryData{static_cast<size_t>(PLATFORM_TRAMPOLINE_BIN_size),
+                                                    PLATFORM_TRAMPOLINE_BIN_data};
