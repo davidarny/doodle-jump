@@ -6,44 +6,46 @@ Engine::Engine(const std::shared_ptr<IEntity> &p_doodler) : m_p_doodler(p_doodle
 
 void Engine::checkCollision(Entities &entities)
 {
-    m_shouldSetFloor = false;
+    bool isInCollision = false;
 
     std::find_if(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> bool {
-        if (m_shouldSetFloor)
-        {
-            return true;
-        }
         if (isDoodler()(p_entity))
         {
             return false;
         }
-        processCollision(p_entity);
-        return false;
+        isInCollision = processCollision(p_entity);
+        return isInCollision;
     });
 
-    if (m_shouldSetFloor)
-    {
-        m_p_doodler->setFloor(m_floor);
-    } else
+
+    if (!isInCollision)
     {
         m_p_doodler->setFloor(-1.f);
+        return;
     }
+
+    m_p_doodler->setFloor(m_floor);
 }
 
-void Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
+bool Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
 {
     if (intersect(p_entity) && m_p_doodler->getFallingState())
     {
-        m_shouldSetFloor = true;
-        m_floor = p_entity->getPosition().y;
+        m_floor = p_entity->getPosition().y + (p_entity->getSize() / 4.f).y;
+        return true;
     }
+    return false;
 }
 
 bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity) const
 {
     sf::FloatRect rhs(p_entity->getPosition(), p_entity->getSize());
     sf::FloatRect lhs(m_p_doodler->getPosition(), m_p_doodler->getSize());
-    return lhs.intersects(rhs);
+    if (rhs.height - lhs.height > 0)
+    {
+        return false;
+    }
+    return lhs.intersects(rhs) && rhs.height - lhs.height <= 0;
 }
 
 void Engine::addPlatforms(Entities &entities)
@@ -95,6 +97,5 @@ const std::function<bool(const std::shared_ptr<IEntity> &)> Engine::isDoodler()
 
 void Engine::reset()
 {
-    m_shouldSetFloor = false;
     m_floor = static_cast<float>(WINDOW_HEIGHT);
 }

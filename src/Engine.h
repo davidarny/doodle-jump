@@ -25,7 +25,7 @@ private:
     float m_floor = static_cast<float>(WINDOW_HEIGHT);
     const std::shared_ptr<IEntity> &m_p_doodler;
 
-    void processCollision(const std::shared_ptr<IEntity> &p_entity);
+    bool processCollision(const std::shared_ptr<IEntity> &p_entity);
 
     bool intersect(const std::shared_ptr<IEntity> &p_entity) const;
 };

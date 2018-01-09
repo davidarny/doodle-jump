@@ -37,10 +37,10 @@ private:
     sf::Vector2f m_size = DOODLER_SPRITE_SIZE;
     sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2);
     sf::RectangleShape m_shape = sf::RectangleShape();
-    Sprite m_doodlerSprite = Sprite(SpriteOptions{Assets::DOODLER.length,
-                                                  Assets::DOODLER.data,
-                                                  DOODLER_SPRITE_SIZE,
-                                                  false, true});
+    Sprite m_spite = Sprite(SpriteOptions{Assets::DOODLER.length,
+                                          Assets::DOODLER.data,
+                                          DOODLER_SPRITE_SIZE,
+                                          false, true});
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

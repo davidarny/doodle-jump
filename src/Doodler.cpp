@@ -5,10 +5,8 @@ Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
     m_shape.setSize(m_size);
     m_shape.setOrigin(m_size / 2.f);
     m_shape.setFillColor(sf::Color::Red);
-    m_shape.setPosition(m_position);
 
     setPosition(m_position);
-    setOrigin(m_size / 2.f);
 }
 
 void Doodler::updatePosition(const float deltaTime)
@@ -17,8 +15,6 @@ void Doodler::updatePosition(const float deltaTime)
     m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
     const sf::Vector2f nextPosition = {m_position.x, getNextY()};
     setFallingState(nextPosition.y);
-    m_shape.setPosition(nextPosition);
-    m_doodlerSprite.setPosition(nextPosition);
     setPosition(nextPosition);
     checkCollision();
     if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
@@ -101,12 +97,12 @@ float Doodler::getNextY() const
 
 sf::FloatRect Doodler::getBounds() const
 {
-    const sf::Vector2f &position = m_shape.getPosition();
+    const sf::Vector2f &position = getPosition();
     const float left = position.x - m_size.x / 2;
-    const float right = position.x + m_size.x / 2;
+    const float width = position.x + m_size.x / 2;
     const float top = position.y - m_size.y / 2;
-    const float bottom = position.y + m_size.y / 2;
-    return sf::FloatRect(left, top, right, bottom);
+    const float height = position.y + m_size.y / 2;
+    return sf::FloatRect(left, top, width, height);
 }
 
 const std::function<bool(float, float)> Doodler::areCloseAbsolute()
@@ -138,11 +134,12 @@ const std::function<bool(float, float)> Doodler::areCloseRelative()
 
 void Doodler::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    states.transform *= getTransform();
     if (IS_DEBUG)
     {
         target.draw(m_shape, states);
     }
-    target.draw(m_doodlerSprite, states);
+    target.draw(m_spite, states);
 }
 
 void Doodler::eventHandler(const sf::Event &event)
@@ -153,9 +150,9 @@ void Doodler::eventHandler(const sf::Event &event)
     }
     if (event.key.code == sf::Keyboard::Left)
     {
-        m_doodlerSprite.setScale({-1, 1});
+        m_spite.setScale({-1, 1});
     } else if (event.key.code == sf::Keyboard::Right)
     {
-        m_doodlerSprite.setScale({1.f, 1.f});
+        m_spite.setScale({1.f, 1.f});
     }
 }
