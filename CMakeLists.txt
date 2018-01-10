@@ -39,8 +39,8 @@ add_executable(doodle-jump ${NO_CONSOLE}
     src/GameState.h
     src/IState.h
     src/enums.h
-    src/StateMediator.cpp
-    src/StateMediator.h
+    src/States.cpp
+    src/States.h
     src/Menu.cpp
     src/Menu.h
     src/Overlay.cpp

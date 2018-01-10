@@ -20,7 +20,7 @@ public:
 
     const sf::Vector2f &getSize() const override;
 
-    EntityType getType() const override;
+    EType getType() const override;
 
     sf::FloatRect getBoundingCoordinates() const override;
 

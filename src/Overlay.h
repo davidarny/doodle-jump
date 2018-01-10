@@ -1,17 +1,17 @@
 #ifndef DOODLE_JUMP_OVERLAY_H
 #define DOODLE_JUMP_OVERLAY_H
 
-#include "StateMediator.h"
+#include "States.h"
 
 class Overlay : public sf::Drawable
 {
 public:
-    explicit Overlay(StateMediator &stateMediator);
+    explicit Overlay(States &stateMediator);
 
     void updateOverlay(float nextY, float deltaTime);
 
 private:
-    StateMediator &m_stateMediator;
+    States &m_states;
     sf::Font m_font;
     sf::Text m_score;
     sf::Text m_fps;

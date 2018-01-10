@@ -1,6 +1,6 @@
 #include "Doodler.h"
 
-Doodler::Doodler(StateMediator &stateMediator) : m_stateMediator(stateMediator)
+Doodler::Doodler(States &stateMediator) : m_states(stateMediator)
 {
     setPosition(m_position);
 }
@@ -17,7 +17,7 @@ void Doodler::updatePosition(const float deltaTime)
     const bool isOverDeadTime = m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
     if (isOverDeadTime)
     {
-        m_stateMediator.setState(State::GameOver);
+        m_states.setState(EState::GAME_OVER);
         m_timeAccumulator = 0.f;
     }
 }
@@ -47,7 +47,7 @@ void Doodler::checkCollision()
 
 void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
 {
-    const KeysMap &keysMap = m_stateMediator.getKeysMap();
+    const KeysMap &keysMap = m_states.getKeysMap();
     const sf::FloatRect bounds = getBoundingCoordinates();
     const bool isMaxRightPosition = bounds.width > WINDOW_WIDTH;
     const bool isMaxLeftPosition = bounds.left < 0;
@@ -60,9 +60,9 @@ void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
     }
 }
 
-EntityType Doodler::getType() const
+EType Doodler::getType() const
 {
-    return EntityType::Doodler;
+    return EType::DOODLER;
 }
 
 const sf::Vector2f &Doodler::getSize() const

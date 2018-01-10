@@ -2,21 +2,21 @@
 #define DOODLE_JUMP_MENU_H
 
 #include <SFML/Graphics.hpp>
-#include "StateMediator.h"
+#include "States.h"
 #include "Sprite.h"
 #include "consts.h"
 
 class Menu : public sf::Drawable
 {
 public:
-    explicit Menu(StateMediator &stateMediator);
+    explicit Menu(States &stateMediator);
 
     void eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback);
 
     void updateMenu();
 
 private:
-    StateMediator &m_stateMediator;
+    States &m_states;
     sf::Font m_font;
     sf::Text m_logo;
     sf::Text m_score;

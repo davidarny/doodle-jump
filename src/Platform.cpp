@@ -26,7 +26,7 @@ void Platform::setRandomBonusSprites()
     if (rand() % 3 > 0)
     {
         m_size = PLATFORM_SPRING_SPRITE_SIZE;
-        m_type = EntityType::PlatformWithSpring;
+        m_type = EType::PLATFORM_BONUS_SPRING;
         m_p_sprite = std::make_unique<Sprite>(Sprite({
                                                          Assets::PLATFORM_SPRING.length,
                                                          Assets::PLATFORM_SPRING.data,
@@ -36,7 +36,7 @@ void Platform::setRandomBonusSprites()
     } else
     {
         m_size = PLATFORM_TRAMPOLINE_SPRITE_SIZE;
-        m_type = EntityType::PlatformWithTrampoline;
+        m_type = EType::PLATFORM_BONUS_TRAMPOLINE;
         m_p_sprite = std::make_unique<Sprite>(Sprite({
                                                          Assets::PLATFORM_TRAMPOLINE.length,
                                                          Assets::PLATFORM_TRAMPOLINE.data,
@@ -46,7 +46,7 @@ void Platform::setRandomBonusSprites()
     }
 }
 
-EntityType Platform::getType() const
+EType Platform::getType() const
 {
     return m_type;
 }

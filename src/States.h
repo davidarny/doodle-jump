@@ -7,24 +7,24 @@
 #include "GameState.h"
 #include "KeyboardState.h"
 
-class StateMediator
+class States
 {
 public:
-    explicit StateMediator(sf::RenderWindow &window);
+    explicit States(sf::RenderWindow &window);
 
     const KeysMap &getKeysMap() const;
 
-    State getState() const;
+    EState getState() const;
 
     float getScore() const;
 
-    void triggerEventHandler(const sf::Event &event);
-
-    void setState(State state);
+    void setState(EState state);
 
     void setScore(float nextScore);
 
     void resetScore();
+
+    void triggerEventHandler(const sf::Event &event);
 
 private:
     sf::RenderWindow &m_window;

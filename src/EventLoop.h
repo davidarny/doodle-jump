@@ -7,7 +7,7 @@
 #include "IEntity.h"
 #include "KeyboardState.h"
 #include "GameState.h"
-#include "StateMediator.h"
+#include "States.h"
 #include "View.h"
 #include "Menu.h"
 #include "Engine.h"
@@ -33,12 +33,12 @@ private:
     sf::Clock m_clock;
     sf::RenderWindow m_window;
     View m_view;
-    StateMediator m_stateMediator = StateMediator(m_window);
+    States m_states = States(m_window);
     Entities m_entities;
-    std::shared_ptr<Doodler> m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));
+    std::shared_ptr<Doodler> m_p_doodler = std::make_shared<Doodler>(Doodler(m_states));
     Engine m_engine = Engine(m_p_doodler);
-    Menu m_menu = Menu(m_stateMediator);
-    Overlay m_overlay = Overlay(m_stateMediator);
+    Menu m_menu = Menu(m_states);
+    Overlay m_overlay = Overlay(m_states);
     Sprite m_backgroundSprite = Sprite(SpriteOptions{Assets::BACKGROUND.length,
                                                      Assets::BACKGROUND.data,
                                                      {0.f, BACKGROUND_SPRITE_SIZE.y},

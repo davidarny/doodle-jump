@@ -1,9 +1,8 @@
-#include <c++/7.2.0/cmath>
 #include "Overlay.h"
 #include "consts.h"
 #include "Assets.h"
 
-Overlay::Overlay(StateMediator &stateMediator) : m_stateMediator(stateMediator)
+Overlay::Overlay(States &stateMediator) : m_states(stateMediator)
 {
     if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.length))
     {
@@ -50,7 +49,7 @@ void Overlay::updateOverlayPosition(float nextY)
 
 void Overlay::updateOverlayStrings(float deltaTime)
 {
-    const auto score = static_cast<int>(m_stateMediator.getScore() * SCORE_MULTIPLIER);
+    const auto score = static_cast<int>(m_states.getScore() * SCORE_MULTIPLIER);
     m_score.setString("score: " + std::to_string(score));
 
     const auto fps = static_cast<int>(1 / deltaTime);

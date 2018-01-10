@@ -3,21 +3,21 @@
 
 #include <cstdlib>
 
-enum class State : size_t
+enum class EState : size_t
 {
-    MainMenu = 0,
-    PauseMenu,
-    GameOver,
-    Game
+    MAIN_MENU = 0,
+    PAUSE_MENU,
+    GAME_OVER,
+    GAME_PROCESS
 };
 
-enum class EntityType : size_t
+enum class EType : size_t
 {
-    Platform = 0,
-    PlatformWithSpring,
-    PlatformWithTrampoline,
-    Doodler,
-    Sprite
+    PLATFORM_DEFAULT = 0,
+    PLATFORM_BONUS_SPRING,
+    PLATFORM_BONUS_TRAMPOLINE,
+    DOODLER,
+    SPRITE
 };
 
 #endif //DOODLE_JUMP_ENUMS_H

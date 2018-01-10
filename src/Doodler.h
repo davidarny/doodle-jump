@@ -9,16 +9,16 @@
 #include "IEntity.h"
 #include "consts.h"
 #include "KeyboardState.h"
-#include "StateMediator.h"
+#include "States.h"
 
 class Doodler : public IEntity
 {
 public:
-    explicit Doodler(StateMediator &stateMediator);
+    explicit Doodler(States &stateMediator);
 
     void updatePosition(float deltaTime) override;
 
-    EntityType getType() const override;
+    EType getType() const override;
 
     const sf::Vector2f &getSize() const override;
 
@@ -33,7 +33,7 @@ private:
     float m_timeAccumulator = 0.f;
     float m_floor = static_cast<float>(WINDOW_HEIGHT);
     bool m_isFalling = false;
-    StateMediator &m_stateMediator;
+    States &m_states;
     sf::Vector2f m_size = DOODLER_SPRITE_SIZE;
     sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2);
     Sprite m_spite = Sprite({

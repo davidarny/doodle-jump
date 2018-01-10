@@ -39,7 +39,7 @@ void Sprite::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(*m_p_sprite, states);
 }
 
-EntityType Sprite::getType() const
+EType Sprite::getType() const
 {
-    return EntityType::Sprite;
+    return EType::SPRITE;
 }

@@ -91,7 +91,7 @@ void Engine::removePlatforms(Entities &entities)
     size_t index = 0;
     entities.erase(
         std::remove_if(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> bool {
-            const bool isNotPlatform = p_entity->getType() == EntityType::Doodler;
+            const bool isNotPlatform = p_entity->getType() == EType::DOODLER;
             const bool isNotFirstPart = index > PLATFORM_COUNT;
             if (isNotPlatform || m_p_doodler == nullptr || isNotFirstPart)
             {
@@ -111,7 +111,7 @@ void Engine::removePlatforms(Entities &entities)
 const std::function<bool(const std::shared_ptr<IEntity> &)> Engine::isDoodler()
 {
     return [](const std::shared_ptr<IEntity> &p_entity) -> bool {
-        return p_entity != nullptr && p_entity->getType() == EntityType::Doodler;
+        return p_entity != nullptr && p_entity->getType() == EType::DOODLER;
     };
 }
 

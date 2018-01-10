@@ -2,7 +2,7 @@
 #include "Menu.h"
 #include "Assets.h"
 
-Menu::Menu(StateMediator &stateMediator) : m_stateMediator(stateMediator)
+Menu::Menu(States &stateMediator) : m_states(stateMediator)
 {
     if (m_font.loadFromMemory(Assets::FONT.data, Assets::FONT.length))
     {
@@ -75,13 +75,13 @@ void Menu::createScore()
 
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    const State state = m_stateMediator.getState();
+    const EState state = m_states.getState();
     switch (state)
     {
-        case State::MainMenu:
+        case EState::MAIN_MENU:
             target.draw(*m_p_startButton, states);
             break;
-        case State::GameOver:
+        case EState::GAME_OVER:
             target.draw(m_score, states);
             target.draw(*m_p_restartButton, states);
             break;
@@ -101,13 +101,13 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
     const sf::FloatRect &startButtonBounds = m_p_startButton->getBoundingCoordinates();
     const sf::FloatRect &exitButtonBounds = m_p_exitButton->getBoundingCoordinates();
     const sf::FloatRect &restartButtonBounds = m_p_restartButton->getBoundingCoordinates();
-    const State state = m_stateMediator.getState();
-    if (startButtonBounds.contains(mousePosition) && state == State::MainMenu)
+    const EState state = m_states.getState();
+    if (startButtonBounds.contains(mousePosition) && state == EState::MAIN_MENU)
     {
-        m_stateMediator.setState(State::Game);
-    } else if (restartButtonBounds.contains(mousePosition) && state == State::GameOver)
+        m_states.setState(EState::GAME_PROCESS);
+    } else if (restartButtonBounds.contains(mousePosition) && state == EState::GAME_OVER)
     {
-        m_stateMediator.setState(State::Game);
+        m_states.setState(EState::GAME_PROCESS);
         callback();
     } else if (exitButtonBounds.contains(mousePosition))
     {
@@ -117,7 +117,7 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
 
 void Menu::updateMenu()
 {
-    const auto score = static_cast<int>(m_stateMediator.getScore() * SCORE_MULTIPLIER);
+    const auto score = static_cast<int>(m_states.getScore() * SCORE_MULTIPLIER);
     m_score.setString("your score: " + std::to_string(score));
     updateScoreOrigin();
 }

@@ -4,10 +4,10 @@
 
 void EventLoop::update()
 {
-    const State state = m_stateMediator.getState();
+    const EState state = m_states.getState();
     switch (state)
     {
-        case State::Game:
+        case EState::GAME_PROCESS:
         {
             const float dtPhysics = m_deltaTime / MAX_PRECISION_COUNT;
             for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
@@ -22,7 +22,7 @@ void EventLoop::update()
                 m_engine.checkCollision(m_entities);
             }
             m_overlay.updateOverlay(m_view.getView().getCenter().y, m_deltaTime);
-            m_stateMediator.setScore(m_p_doodler->getPosition().y);
+            m_states.setScore(m_p_doodler->getPosition().y);
             m_engine.addPlatforms(m_entities);
             m_engine.removePlatforms(m_entities);
             m_menu.updateMenu();
@@ -41,21 +41,21 @@ void EventLoop::pollEvents()
     {
         const sf::Vector2f &mousePosition = sf::Vector2f(sf::Mouse::getPosition(m_window));
         m_p_doodler->eventHandler(event);
-        m_stateMediator.triggerEventHandler(event);
+        m_states.triggerEventHandler(event);
         m_menu.eventHandler(event, mousePosition, std::bind(&EventLoop::restart, this));
     }
 }
 
 void EventLoop::redrawFrame()
 {
-    const State state = m_stateMediator.getState();
+    const EState state = m_states.getState();
     switch (state)
     {
-        case State::Game:
+        case EState::GAME_PROCESS:
             drawGameScreen();
             break;
-        case State::GameOver:
-        case State::MainMenu:
+        case EState::GAME_OVER:
+        case EState::MAIN_MENU:
             drawMenuScreen();
             break;
         default:
@@ -121,7 +121,7 @@ void EventLoop::init()
         m_entities.push_back(std::make_shared<Platform>(Platform()));
     }
 
-    m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));
+    m_p_doodler = std::make_shared<Doodler>(Doodler(m_states));
     m_entities.push_back(m_p_doodler);
 }
 
@@ -129,6 +129,6 @@ void EventLoop::restart()
 {
     Platform::resetMultiplier();
     m_entities.clear();
-    m_stateMediator.resetScore();
+    m_states.resetScore();
     init();
 }

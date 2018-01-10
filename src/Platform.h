@@ -14,7 +14,7 @@ class Platform : public IEntity
 public:
     Platform();
 
-    EntityType getType() const override;
+    EType getType() const override;
 
     const sf::Vector2f &getSize() const override;
 
@@ -23,7 +23,7 @@ public:
     static void resetMultiplier();
 
 private:
-    EntityType m_type = EntityType::Platform;
+    EType m_type = EType::PLATFORM_DEFAULT;
     sf::Vector2f m_position;
     sf::Vector2f m_size = PLATFORM_SPRITE_SIZE;
     std::unique_ptr<Sprite> m_p_sprite = std::make_unique<Sprite>(Sprite({

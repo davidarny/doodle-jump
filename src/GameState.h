@@ -10,9 +10,9 @@ public:
 
     void eventHandler(const sf::Event &event) override;
 
-    State getState() const;
+    EState getState() const;
 
-    void setState(State state);
+    void setState(EState state);
 
     float getScore() const;
 
@@ -23,7 +23,7 @@ public:
 private:
     float m_score = 0.f;
     sf::RenderWindow &m_window;
-    State m_state = State::MainMenu;
+    EState m_state = EState::MAIN_MENU;
 
     float positionToScore(float position);
 };
