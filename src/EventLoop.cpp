@@ -14,7 +14,6 @@ void EventLoop::update()
             {
                 const sf::Vector2f &viewCenter = m_view.getView().getCenter();
                 m_backgroundSprite.setPosition({0.f, viewCenter.y});
-                m_overlay.updateScorePosition(viewCenter.y);
                 m_view.followTo(m_p_doodler);
                 for (auto &&m_entity : m_entities)
                 {
@@ -22,11 +21,11 @@ void EventLoop::update()
                 }
                 m_engine.checkCollision(m_entities);
             }
+            m_overlay.updateOverlay(m_view.getView().getCenter().y, m_deltaTime);
             m_stateMediator.setScore(m_p_doodler->getPosition().y);
-            m_overlay.updateScoreString();
-            m_menu.updateScoreString();
             m_engine.addPlatforms(m_entities);
             m_engine.removePlatforms(m_entities);
+            m_menu.updateMenu();
             break;
         }
         default:

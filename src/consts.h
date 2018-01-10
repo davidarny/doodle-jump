@@ -9,7 +9,7 @@
 /// Window params
 static const unsigned WINDOW_WIDTH = 400;
 static const unsigned WINDOW_HEIGHT = 600;
-static const std::string WINDOW_TITLE = "Doodle Jump";
+static const std::string WINDOW_TITLE = "doodle jump";
 static const unsigned ANTIALIASING_LEVEL = 8;
 static const unsigned MAX_FPS = 60;
 
@@ -26,9 +26,9 @@ static const float COLLISION_TOLERANCE = 2.f;
 
 /// Menu params
 static const unsigned BASE_MARGIN = 20;
-static const unsigned LOGO_TEXT_SIZE = 50;
-static const unsigned SCORE_TEXT_SIZE = 30;
-static const unsigned GAME_SCORE_TEXT_SIZE = 20;
+static const unsigned LOGO_TEXT_SIZE = 75;
+static const unsigned SCORE_TEXT_SIZE = 50;
+static const unsigned GAME_SCORE_TEXT_SIZE = 35;
 
 /// Debug params
 extern bool IS_DEBUG;

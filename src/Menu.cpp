@@ -1,3 +1,4 @@
+#include <locale>
 #include "Menu.h"
 #include "Assets.h"
 
@@ -67,7 +68,7 @@ void Menu::createScore()
     m_score.setFont(m_font);
     m_score.setCharacterSize(SCORE_TEXT_SIZE);
     m_score.setFillColor(sf::Color::Black);
-    updateScoreString();
+    updateMenu();
     m_score.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3);
 }
 
@@ -114,10 +115,10 @@ void Menu::eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, con
     }
 }
 
-void Menu::updateScoreString()
+void Menu::updateMenu()
 {
     const auto score = static_cast<int>(m_stateMediator.getScore() * SCORE_MULTIPLIER);
-    m_score.setString("Your score: " + std::to_string(score));
+    m_score.setString("your score: " + std::to_string(score));
     updateScoreOrigin();
 }
 

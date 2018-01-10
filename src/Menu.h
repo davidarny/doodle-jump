@@ -13,7 +13,7 @@ public:
 
     void eventHandler(sf::Event &event, const sf::Vector2f &mousePosition, const std::function<void()> &callback);
 
-    void updateScoreString();
+    void updateMenu();
 
 private:
     StateMediator &m_stateMediator;

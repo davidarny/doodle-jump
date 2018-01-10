@@ -8,18 +8,23 @@ class Overlay : public sf::Drawable
 public:
     explicit Overlay(StateMediator &stateMediator);
 
-    void updateScoreString();
-
-    void updateScorePosition(float nextY);
+    void updateOverlay(float nextY, float deltaTime);
 
 private:
     StateMediator &m_stateMediator;
     sf::Font m_font;
     sf::Text m_score;
+    sf::Text m_fps;
 
-    void createScore();
+    void createScoreCounter();
+
+    void createFrameRateCounter();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    void updateOverlayPosition(float nextY);
+
+    void updateOverlayStrings(float deltaTime);
 };
 
 #endif //DOODLE_JUMP_OVERLAY_H

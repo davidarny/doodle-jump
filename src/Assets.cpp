@@ -1,7 +1,7 @@
 #include "Assets.h"
 
 INCBIN(ICON_BIN, "../resources/icon.png");
-INCBIN(FONT_BIN, "../resources/opensans.ttf");
+INCBIN(FONT_BIN, "../resources/al-seana.ttf");
 INCBIN(BACKGROUND_BIN, "../resources/background.png");
 INCBIN(DOODLER_BIN, "../resources/doodler.png");
 INCBIN(PLATFORM_BIN, "../resources/platform.png");
