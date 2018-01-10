@@ -23,6 +23,7 @@ public:
     static void resetMultiplier();
 
 private:
+    EntityType m_type = EntityType::Platform;
     sf::Vector2f m_position;
     sf::Vector2f m_size = PLATFORM_SPRITE_SIZE;
     std::unique_ptr<Sprite> m_p_sprite = std::make_unique<Sprite>(Sprite({

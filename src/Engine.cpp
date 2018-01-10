@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "Platform.h"
 
-Engine::Engine(const std::shared_ptr<IEntity> &p_doodler) : m_p_doodler(p_doodler)
+Engine::Engine(const std::shared_ptr<Doodler> &p_doodler) : m_p_doodler(p_doodler)
 {
     m_doodlerHitbox.setFillColor(sf::Color::Blue);
     m_platformHitbox.setFillColor(sf::Color::Green);
@@ -9,35 +9,28 @@ Engine::Engine(const std::shared_ptr<IEntity> &p_doodler) : m_p_doodler(p_doodle
 
 void Engine::checkCollision(Entities &entities)
 {
-    bool isInCollision = false;
+    std::vector<float> intersections;
 
-    std::find_if(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> bool {
+    std::for_each(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> void {
         if (isDoodler()(p_entity))
         {
-            return false;
+            return;
         }
-        isInCollision = processCollision(p_entity);
-        return isInCollision;
+        intersections.push_back(processCollision(p_entity));
     });
 
+    const float min = *std::min_element(intersections.begin(), intersections.end());
 
-    if (!isInCollision)
-    {
-        m_p_doodler->setPlatformIntersection(WINDOW_HEIGHT * 2);
-        return;
-    }
-
-    m_p_doodler->setPlatformIntersection(m_floor);
+    m_p_doodler->setPlatformIntersection(min);
 }
 
-bool Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
+float Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
 {
     if (intersect(p_entity) && m_p_doodler->getFallingState())
     {
-        m_floor = p_entity->getPosition().y - p_entity->getSize().y / 4;
-        return true;
+        return p_entity->getPosition().y - p_entity->getSize().y / 4;
     }
-    return false;
+    return WINDOW_HEIGHT * 2.f;
 }
 
 bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
@@ -45,8 +38,10 @@ bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
     const sf::Vector2f &doodlerSize = m_p_doodler->getSize();
     const sf::Vector2f &doodlerPosition = m_p_doodler->getPosition();
     const sf::Vector2f &platformSize = p_entity->getSize();
+    const sf::Vector2f &platformPosition = p_entity->getPosition();
     const sf::Vector2f &offset = sf::Vector2f({doodlerSize.x * 0.25f, 0});
-    sf::FloatRect rhs(p_entity->getPosition() - platformSize * 0.5f, platformSize);
+
+    sf::FloatRect rhs(platformPosition - platformSize * 0.5f, platformSize);
     sf::FloatRect lhs;
 
     const bool isReflected = m_p_doodler->getScale().x == -1.f;
@@ -58,7 +53,8 @@ bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
         lhs = sf::FloatRect(doodlerPosition - doodlerSize * 0.5f + offset, doodlerSize - offset * 1.25f);
     }
 
-    const bool intersects = lhs.intersects(rhs);
+    const bool isOverPlatform = lhs.top + doodlerSize.y < rhs.top + platformSize.y;
+    const bool intersects = lhs.intersects(rhs) && isOverPlatform;
 
     if (intersects && IS_DEBUG)
     {
@@ -95,7 +91,7 @@ void Engine::removePlatforms(Entities &entities)
     size_t index = 0;
     entities.erase(
         std::remove_if(entities.begin(), entities.end(), [&](const std::shared_ptr<IEntity> &p_entity) -> bool {
-            const bool isNotPlatform = p_entity->getType() != EntityType::Platform;
+            const bool isNotPlatform = p_entity->getType() == EntityType::Doodler;
             const bool isNotFirstPart = index > PLATFORM_COUNT;
             if (isNotPlatform || m_p_doodler == nullptr || isNotFirstPart)
             {
@@ -117,11 +113,6 @@ const std::function<bool(const std::shared_ptr<IEntity> &)> Engine::isDoodler()
     return [](const std::shared_ptr<IEntity> &p_entity) -> bool {
         return p_entity != nullptr && p_entity->getType() == EntityType::Doodler;
     };
-}
-
-void Engine::reset()
-{
-    m_floor = static_cast<float>(WINDOW_HEIGHT);
 }
 
 void Engine::draw(sf::RenderTarget &target, sf::RenderStates states) const

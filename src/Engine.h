@@ -8,7 +8,7 @@
 class Engine : public sf::Drawable
 {
 public:
-    explicit Engine(const std::shared_ptr<IEntity> &p_doodler);
+    explicit Engine(const std::shared_ptr<Doodler> &p_doodler);
 
     void checkCollision(Entities &entities);
 
@@ -18,16 +18,13 @@ public:
 
     const std::function<bool(const std::shared_ptr<IEntity> &)> isDoodler();
 
-    void reset();
-
 private:
     sf::RectangleShape m_platformHitbox;
     sf::RectangleShape m_doodlerHitbox;
 
-    float m_floor = static_cast<float>(WINDOW_HEIGHT);
-    const std::shared_ptr<IEntity> &m_p_doodler;
+    const std::shared_ptr<Doodler> &m_p_doodler;
 
-    bool processCollision(const std::shared_ptr<IEntity> &p_entity);
+    float processCollision(const std::shared_ptr<IEntity> &p_entity);
 
     bool intersect(const std::shared_ptr<IEntity> &p_entity);
 

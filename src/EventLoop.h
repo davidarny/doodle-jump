@@ -35,7 +35,7 @@ private:
     View m_view;
     StateMediator m_stateMediator = StateMediator(m_window);
     Entities m_entities;
-    std::shared_ptr<IEntity> m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));
+    std::shared_ptr<Doodler> m_p_doodler = std::make_shared<Doodler>(Doodler(m_stateMediator));
     Engine m_engine = Engine(m_p_doodler);
     Menu m_menu = Menu(m_stateMediator);
     Overlay m_overlay = Overlay(m_stateMediator);

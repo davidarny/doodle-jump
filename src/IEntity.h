@@ -9,13 +9,25 @@
 class IEntity : public IPhysicsObject, public sf::Drawable, public sf::Transformable
 {
 public:
-    virtual void updatePosition(float deltaTime) { (void) &deltaTime; };
+    virtual void updatePosition(float deltaTime)
+    {
+        (void) &deltaTime;
+    };
 
-    virtual void setPlatformIntersection(float nextFloor) { (void) &nextFloor; };
+    virtual void setPlatformIntersection(float nextFloor)
+    {
+        (void) &nextFloor;
+    };
 
-    virtual bool getFallingState() const { return false; };
+    virtual bool getFallingState() const
+    {
+        return false;
+    };
 
-    virtual void eventHandler(const sf::Event &event) { (void) &event; };
+    virtual void eventHandler(const sf::Event &event)
+    {
+        (void) &event;
+    };
 
 private:
     virtual void checkCollision() {};

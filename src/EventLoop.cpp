@@ -129,7 +129,6 @@ void EventLoop::init()
 void EventLoop::restart()
 {
     Platform::resetMultiplier();
-    m_engine.reset();
     m_entities.clear();
     m_stateMediator.resetScore();
     init();
