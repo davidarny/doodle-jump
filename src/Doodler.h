@@ -24,7 +24,7 @@ public:
 
     bool getFallingState() const override;
 
-    void setFloor(float nextFloor) override;
+    void setPlatformIntersection(float nextFloor) override;
 
     void eventHandler(const sf::Event &event) override;
 

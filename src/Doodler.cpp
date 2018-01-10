@@ -9,11 +9,13 @@ void Doodler::updatePosition(const float deltaTime)
 {
     setHorizontalPosition(MOVE_SPEED, deltaTime);
     m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
-    const sf::Vector2f nextPosition = {m_position.x, getNextY()};
+    sf::Vector2f nextPosition = {m_position.x, getNextY()};
     setFallingState(nextPosition.y);
     setPosition(nextPosition);
     checkCollision();
-    if (m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME)
+
+    const bool isOverDeadTime = m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
+    if (isOverDeadTime)
     {
         m_stateMediator.setState(State::GameOver);
         m_timeAccumulator = 0.f;
@@ -31,9 +33,9 @@ void Doodler::checkCollision()
     const float lhs = getPosition().y + getSize().y / 2;
     const float rhs = std::abs(std::abs(lhs) - std::abs(m_floor));
 
-    const bool isAtFloorLevel = std::ceil(lhs) == std::ceil(m_floor) ||
+    const bool isAtFloorLevel = int(lhs) == int(m_floor) ||
+                                std::ceil(lhs) == std::ceil(m_floor) ||
                                 std::floor(lhs) == std::floor(m_floor) ||
-                                int(lhs) == int(m_floor) ||
                                 (rhs < COLLISION_TOLERANCE && rhs > 0.f);
 
     if (isAtFloorLevel)
@@ -47,12 +49,12 @@ void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
 {
     const KeysMap &keysMap = m_stateMediator.getKeysMap();
     const sf::FloatRect bounds = getBoundingCoordinates();
-    const bool isMaxRightPosition = bounds.width < WINDOW_WIDTH;
-    const bool isMaxLeftPosition = bounds.left > 0;
-    if (keysMap.at(sf::Keyboard::Right) && isMaxRightPosition)
+    const bool isMaxRightPosition = bounds.width > WINDOW_WIDTH;
+    const bool isMaxLeftPosition = bounds.left < 0;
+    if (keysMap.at(sf::Keyboard::Right) && !isMaxRightPosition)
     {
         m_position.x += nextX * deltaTime;
-    } else if (keysMap.at(sf::Keyboard::Left) && isMaxLeftPosition)
+    } else if (keysMap.at(sf::Keyboard::Left) && !isMaxLeftPosition)
     {
         m_position.x -= nextX * deltaTime;
     }
@@ -68,7 +70,7 @@ const sf::Vector2f &Doodler::getSize() const
     return m_size;
 }
 
-void Doodler::setFloor(const float nextFloor)
+void Doodler::setPlatformIntersection(float nextFloor)
 {
     if (!m_isFalling)
     {

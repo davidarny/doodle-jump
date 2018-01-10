@@ -23,11 +23,11 @@ void Engine::checkCollision(Entities &entities)
 
     if (!isInCollision)
     {
-        m_p_doodler->setFloor(WINDOW_HEIGHT * 2);
+        m_p_doodler->setPlatformIntersection(WINDOW_HEIGHT * 2);
         return;
     }
 
-    m_p_doodler->setFloor(m_floor);
+    m_p_doodler->setPlatformIntersection(m_floor);
 }
 
 bool Engine::processCollision(const std::shared_ptr<IEntity> &p_entity)
@@ -49,7 +49,8 @@ bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
     sf::FloatRect rhs(p_entity->getPosition() - platformSize * 0.5f, platformSize);
     sf::FloatRect lhs;
 
-    if (m_p_doodler->getScale().x == 1)
+    const bool isReflected = m_p_doodler->getScale().x == -1.f;
+    if (!isReflected)
     {
         lhs = sf::FloatRect(doodlerPosition - doodlerSize * 0.5f + offset * 0.25f, doodlerSize - offset);
     } else
