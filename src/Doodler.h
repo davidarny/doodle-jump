@@ -24,18 +24,21 @@ public:
 
     bool getFallingState() const override;
 
-    void setPlatformIntersection(float nextFloor) override;
+    void setPlatformIntersection(float nextIntersection) override;
+
+    void setBonusType(EType nextType);
 
     void eventHandler(const sf::Event &event) override;
 
 private:
-    const float m_initialSpeed = DOODLER_SPEED;
     float m_timeAccumulator = 0.f;
-    float m_floor = static_cast<float>(WINDOW_HEIGHT);
     bool m_isFalling = false;
+    float m_speed = DOODLER_SPEED;
+    float m_intersection = static_cast<float>(WINDOW_HEIGHT);
+    EType m_bonus = EType::PLATFORM_DEFAULT;
     States &m_states;
     sf::Vector2f m_size = DOODLER_SPRITE_SIZE;
-    sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_floor - m_size.x / 2);
+    sf::Vector2f m_position = sf::Vector2f(WINDOW_WIDTH / 2, m_intersection - m_size.x / 2);
     Sprite m_spite = Sprite({
                                 Assets::DOODLER.length,
                                 Assets::DOODLER.data,
@@ -50,6 +53,8 @@ private:
     void setFallingState(float nextY);
 
     void checkCollision() override;
+
+    void checkBonus();
 
     sf::FloatRect getBoundingCoordinates() const override;
 

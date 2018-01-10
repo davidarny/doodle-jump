@@ -39,10 +39,12 @@ private:
     Engine m_engine = Engine(m_p_doodler);
     Menu m_menu = Menu(m_states);
     Overlay m_overlay = Overlay(m_states);
-    Sprite m_backgroundSprite = Sprite(SpriteOptions{Assets::BACKGROUND.length,
-                                                     Assets::BACKGROUND.data,
-                                                     {0.f, BACKGROUND_SPRITE_SIZE.y},
-                                                     false, true});
+    Sprite m_backgroundSprite = Sprite({
+                                           Assets::BACKGROUND.length,
+                                           Assets::BACKGROUND.data,
+                                           {0.f, BACKGROUND_SPRITE_SIZE.y},
+                                           false, true
+                                       });
 
     void createWindow();
 
