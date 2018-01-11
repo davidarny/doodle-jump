@@ -1,4 +1,3 @@
-#include <c++/7.2.0/iostream>
 #include "Doodler.h"
 
 Doodler::Doodler(States &stateMediator) : m_states(stateMediator)
