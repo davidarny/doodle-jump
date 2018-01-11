@@ -39,7 +39,7 @@ bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
     const sf::Vector2f &doodlerPosition = m_p_doodler->getPosition();
     const sf::Vector2f &platformSize = p_entity->getSize();
     const sf::Vector2f &platformPosition = p_entity->getPosition();
-    const sf::Vector2f &offset = sf::Vector2f({doodlerSize.x * 0.25f, 0});
+    const sf::Vector2f &offset = sf::Vector2f({doodlerSize.x * 0.35f, 0});
 
     sf::FloatRect rhs(platformPosition - platformSize * 0.5f, platformSize);
     sf::FloatRect lhs;
