@@ -31,7 +31,8 @@ public:
     void eventHandler(const sf::Event &event) override;
 
 private:
-    float m_timeAccumulator = 0.f;
+    float m_jumpTimeAccumulator = 0.f;
+    float m_fallTimeAccumulator = 0.f;
     bool m_isFalling = false;
     float m_speed = DOODLER_SPEED;
     float m_intersection = static_cast<float>(WINDOW_HEIGHT);
@@ -61,6 +62,12 @@ private:
     float getNextY() const;
 
     void setNextY(float nextY);
+
+    void resetTimeAccumulators();
+
+    void updateTimeAccumulators(float deltaTime);
+
+    void checkGameOver();
 };
 
 #endif //DOODLE_JUMP_DOODLER_H

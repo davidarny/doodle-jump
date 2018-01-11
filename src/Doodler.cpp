@@ -8,19 +8,12 @@ Doodler::Doodler(States &stateMediator) : m_states(stateMediator)
 void Doodler::updatePosition(const float deltaTime)
 {
     setHorizontalPosition(MOVE_SPEED, deltaTime);
-    m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
+    updateTimeAccumulators(deltaTime);
     sf::Vector2f nextPosition = {m_position.x, getNextY()};
     setFallingState(nextPosition.y);
     setPosition(nextPosition);
     checkCollision();
-
-    // TODO: fix big jump death
-    const bool isOverDeadTime = m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
-    if (isOverDeadTime)
-    {
-        m_states.setState(EState::GAME_OVER);
-        m_timeAccumulator = 0.f;
-    }
+    checkGameOver();
 }
 
 void Doodler::checkCollision()
@@ -43,7 +36,7 @@ void Doodler::checkCollision()
     {
         checkBonus();
         setNextY(m_intersection);
-        m_timeAccumulator = 0.f;
+        resetTimeAccumulators();
     }
 }
 
@@ -118,8 +111,8 @@ void Doodler::setNextY(const float nextY)
 
 float Doodler::getNextY() const
 {
-    const float lhs = m_speed * m_timeAccumulator;
-    const auto rhs = static_cast<float>(0.5 * G * std::pow(m_timeAccumulator, 2));
+    const float lhs = m_speed * m_jumpTimeAccumulator;
+    const auto rhs = static_cast<float>(0.5 * G * std::pow(m_jumpTimeAccumulator, 2));
     return m_position.y - lhs + rhs;
 }
 
@@ -157,5 +150,30 @@ void Doodler::eventHandler(const sf::Event &event)
 void Doodler::setBonusType(EType nextType)
 {
     m_bonus = nextType;
+}
+
+void Doodler::resetTimeAccumulators()
+{
+    m_jumpTimeAccumulator = 0.f;
+    m_fallTimeAccumulator = 0.f;
+}
+
+void Doodler::checkGameOver()
+{
+    const bool isOverDeadTime = m_fallTimeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
+    if (isOverDeadTime)
+    {
+        m_states.setState(EState::GAME_OVER);
+        resetTimeAccumulators();
+    }
+}
+
+void Doodler::updateTimeAccumulators(const float deltaTime)
+{
+    m_jumpTimeAccumulator += deltaTime * TIME_ACCELERATOR;
+    if (m_isFalling)
+    {
+        m_fallTimeAccumulator += deltaTime * TIME_ACCELERATOR;
+    }
 }
 
