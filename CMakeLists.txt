@@ -10,13 +10,25 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-set(NO_CONSOLE "")
+set(WIN)
+set(RES)
 
 if (WIN32 AND CMAKE_BUILD_TYPE MATCHES Release)
-    set(NO_CONSOLE WIN32)
+    set(WIN WIN32)
 endif ()
 
-add_executable(doodle-jump ${NO_CONSOLE}
+if (WIN32 AND EXISTS ${CMAKE_SOURCE_DIR}/resources.rc)
+    find_program(WINDRES "windres.exe")
+    if (WINDRES)
+        execute_process(
+            COMMAND windres.exe resources.rc -o resources.o
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        )
+        set(RES resources.o)
+    endif ()
+endif ()
+
+add_executable(doodle-jump ${WIN}
     resources
     lib/incbin/incbin.h
     src/main.cpp
@@ -48,7 +60,8 @@ add_executable(doodle-jump ${NO_CONSOLE}
     src/Assets.cpp
     src/Assets.h
     src/Sprite.cpp
-    src/Sprite.h)
+    src/Sprite.h
+    ${RES})
 
 target_compile_features(doodle-jump PUBLIC cxx_std_17)
 

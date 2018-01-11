@@ -1,0 +1,24 @@
+0 ICON "resources/icon.ico"
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "David Arutiunian"
+      VALUE "FileDescription", "doodle jump"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "doodle-jump"
+      VALUE "LegalCopyright", "David Arutiunian"
+      VALUE "OriginalFilename", "doodle-jump.exe"
+      VALUE "ProductName", "doodle jump"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END
