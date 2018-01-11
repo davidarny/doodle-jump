@@ -63,15 +63,28 @@ void Doodler::checkBonus()
 void Doodler::setHorizontalPosition(const float nextX, const float deltaTime)
 {
     const KeysMap &keysMap = m_states.getKeysMap();
+    const sf::Vector2f &size = getSize();
     const sf::FloatRect bounds = getBoundingCoordinates();
-    const bool isMaxRightPosition = bounds.width > WINDOW_WIDTH;
-    const bool isMaxLeftPosition = bounds.left < 0;
-    if (keysMap.at(sf::Keyboard::Right) && !isMaxRightPosition)
+    const bool isMaxRightPosition = bounds.width - size.x / 2 > WINDOW_WIDTH;
+    const bool isMaxLeftPosition = bounds.left + size.x / 2 < 0;
+    if (keysMap.at(sf::Keyboard::Right))
     {
-        m_position.x += nextX * deltaTime;
-    } else if (keysMap.at(sf::Keyboard::Left) && !isMaxLeftPosition)
+        if (isMaxRightPosition)
+        {
+            m_position.x = 0.f;
+        } else
+        {
+            m_position.x += nextX * deltaTime;
+        }
+    } else if (keysMap.at(sf::Keyboard::Left))
     {
-        m_position.x -= nextX * deltaTime;
+        if (isMaxLeftPosition)
+        {
+            m_position.x = WINDOW_WIDTH;
+        } else
+        {
+            m_position.x -= nextX * deltaTime;
+        }
     }
 }
 
