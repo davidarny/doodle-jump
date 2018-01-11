@@ -10,7 +10,7 @@ static const sf::Vector2u ICON_IMAGE_SIZE = {32, 32};
 static const sf::Vector2f BACKGROUND_SPRITE_SIZE = {600.f, 800.f};
 static const sf::Vector2f DOODLER_SPRITE_SIZE = {50.f, 45.f};
 static const sf::Vector2f PLATFORM_SPRITE_SIZE = {40.f, 12.5f};
-static const sf::Vector2f PLATFORM_SPRING_SPRITE_SIZE = {40.f, 28.f};
+static const sf::Vector2f PLATFORM_SPRING_SPRITE_SIZE = {40.f, 21.f};
 static const sf::Vector2f PLATFORM_TRAMPOLINE_SPRITE_SIZE = {40.f, 20.f};
 static const sf::Vector2f BUTTON_SPRITE_SIZE = {220.f, 80.f};
 

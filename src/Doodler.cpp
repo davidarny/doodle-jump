@@ -8,40 +8,55 @@ Doodler::Doodler(States &stateMediator) : m_states(stateMediator)
 void Doodler::updatePosition(const float deltaTime)
 {
     setHorizontalPosition(MOVE_SPEED, deltaTime);
-    m_timeAccumulator += deltaTime * TIME_ACCELERATOR;
+    updateTimeAccumulators(deltaTime);
     sf::Vector2f nextPosition = {m_position.x, getNextY()};
     setFallingState(nextPosition.y);
     setPosition(nextPosition);
     checkCollision();
-
-    const bool isOverDeadTime = m_timeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
-    if (isOverDeadTime)
-    {
-        m_states.setState(EState::GAME_OVER);
-        m_timeAccumulator = 0.f;
-    }
+    checkGameOver();
 }
 
 void Doodler::checkCollision()
 {
-    const bool shouldCheck = m_floor != WINDOW_HEIGHT * 2;
+    const bool shouldCheck = m_intersection != WINDOW_HEIGHT * 2;
     if (!shouldCheck || !m_isFalling)
     {
         return;
     }
 
     const float lhs = getPosition().y + getSize().y / 2;
-    const float rhs = std::abs(std::abs(lhs) - std::abs(m_floor));
+    const float rhs = std::abs(std::abs(lhs) - std::abs(m_intersection));
 
-    const bool isAtFloorLevel = int(lhs) == int(m_floor) ||
-                                std::ceil(lhs) == std::ceil(m_floor) ||
-                                std::floor(lhs) == std::floor(m_floor) ||
+    const bool isAtFloorLevel = int(lhs) == int(m_intersection) ||
+                                std::ceil(lhs) == std::ceil(m_intersection) ||
+                                std::floor(lhs) == std::floor(m_intersection) ||
                                 (rhs < COLLISION_TOLERANCE && rhs > 0.f);
 
     if (isAtFloorLevel)
     {
-        setNextY(m_floor);
-        m_timeAccumulator = 0.f;
+        checkBonus();
+        setNextY(m_intersection);
+        resetTimeAccumulators();
+    }
+}
+
+void Doodler::checkBonus()
+{
+    if (m_speed != DOODLER_SPEED)
+    {
+        m_speed = DOODLER_SPEED;
+    }
+
+    if (m_bonus == EType::PLATFORM_BONUS_SPRING)
+    {
+        m_speed = DOODLER_SPEED * 1.5f;
+        m_bonus = EType::PLATFORM_DEFAULT;
+    }
+
+    if (m_bonus == EType::PLATFORM_BONUS_TRAMPOLINE)
+    {
+        m_speed = DOODLER_SPEED * 3;
+        m_bonus = EType::PLATFORM_DEFAULT;
     }
 }
 
@@ -70,13 +85,13 @@ const sf::Vector2f &Doodler::getSize() const
     return m_size;
 }
 
-void Doodler::setPlatformIntersection(float nextFloor)
+void Doodler::setPlatformIntersection(float nextIntersection)
 {
     if (!m_isFalling)
     {
         return;
     }
-    m_floor = nextFloor;
+    m_intersection = nextIntersection;
 }
 
 void Doodler::setFallingState(const float nextY)
@@ -96,8 +111,8 @@ void Doodler::setNextY(const float nextY)
 
 float Doodler::getNextY() const
 {
-    const float lhs = m_initialSpeed * m_timeAccumulator;
-    const auto rhs = static_cast<float>(0.5 * G * std::pow(m_timeAccumulator, 2));
+    const float lhs = m_speed * m_jumpTimeAccumulator;
+    const auto rhs = static_cast<float>(0.5 * G * std::pow(m_jumpTimeAccumulator, 2));
     return m_position.y - lhs + rhs;
 }
 
@@ -131,3 +146,34 @@ void Doodler::eventHandler(const sf::Event &event)
         setScale({1.f, 1.f});
     }
 }
+
+void Doodler::setBonusType(EType nextType)
+{
+    m_bonus = nextType;
+}
+
+void Doodler::resetTimeAccumulators()
+{
+    m_jumpTimeAccumulator = 0.f;
+    m_fallTimeAccumulator = 0.f;
+}
+
+void Doodler::checkGameOver()
+{
+    const bool isOverDeadTime = m_fallTimeAccumulator / TIME_ACCELERATOR > DEAD_TIME;
+    if (isOverDeadTime)
+    {
+        m_states.setState(EState::GAME_OVER);
+        resetTimeAccumulators();
+    }
+}
+
+void Doodler::updateTimeAccumulators(const float deltaTime)
+{
+    m_jumpTimeAccumulator += deltaTime * TIME_ACCELERATOR;
+    if (m_isFalling)
+    {
+        m_fallTimeAccumulator += deltaTime * TIME_ACCELERATOR;
+    }
+}
+

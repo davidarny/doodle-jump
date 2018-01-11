@@ -2,7 +2,6 @@
 #define DOODLE_JUMP_ISTATE_H
 
 #include <SFML/Graphics.hpp>
-#include <memory>
 #include "enums.h"
 
 class IState

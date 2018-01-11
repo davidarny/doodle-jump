@@ -65,6 +65,11 @@ bool Engine::intersect(const std::shared_ptr<IEntity> &p_entity)
         m_platformHitbox.setSize({rhs.width, rhs.height});
     }
 
+    if (intersects)
+    {
+        m_p_doodler->setBonusType(p_entity->getType());
+    }
+
     return intersects;
 }
 

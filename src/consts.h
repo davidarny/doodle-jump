@@ -20,7 +20,7 @@ static const float MOVE_SPEED = 500.f;
 static const size_t PLATFORM_COUNT = 18;
 static const float DOODLER_SPEED = 60.f;
 static const unsigned MAX_PRECISION_COUNT = 16;
-static const float DEAD_TIME = 2.25f;
+static const float DEAD_TIME = 2.f;
 static const float SCORE_MULTIPLIER = 0.1f;
 static const float COLLISION_TOLERANCE = 2.f;
 
