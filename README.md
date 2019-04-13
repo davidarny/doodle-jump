@@ -1,17 +1,11 @@
 # Doodle Jump
 C++ clone of Doodle Jump
 
+![GitHub top language](https://img.shields.io/github/languages/top/DavidArutiunian/doodle-jump.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/DavidArutiunian/doodle-jump.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/DavidArutiunian/doodle-jump.svg)
+
 ![Doodle Jump](resources/doodle-jump.png)
-
-## Up and coming features
-
-- [x] collision adjustment
-- [x] first playable version
-- [x] endless map
-- [x] game over state
-- [x] score
-- [x] bonuses
-- [x] textures
 
 ## Requirements
 
